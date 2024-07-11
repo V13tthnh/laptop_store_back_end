@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUpdateCouponRequest;
 use App\Models\Coupon;
+use App\Models\Discount;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -20,6 +21,8 @@ class CouponController extends Controller
         $coupons = Coupon::orderByDesc('id')->get();
         return Datatables::of($coupons)->make(true);
     }
+
+   
 
     public function store(StoreUpdateCouponRequest $request)
     {

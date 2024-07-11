@@ -1,0 +1,171 @@
+Product::create([
+            'name' => 'Laptop MSI Gaming Bravo 15 B7ED R5 7535HS/16GB/512GB/4GB RX6550M/144Hz/Win11 (010VN)',
+            'SKU' => '5283017496',
+            'slug' => 'msi-bravo-15-b7ed-r5-010vn#top-color-images-gallery-11',
+            'description' => 'Laptop MSI Gaming Bravo 15 B7ED R5 7535HS (010VN) không chỉ là một mẫu laptop gaming tầm trung thông thường, mà còn là người bạn đồng hành đáng tin cậy dành cho những game thủ cũng như những người đam mê công việc sáng tạo. Với thiết kế hầm hố, máy trở thành biểu tượng của sức mạnh và sự phong cách, hứa hẹn sẽ tạo nên một trải nghiệm tuyệt vời trên mọi đấu trường ảo.',
+            'featured' => 1,
+            'status' => 1,
+            'brand_id' => 5,
+            'category_id' => 9,
+        ]);
+
+        ProductSpecificationDetail::create([//công nghệ cpu
+            'product_id' => '',
+            'product_specification_id' => '1',
+            'value' => 'AMD Ryzen 5 - 7535HS',
+        ]);
+        ProductSpecificationDetail::create([//số nhân
+            'product_id' => '',
+            'product_specification_id' => '2',
+            'value' => '6',
+        ]);
+        ProductSpecificationDetail::create([//số luồng
+            'product_id' => '',
+            'product_specification_id' => '3',
+            'value' => '12',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ cpu
+            'product_id' => '',
+            'product_specification_id' => '4',
+            'value' => '3.30 GHz',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ tối đa
+            'product_id' => '',
+            'product_specification_id' => '5',
+            'value' => 'Turbo Boost 4.55 GHz',
+        ]);
+        ProductSpecificationDetail::create([//bộ nhớ đệm
+            'product_id' => '',
+            'product_specification_id' => '6',
+            'value' => '16 MB',
+        ]);
+        ProductSpecificationDetail::create([//ram
+            'product_id' => '',
+            'product_specification_id' => '7',
+            'value' => '16 GB',
+        ]);
+        ProductSpecificationDetail::create([//loại ram
+            'product_id' => '',
+            'product_specification_id' => '8',
+            'value' => 'DDR5 2 khe (1 khe 8 GB + 1 khe 8 GB)',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ bus ram
+            'product_id' => '',
+            'product_specification_id' => '9',
+            'value' => '4800 MHz',
+        ]);
+        ProductSpecificationDetail::create([//hỗ trợ ram tối đa
+            'product_id' => '',
+            'product_specification_id' => '10',
+            'value' => '64 GB',
+        ]);
+        ProductSpecificationDetail::create([//ổ cứng
+            'product_id' => '',
+            'product_specification_id' => '11',
+            'value' => '512 GB SSD NVMe PCIe Gen 4.0Hỗ trợ thêm 1 khe cắm SSD M.2 PCIe mở rộng',
+        ]);
+        ProductSpecificationDetail::create([//màn hình
+            'product_id' => '',
+            'product_specification_id' => '12',
+	    'value' => '15.6 inch',
+  	]);
+        ProductSpecificationDetail::create([//độ phân giải
+            'product_id' => '',
+            'product_specification_id' => '13',
+            'value' => 'Full HD (1920 x 1080)',
+        ]);
+        ProductSpecificationDetail::create([//tần số quét
+            'product_id' => '',
+            'product_specification_id' => '14',
+            'value' => '144 Hz',
+        ]);
+        ProductSpecificationDetail::create([//độ phủ màu
+            'product_id' => '',
+            'product_specification_id' => '15',
+            'value' => '45% NTSC',
+        ]);
+        ProductSpecificationDetail::create([//công nghệ màn hình
+            'product_id' => '',
+            'product_specification_id' => '16',
+            'value' => 'Tấm nền IPS',
+        ]);
+        ProductSpecificationDetail::create([//card màn hình
+            'product_id' => '',
+            'product_specification_id' => '17',
+            'value' => 'Card rời - AMD Radeon RX 6550M, 4 GB',
+        ]);
+        ProductSpecificationDetail::create([//công nghệ âm thanh
+            'product_id' => '',
+            'product_specification_id' => '18',
+            'value' => 'Hi-Res Audio',
+        ]);
+        ProductSpecificationDetail::create([//cổng giao tiếp
+            'product_id' => '',
+            'product_specification_id' => '19',
+            'value' => 'LAN (RJ45), 1 x USB 2.0, Jack tai nghe 3.5 mm, 2 x USB 3.2, HDMI, 1 x USB Type-C (hỗ trợ USB 3.2, DisplayPort)',
+        ]);
+        ProductSpecificationDetail::create([//kết nối không dây
+            'product_id' => '',
+            'product_specification_id' => '20',
+            'value' => 'Wi-Fi 6E (802.11ax)Bluetooth 5.3',
+        ]);
+        ProductSpecificationDetail::create([//khe đọc thẻ nhớ
+            'product_id' => '',
+            'product_specification_id' => '21',
+            'value' => '',
+        ]);
+        ProductSpecificationDetail::create([//webcam
+            'product_id' => '',
+            'product_specification_id' => '22',
+            'value' => 'HD Webcam',
+        ]);
+        ProductSpecificationDetail::create([//đèn pin
+            'product_id' => '',
+            'product_specification_id' => '23',
+            'value' => 'Không có',
+        ]);
+        ProductSpecificationDetail::create([//tính năng khác
+            'product_id' => '',
+            'product_specification_id' => '24',
+            'value' => 'TPM 2.0Bản lề mở 180 độ',
+        ]);
+        ProductSpecificationDetail::create([//kích thước, trọng lượng
+            'product_id' => '',
+            'product_specification_id' => '25',
+            'value' => 'Dài 359 mm - Rộng 259 mm - Dày 24.95 mm',
+        ]);
+        ProductSpecificationDetail::create([//chất liệu
+            'product_id' => '',
+	    'product_specification_id' => '26',
+            'value' => 'Vỏ nhựa',
+        ]);
+        ProductSpecificationDetail::create([//thông tin pin
+            'product_id' => '',
+            'product_specification_id' => '27',
+            'value' => '3 cell, 53.5 Wh',
+        ]);
+        ProductSpecificationDetail::create([//công suất bộ sạc
+            'product_id' => '',
+            'product_specification_id' => '28',
+            'value' => '180 W',
+        ]);
+        ProductSpecificationDetail::create([ //hệ điều hành
+            'product_id' => '',
+            'product_specification_id' => '29',
+            'value' => 'Windows 11 Home SL',
+        ]);
+        ProductSpecificationDetail::create([ //màu sắc
+            'product_id' => '',
+            'product_specification_id' => '30',
+            'value' => 'Đen',
+        ]);
+        ProductSpecificationDetail::create([ //bảo hành
+            'product_id' => '',
+            'product_specification_id' => '31',
+            'value' => '12 tháng',
+        ]);
+        ProductSpecificationDetail::create([ //ngày ra mắt
+            'product_id' => '',
+            'product_specification_id' => '32',
+            'value' => '2023',
+        ]);

@@ -21,7 +21,7 @@ class Product extends Model
 
     public function orders()
     {
-        return $this->belongsToMany(Order::class);
+        return $this->belongsToMany(Order::class)->withPivot('quantity')->withTimestamps();
     }
 
     public function productSpecificationDetails()
@@ -33,6 +33,12 @@ class Product extends Model
     {
         return $this->hasMany(Image::class);
     }
+
+    public function firstImage()
+    {
+        return $this->hasOne(Image::class)->oldest();
+    }
+
     public function reviews(){
         return $this->hasMany(Review::class);
     }

@@ -6,9 +6,19 @@ use App\Http\Requests\StoreUpdatePermissionRequest;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Routing\Controllers\Middleware;
 
-class PermissionController extends Controller
+class PermissionController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(middleware: 'permission:thêm quyền|sửa quyền|xóa quyền', only: ['index', 'store']),
+            new Middleware(middleware: 'permission:thêm quyền', only: ['create', 'store']),
+            new Middleware(middleware: 'permission:sửa quyền', only: ['edit', 'update']),
+            new Middleware(middleware: 'permission:xóa quyền', only: ['destroy']),
+        ];
+    }
     public function index()
     {
         return view('role-permission.permission');

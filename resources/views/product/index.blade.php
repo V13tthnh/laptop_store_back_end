@@ -49,6 +49,7 @@
                         data: 'name', render: function (data, type, full, meta) {
                             var $name = full['name'],
                                 $image = full['images'][0]?.url;
+                                var truncatedName = $name.length > 50 ? $name.substring(0, 50) + '...' : $name;
                             if ($image) {
                                 // For Avatar image
                                 var $output =
@@ -73,7 +74,7 @@
                                 '</div>' +
                                 '<div class="d-flex flex-column">' +
                                 '<a href="" class="text-body text-truncate"><span class="fw-medium">' +
-                                $name +
+                                truncatedName  +
                                 '</span></a>' +
                                 '</div>' +
                                 '</div>';

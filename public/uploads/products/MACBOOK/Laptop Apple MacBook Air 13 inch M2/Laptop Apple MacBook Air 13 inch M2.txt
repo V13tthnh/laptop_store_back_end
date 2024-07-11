@@ -1,0 +1,171 @@
+Product::create([
+            'name' => 'Laptop Apple MacBook Air 13 inch M2 8GB/256GB (MLY33SA/A)',
+            'SKU' => '7590438216',
+            'slug' => 'apple-macbook-air-m2-2022#top-color-images-gallery-72',
+            'description' => 'Sau 14 năm, ba lần sửa đổi và hai kiến trúc bộ vi xử lý khác nhau, kiểu dáng mỏng dần mang tính biểu tượng của MacBook Air đã đi vào lịch sử. Thay vào đó là một chiếc MacBook Air M2 với thiết kế hoàn toàn mới, độ dày không thay đổi tương tự như MacBook Pro, đánh bật mọi rào cản với con chip Apple M2 đầy mạnh mẽ.',
+            'featured' => 1,
+            'status' => 1,
+            'brand_id' => 6,
+            'category_id' => 10,
+        ]);
+
+        ProductSpecificationDetail::create([//công nghệ cpu
+            'product_id' => '',
+            'product_specification_id' => '1',
+            'value' => 'Apple Mâ',
+        ]);
+        ProductSpecificationDetail::create([//số nhân
+            'product_id' => '',
+            'product_specification_id' => '2',
+            'value' => '8',
+        ]);
+        ProductSpecificationDetail::create([//số luồng
+            'product_id' => '',
+            'product_specification_id' => '3',
+            'value' => 'Hãng không công bố',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ cpu
+            'product_id' => '',
+            'product_specification_id' => '4',
+            'value' => '100 GB/s memory bandwidth',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ tối đa
+            'product_id' => '',
+            'product_specification_id' => '5',
+            'value' => 'Hãng không công bố',
+        ]);
+        ProductSpecificationDetail::create([//bộ nhớ đệm
+            'product_id' => '',
+            'product_specification_id' => '6',
+            'value' => 'Hãng không công bố',
+        ]);
+        ProductSpecificationDetail::create([//ram
+            'product_id' => '',
+            'product_specification_id' => '7',
+            'value' => '8 GB',
+        ]);
+        ProductSpecificationDetail::create([//loại ram
+            'product_id' => '',
+            'product_specification_id' => '8',
+            'value' => 'Hãng không công bố',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ bus ram
+            'product_id' => '',
+            'product_specification_id' => '9',
+            'value' => 'Hãng không công bố',
+        ]);
+        ProductSpecificationDetail::create([//hỗ trợ ram tối đa
+            'product_id' => '',
+            'product_specification_id' => '10',
+            'value' => 'Không hỗ trợ nâng cấp',
+        ]);
+        ProductSpecificationDetail::create([//ổ cứng
+            'product_id' => '',
+            'product_specification_id' => '11',
+            'value' => '256 GB SSD',
+        ]);
+        ProductSpecificationDetail::create([//màn hình
+            'product_id' => '',
+            'product_specification_id' => '12',
+	    'value' => '13.6 inch',
+  	]);
+        ProductSpecificationDetail::create([//độ phân giải
+            'product_id' => '',
+            'product_specification_id' => '13',
+            'value' => 'Liquid Retina (2560 x 1664)',
+        ]);
+        ProductSpecificationDetail::create([//tần số quét
+            'product_id' => '',
+            'product_specification_id' => '14',
+            'value' => 'Hãng không công bố',
+        ]);
+        ProductSpecificationDetail::create([//độ phủ màu
+            'product_id' => '',
+            'product_specification_id' => '15',
+            'value' => '',
+        ]);
+        ProductSpecificationDetail::create([//công nghệ màn hình
+            'product_id' => '',
+            'product_specification_id' => '16',
+            'value' => 'Wide color (P3), 500 nits brightness, True Tone Technology, 1 tỷ màu',
+        ]);
+        ProductSpecificationDetail::create([//card màn hình
+            'product_id' => '',
+            'product_specification_id' => '17',
+            'value' => 'Card tích hợp - 8 nhân GPU',
+        ]);
+        ProductSpecificationDetail::create([//công nghệ âm thanh
+            'product_id' => '',
+            'product_specification_id' => '18',
+            'value' => 'Spatial Audio, 3 microphones, 4 Loa, Dolby Atmos',
+        ]);
+        ProductSpecificationDetail::create([//cổng giao tiếp
+            'product_id' => '',
+            'product_specification_id' => '19',
+            'value' => 'MagSafe 3, Jack tai nghe 3.5 mm, 2 x Thunderbolt 3',
+        ]);
+        ProductSpecificationDetail::create([//kết nối không dây
+            'product_id' => '',
+            'product_specification_id' => '20',
+            'value' => 'Wi-Fi 6 (802.11ax)Bluetooth 5.3',
+        ]);
+        ProductSpecificationDetail::create([//khe đọc thẻ nhớ
+            'product_id' => '',
+            'product_specification_id' => '21',
+            'value' => '',
+        ]);
+        ProductSpecificationDetail::create([//webcam
+            'product_id' => '',
+            'product_specification_id' => '22',
+            'value' => '1080p FaceTime HD camera',
+        ]);
+        ProductSpecificationDetail::create([//đèn pin
+            'product_id' => '',
+            'product_specification_id' => '23',
+            'value' => 'Không có',
+        ]);
+        ProductSpecificationDetail::create([//tính năng khác
+            'product_id' => '',
+            'product_specification_id' => '24',
+            'value' => 'Sạc MagSafeBảo mật vân tay',
+        ]);
+        ProductSpecificationDetail::create([//kích thước, trọng lượng
+            'product_id' => '',
+            'product_specification_id' => '25',
+            'value' => 'Dài 304.1 mm - Rộng 215 mm - Dày 11.3 mm',
+        ]);
+        ProductSpecificationDetail::create([//chất liệu
+            'product_id' => '',
+	    'product_specification_id' => '26',
+            'value' => 'Vỏ kim loại',
+        ]);
+        ProductSpecificationDetail::create([//thông tin pin
+            'product_id' => '',
+            'product_specification_id' => '27',
+            'value' => 'Lên đến 18 giờ (Hãng công bố)',
+        ]);
+        ProductSpecificationDetail::create([//công suất bộ sạc
+            'product_id' => '',
+            'product_specification_id' => '28',
+            'value' => '',
+        ]);
+        ProductSpecificationDetail::create([ //hệ điều hành
+            'product_id' => '',
+            'product_specification_id' => '29',
+            'value' => 'macOS',
+        ]);
+        ProductSpecificationDetail::create([ //màu sắc
+            'product_id' => '',
+            'product_specification_id' => '30',
+            'value' => 'Xanh đen',
+        ]);
+        ProductSpecificationDetail::create([ //bảo hành
+            'product_id' => '',
+            'product_specification_id' => '31',
+            'value' => '12 tháng',
+        ]);
+        ProductSpecificationDetail::create([ //ngày ra mắt
+            'product_id' => '',
+            'product_specification_id' => '32',
+            'value' => '2022',
+        ]);

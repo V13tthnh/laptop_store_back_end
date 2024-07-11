@@ -19,7 +19,7 @@ class AddressController extends Controller
     public function getAllAddress($id)
     {
         try {
-            $addresses =  $addresses = Address::orderBy('is_default', 'desc')->get();
+            $addresses =  $addresses = Address::where('user_id', $id)->orderBy('is_default', 'desc')->get();
             return response()->json([
                 'status' => true,
                 'data' => $addresses
@@ -46,8 +46,6 @@ class AddressController extends Controller
             ], 500);
         }
     }
-
-
 
     public function getProvinces()
     {
@@ -138,6 +136,11 @@ class AddressController extends Controller
             $province = Province::find($request->provinces);
             $district = District::find($request->district);
             $ward = Ward::find($request->ward);
+
+            $userAddressesCount = Address::where('user_id', $request->user_id)->count();
+
+            $isDefault = $userAddressesCount === 0 ? 1 : 0;
+
             Address::create(
                 [
                     'full_name' => $request->full_name,
@@ -147,7 +150,7 @@ class AddressController extends Controller
                     'provinces' => $province->name,
                     'address_detail' => $request->address_detail,
                     'user_id' => $request->user_id,
-                    'is_default' => 0,
+                    'is_default' => $isDefault,
                 ]
             );
 

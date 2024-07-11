@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
+
+    const STATUS_PENDING = 1;
+    const STATUS_CONFIRMED = 2;
+    const STATUS_SHIPPING = 3;
+    const STATUS_CANCELLED = 4;
+    const STATUS_COMPLETED = 5;
+
     use HasFactory, SoftDeletes;
 
     protected $table = "orders";
@@ -30,6 +37,19 @@ class Order extends Model
         'deleted_at',
     ];
 
+    public function getStatusTextAttribute()
+    {
+        $statuses = [
+            self::STATUS_PENDING => 'Chờ xử lý',
+            self::STATUS_CONFIRMED => 'Đã xác nhận',
+            self::STATUS_SHIPPING => 'Đang giao hàng',
+            self::STATUS_CANCELLED => 'Đã hủy',
+            self::STATUS_COMPLETED => 'Thành công',
+        ];
+
+        return $statuses[$this->status] ?? 'Không xác định';
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -37,17 +57,17 @@ class Order extends Model
 
     public function address()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Address::class);
     }
 
     public function products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class)->withPivot(['quantity', 'price'])->withTimestamps();
     }
 
-    public function orderDetails()
+    public function orderProduct()
     {
-        return $this->hasMany(OrderDetail::class);
+        return $this->hasMany(OrderProduct::class);
     }
 
     public function getCreatedAtAttribute($value)

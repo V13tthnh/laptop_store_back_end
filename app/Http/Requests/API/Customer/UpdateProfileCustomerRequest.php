@@ -15,11 +15,11 @@ class UpdateProfileCustomerRequest extends FormRequest
     {
         return [
             'full_name' => 'required|string|max:255',
-            'email' => [
-                'required',
-                'email',
-                'unique:users,email,' . $this->id . ',id'
-            ],
+            // 'email' => [
+            //     'required',
+            //     'email',
+            //     'unique:users,email,' . $this->id . ',id'
+            // ],
             'gender' => 'required',
             'birthday' => 'required',
             'phone' => 'required|string|max:15|regex:/^\+?[0-9]{10,15}$/',
@@ -33,9 +33,9 @@ class UpdateProfileCustomerRequest extends FormRequest
             'full_name.string' => 'Tên phải là chuỗi ký tự.',
             'full_name.max' => 'Tên không được dài quá 255 ký tự.',
 
-            'email.required' => 'Vui lòng nhập Email.',
-            'email.email' => 'Email không hợp lệ.',
-            'email.unique' => 'Email đã tồn tại.',
+            // 'email.required' => 'Vui lòng nhập Email.',
+            // 'email.email' => 'Email không hợp lệ.',
+            // 'email.unique' => 'Email đã tồn tại.',
 
             'gender.required' => 'Vui lòng chọn giới tính .',
 

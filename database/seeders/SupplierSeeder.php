@@ -5,7 +5,9 @@ namespace Database\Seeders;
 use App\Models\Supplier;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
+use App\Models\Image;
+use App\Models\Product;
+use App\Models\ProductSpecificationDetail;
 class SupplierSeeder extends Seeder
 {
     /**
@@ -17,5 +19,7 @@ class SupplierSeeder extends Seeder
         Supplier::create(['name' => 'FPTShop', 'email' => 'fptshop@fpt.com', 'address' => '261 - 263 Khánh Hội, Phường 5, Quận 4, Thành phố Hồ Chí Minh', 'phone' => ' 1800 6601']);
         Supplier::create(['name' => 'GearVN','email' => ' cskh@gearvn.com',  'address' => '78-80 Hoàng Hoa Thám, Phường 12, Quận Tân Bình', 'phone' => ' 1800 6601']);
         Supplier::create(['name' => 'Phong vũ','email' => 'hoptac@phongvu.vn',  'address' => '677/2A Điện Biên Phủ, Phường 25, Quận Bình Thạnh, TP. Hồ Chí Minh', 'phone' => '1800 68 65 ']);
+
+
     }
 }

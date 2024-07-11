@@ -1,0 +1,171 @@
+Product::create([
+            'name' => 'Laptop Lenovo Ideapad 1 15ALC7 R7 5700U/16GB/512GB/Win11 (82R400C1VN)',
+            'SKU' => '8623750194',
+            'slug' => 'lenovo-ideapad-1-15alc7-r7-82r400c1vn#top-tskt',
+            'description' => 'Laptop Lenovo Ideapad 1 15ALC7 R7 5700U (82R400C1VN) không chỉ là một sản phẩm phù hợp cho sinh viên mà còn dành cho những người đi làm. Hội tụ từ cấu hình ổn định, thiết kế thanh lịch cùng vô vàn tính năng nổi bật. Với tất cả những ưu điểm trên, thiết bị này thực sự là một sự lựa chọn lý tưởng cho mọi người trong việc đáp ứng nhu cầu làm việc, giải trí hàng ngày.',
+            'featured' => 1,
+            'status' => 1,
+            'brand_id' => 1,
+            'category_id' => 5,
+        ]);
+
+        ProductSpecificationDetail::create([//công nghệ cpu
+            'product_id' => '',
+            'product_specification_id' => '1',
+            'value' => 'AMD Ryzen 7 - 5700U',
+        ]);
+        ProductSpecificationDetail::create([//số nhân
+            'product_id' => '',
+            'product_specification_id' => '2',
+            'value' => '8',
+        ]);
+        ProductSpecificationDetail::create([//số luồng
+            'product_id' => '',
+            'product_specification_id' => '3',
+            'value' => '16',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ cpu
+            'product_id' => '',
+            'product_specification_id' => '4',
+            'value' => '1.80 GHz',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ tối đa
+            'product_id' => '',
+            'product_specification_id' => '5',
+            'value' => 'Turbo Boost 4.3 GHz',
+        ]);
+        ProductSpecificationDetail::create([//bộ nhớ đệm
+            'product_id' => '',
+            'product_specification_id' => '6',
+            'value' => '8 MB',
+        ]);
+        ProductSpecificationDetail::create([//ram
+            'product_id' => '',
+            'product_specification_id' => '7',
+            'value' => '16 GB',
+        ]);
+        ProductSpecificationDetail::create([//loại ram
+            'product_id' => '',
+            'product_specification_id' => '8',
+            'value' => 'DDR4 2 khe (8 GB onboard + 1 khe 8 GB)',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ bus ram
+            'product_id' => '',
+            'product_specification_id' => '9',
+            'value' => '3200 MHz',
+        ]);
+        ProductSpecificationDetail::create([//hỗ trợ ram tối đa
+            'product_id' => '',
+            'product_specification_id' => '10',
+            'value' => '16 GB',
+        ]);
+        ProductSpecificationDetail::create([//ổ cứng
+            'product_id' => '',
+            'product_specification_id' => '11',
+            'value' => '512 GB SSD NVMe PCIe Gen 4.0 (Có thể tháo ra, lắp thanh khác tối đa 1 TB (2280) / 512 GB (2242))',
+        ]);
+        ProductSpecificationDetail::create([//màn hình
+            'product_id' => '',
+            'product_specification_id' => '12',
+	    'value' => '15.6 inch',
+  	]);
+        ProductSpecificationDetail::create([//độ phân giải
+            'product_id' => '',
+            'product_specification_id' => '13',
+            'value' => 'Full HD (1920 x 1080)',
+        ]);
+        ProductSpecificationDetail::create([//tần số quét
+            'product_id' => '',
+            'product_specification_id' => '14',
+            'value' => '60 Hz',
+        ]);
+        ProductSpecificationDetail::create([//độ phủ màu
+            'product_id' => '',
+            'product_specification_id' => '15',
+            'value' => '',
+        ]);
+        ProductSpecificationDetail::create([//công nghệ màn hình
+            'product_id' => '',
+            'product_specification_id' => '16',
+            'value' => 'Tấm nền IPS, Chống chói Anti Glare, 250 nits',
+        ]);
+        ProductSpecificationDetail::create([//card màn hình
+            'product_id' => '',
+            'product_specification_id' => '17',
+            'value' => 'Card tích hợp - AMD Radeon Graphics',
+        ]);
+        ProductSpecificationDetail::create([//công nghệ âm thanh
+            'product_id' => '',
+            'product_specification_id' => '18',
+            'value' => 'Dolby Audio',
+        ]);
+        ProductSpecificationDetail::create([//cổng giao tiếp
+            'product_id' => '',
+            'product_specification_id' => '19',
+            'value' => 'Jack tai nghe 3.5 mm, 1 x USB 2.0, 1 x USB 3.2, HDMI, 1 x USB Type-C (chỉ hỗ trợ truyền dữ liệu)',
+        ]);
+        ProductSpecificationDetail::create([//kết nối không dây
+            'product_id' => '',
+            'product_specification_id' => '20',
+            'value' => 'Bluetooth 5.0Wi-Fi 802.11 a/b/g/n/ac',
+        ]);
+        ProductSpecificationDetail::create([//khe đọc thẻ nhớ
+            'product_id' => '',
+            'product_specification_id' => '21',
+            'value' => 'SD',
+        ]);
+        ProductSpecificationDetail::create([//webcam
+            'product_id' => '',
+            'product_specification_id' => '22',
+            'value' => 'HD Webcam',
+        ]);
+        ProductSpecificationDetail::create([//đèn pin
+            'product_id' => '',
+            'product_specification_id' => '23',
+            'value' => 'Không có',
+        ]);
+        ProductSpecificationDetail::create([//tính năng khác
+            'product_id' => '',
+            'product_specification_id' => '24',
+            'value' => 'TPM 2.0, Bản lề mở 180 độ, Công tắc khóa camera',
+        ]);
+        ProductSpecificationDetail::create([//kích thước, trọng lượng
+            'product_id' => '',
+            'product_specification_id' => '25',
+            'value' => 'Dài 360.2 mm - Rộng 236 mm - Dày 17.9 mm',
+        ]);
+        ProductSpecificationDetail::create([//chất liệu
+            'product_id' => '',
+	    'product_specification_id' => '26',
+            'value' => 'Vỏ nhựa',
+        ]);
+        ProductSpecificationDetail::create([//thông tin pin
+            'product_id' => '',
+            'product_specification_id' => '27',
+            'value' => '42 Wh',
+        ]);
+        ProductSpecificationDetail::create([//công suất bộ sạc
+            'product_id' => '',
+            'product_specification_id' => '28',
+            'value' => '65 W',
+        ]);
+        ProductSpecificationDetail::create([ //hệ điều hành
+            'product_id' => '',
+            'product_specification_id' => '29',
+            'value' => 'Windows 11 Home SL',
+        ]);
+        ProductSpecificationDetail::create([ //màu sắc
+            'product_id' => '',
+            'product_specification_id' => '30',
+            'value' => 'Xám',
+        ]);
+        ProductSpecificationDetail::create([ //bảo hành
+            'product_id' => '',
+            'product_specification_id' => '31',
+            'value' => '12 tháng',
+        ]);
+        ProductSpecificationDetail::create([ //ngày ra mắt
+            'product_id' => '',
+            'product_specification_id' => '32',
+            'value' => '2023',
+        ]);

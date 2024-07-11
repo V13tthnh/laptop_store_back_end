@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -9,16 +10,14 @@ use Yajra\DataTables\DataTables;
 class CustomerController extends Controller
 {
     public function index()
-    {
+    {   
         return view('customer.index');
     }
 
-    public function listDataTableUsers()
+    public function listDataTableCustomers()
     {
-        $employees = User::role('customer')->get();
-        return Datatables::of($employees)->addColumn('roles', function($row){
-            return $row->roles->pluck('name')->implode(', ');
-        })->make(true);
+        $customers = User::role('customer')->get();
+        return Datatables::of($customers)->make(true);
     }
 
     public function create()

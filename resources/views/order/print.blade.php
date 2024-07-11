@@ -69,16 +69,16 @@
                                 fill="#7367F0" />
                         </svg>
                     </div>
-                    <span class="app-brand-text fw-bold"> Laptop </span>
+                    <span class="app-brand-text fw-bold"> Laptop Thành Nghĩa </span>
                 </div>
                 <p class="mb-2">Tân Định, hẻm 48 Bùi Thị Xuân</p>
                 <p class="mb-0">(+84) 123 456 7891</p>
             </div>
             <div>
-                <h4 class="fw-medium">Hóa đơn #{{1}}</h4>
+                <h4 class="fw-medium">Hóa đơn #{{$order->id}}</h4>
                 <div class="mb-2">
-                    <span class="text-muted">Ngày tạo:</span>
-                    <span class="fw-medium">{{'27/6/2024'}}</span>
+                    <span class="text-muted">Ngày tạo: </span>
+                    <span class="fw-medium">{{$order->created_at}}</span>
                 </div>
             </div>
         </div>
@@ -88,10 +88,13 @@
         <div class="row d-flex justify-content-between mb-4">
             <div class="col-sm-6 w-50">
                 <h6>Khách hàng:</h6>
-                <p class="mb-1">Thomas shelby</p>
-                <p class="mb-1">Shelby Company Limited</p>
-                <p class="mb-1">718-986-6062</p>
-                <p class="mb-0">peakyFBlinders@gmail.com</p>
+                <p class="mb-1">{{$order->user->full_name}}</p>
+                <p class="mb-1">{{$order->address->address_detail}}, {{$order->address->ward}},
+                    {{$order->address->district}},
+                    {{$order->address->provinces}}
+                </p>
+                <p class="mb-1">{{$order->phone}}</p>
+                <p class="mb-0">{{$order->user->email}}</p>
             </div>
             <div class="col-sm-6 w-50">
                 <h6>Hóa đơn:</h6>
@@ -99,19 +102,22 @@
                     <tbody>
                         <tr>
                             <td class="pe-3">Tổng tiền:</td>
-                            <td class="fw-medium">$12,110.55</td>
+                            <td class="fw-medium">{{$order->total}}</td>
                         </tr>
                         <tr>
                             <td class="pe-3">SĐT:</td>
-                            <td>American Bank</td>
+                            <td>{{$order->phone}}</td>
                         </tr>
                         <tr>
                             <td class="pe-3">Địa chỉ:</td>
-                            <td>United States</td>
+                            <td>{{$order->address->address_detail}}, {{$order->address->ward}},
+                                {{$order->address->district}},
+                                {{$order->address->provinces}}
+                            </td>
                         </tr>
                         <tr>
                             <td class="pe-3">Phương thức thanh toán:</td>
-                            <td>Tiền mặt</td>
+                            <td>{{$order->formality === 1 ? 'Thanh toán VNPAY' : 'Thanh toán tiền mặt'}}</td>
                         </tr>
                         </tr>
                     </tbody>
@@ -131,41 +137,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Vuexy Admin Template</td>
-                        <td>$32</td>
-                        <td>1</td>
-                        <td>$32.00</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Frest Admin Template</td>
+                    @foreach ($order->products as $item)
+                        <tr>
+                            <td>
 
-                        <td>$22</td>
-                        <td>1</td>
-                        <td>$22.00</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Apex Admin Template</td>
-                        <td>$17</td>
-                        <td>2</td>
-                        <td>$34.00</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Robust Admin Template</td>
+                                {{ $item->id }}
+                            </td>
+                            <td>
+                                <img src="/{{$item->firstImage->url ?? 'Không có ảnh'}}" alt="Product Image" width="100">
+                                {{ $item->name }}
+                            </td>
+                            <td>{{ $item->pivot->quantity }}</td>
+                            <td>{{ number_format($item->pivot->price, 0, ',', '.') . ' vnđ' }}</td>
+                            <td>{{ number_format($item->pivot->price * $item->pivot->quantity, 0, ',', '.') . ' vnđ'}}</td>
+                        </tr>
+                    @endforeach
 
-                        <td>$66</td>
-                        <td>1</td>
-                        <td>$66.00</td>
-                    </tr>
                     <tr>
                         <td colspan="3" class="align-top px-4 py-3">
                             <p class="mb-2">
                                 <span class="me-1 fw-medium">Người bán:</span>
-                                <span>Đinh Viết Thành</span>
+                                <span>Laptop Thành Nghĩa</span>
                             </p>
                             <span>Cảm ơn vì đã mua hàng</span>
                         </td>
@@ -175,9 +167,11 @@
                             <p class="mb-0">Tổng tiền:</p>
                         </td>
                         <td class="px-4 py-3">
-                            <p class="fw-medium mb-2">$154.25</p>
-                            <p class="fw-medium mb-2">$50.00</p>
-                            <p class="fw-medium mb-0">$204.25</p>
+                            <p class="fw-medium mb-2">
+                                {{number_format($order->subtotal, 0, ',', '.') . ' vnđ'}}
+                            </p>
+                            <p class="fw-medium mb-2">{{number_format($order->discount, 0, ',', '.') . ' vnđ'}}</p>
+                            <p class="fw-medium mb-0">{{$order->total}}</p>
                         </td>
                     </tr>
                 </tbody>
@@ -186,7 +180,7 @@
 
         <div class="row">
             <div class="col-12">
-                <span class="fw-medium">Ghi chú:</span>
+                <span class="fw-medium">Ghi chú: {{$order->note}}</span>
                 <span></span>
             </div>
         </div>

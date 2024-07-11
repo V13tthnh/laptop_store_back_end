@@ -7,13 +7,18 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Str;
+use Illuminate\Routing\Controllers\Middleware;
 
-class CategoryController extends Controller
+class CategoryController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
-
-    public function __construct()
+    public static function middleware(): array
     {
-
+        return [
+            new Middleware(middleware: 'permission:thêm danh mục|sửa danh mục|xóa danh mục', only: ['index', 'store']),
+            new Middleware(middleware: 'permission:thêm danh mục', only: ['create', 'store']),
+            new Middleware(middleware: 'permission:sửa danh mục', only: ['edit', 'update']),
+            new Middleware(middleware: 'permission:xóa danh mục', only: ['destroy']),
+        ];
     }
 
     public function index()

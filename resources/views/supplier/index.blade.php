@@ -28,7 +28,6 @@
     'use strict';
     const formDataStore = new FormData();
     const formDataUpdate = new FormData();
-
     // Datatable (jquery)
     $(function () {
         const SUCCESS = 200;
@@ -402,11 +401,17 @@
         $('.datatables-suppliers').on('click', '.delete-btn', function () {
             var id = $(this).val();
             Swal.fire({
-                title: 'Bạn muốn xóa mục này',
-                text: 'Dữ liệu bị xóa vẫn có thể khôi phục!',
+                title: 'Bạn có chắc không?',
+                text: "Dữ liệu này không thể khôi phục!",
                 icon: 'warning',
-                confirmButtonText: 'Đồng ý',
-                cancelButtonText: 'Hủy bỏ'
+                showCancelButton: true,
+                confirmButtonText: 'Đúng, Hãy xóa nó!',
+                cancelButtonText: 'Hủy',
+                customClass: {
+                    confirmButton: 'btn btn-primary me-3 waves-effect waves-light',
+                    cancelButton: 'btn btn-label-secondary waves-effect waves-light'
+                },
+                buttonsStyling: false
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
@@ -442,15 +447,12 @@
         //Notification if request successfully
         function successfulNotification(message) {
             Swal.fire({
-                position: 'top-end',
                 icon: 'success',
-                title: message,
-                showConfirmButton: false,
-                timer: 1500,
+                title: 'Đã xóa thành công!',
+                text: 'Bảng nhà cung cấp đã được cập nhật.',
                 customClass: {
-                    confirmButton: 'btn btn-primary waves-effect waves-light'
-                },
-                buttonsStyling: false
+                    confirmButton: 'btn btn-success waves-effect waves-light'
+                }
             });
         }
 
@@ -550,7 +552,7 @@
 
 @section('main-content')
 <div class="container-xxl flex-grow-1 container-p-y">
-<h4 class="py-3 mb-4"><span class="text-muted fw-light">Trang chủ /</span> Danh sách nhà cung cấp</h4>
+    <h4 class="py-3 mb-4"><span class="text-muted fw-light">Trang chủ /</span> Danh sách nhà cung cấp</h4>
     <!-- Suppliers List Table -->
     <div class="card">
         <div class="card-datatable table-responsive">

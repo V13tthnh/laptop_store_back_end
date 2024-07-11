@@ -91,7 +91,7 @@
                         fill="#7367F0" />
                     </svg>
                   </span>
-                  <span class="app-brand-text demo text-body fw-bold ms-1">Vuexy</span>
+                  <span class="app-brand-text demo text-body fw-bold ms-1">Admin</span>
                 </a>
               </div>
               <!-- /Logo -->
@@ -125,9 +125,7 @@
                 <div class="mb-3 form-password-toggle">
                   <div class="d-flex justify-content-between">
                     <label class="form-label" for="password">Mật khẩu</label>
-                    <a href="auth-forgot-password-basic.html">
-                      <small>Quên mật khẩu?</small>
-                    </a>
+                    
                   </div>
                   <div class="input-group input-group-merge">
                     <input

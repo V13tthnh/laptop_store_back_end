@@ -1,0 +1,171 @@
+Product::create([
+            'name' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U/16GB/512GB/Chuột/Win11 (NJ776W)',
+            'SKU' => '3874016259',
+            'slug' => 'asus-vivobook-go-15-e1504fa-r5-nj776w#top-color-images-gallery-1174',
+            'description' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U (NJ776W) mang phong cách thiết kế sang trọng, hiệu năng mạnh mẽ cùng tính đa năng sử dụng, chắc chắn sẽ giúp bạn đáp ứng mọi tác vụ công việc và học tập hàng ngày một cách hiệu quả và chuyên nghiệp nhất.',
+            'featured' => 1,
+            'status' => 1,
+            'brand_id' => 3,
+            'category_id' => 7,
+        ]);
+
+        ProductSpecificationDetail::create([//công nghệ cpu
+            'product_id' => '',
+            'product_specification_id' => '1',
+            'value' => 'AMD Ryzen 5 - 7520U',
+        ]);
+        ProductSpecificationDetail::create([//số nhân
+            'product_id' => '',
+            'product_specification_id' => '2',
+            'value' => '4',
+        ]);
+        ProductSpecificationDetail::create([//số luồng
+            'product_id' => '',
+            'product_specification_id' => '3',
+            'value' => '8',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ cpu
+            'product_id' => '',
+            'product_specification_id' => '4',
+            'value' => '2.80 GHz',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ tối đa
+            'product_id' => '',
+            'product_specification_id' => '5',
+            'value' => 'Turbo Boost 4.3 GHz',
+        ]);
+        ProductSpecificationDetail::create([//bộ nhớ đệm
+            'product_id' => '',
+            'product_specification_id' => '6',
+            'value' => '4 MB',
+        ]);
+        ProductSpecificationDetail::create([//ram
+            'product_id' => '',
+            'product_specification_id' => '7',
+            'value' => '16 GB',
+        ]);
+        ProductSpecificationDetail::create([//loại ram
+            'product_id' => '',
+            'product_specification_id' => '8',
+            'value' => 'LPDDR5 (Onboard)',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ bus ram
+            'product_id' => '',
+            'product_specification_id' => '9',
+            'value' => '5500 MHz',
+        ]);
+        ProductSpecificationDetail::create([//hỗ trợ ram tối đa
+            'product_id' => '',
+            'product_specification_id' => '10',
+            'value' => 'Không hỗ trợ nâng cấp',
+        ]);
+        ProductSpecificationDetail::create([//ổ cứng
+            'product_id' => '',
+            'product_specification_id' => '11',
+            'value' => '512 GB SSD NVMe PCIe (Có thể tháo ra, lắp thanh khác tối đa 1 TB)',
+        ]);
+        ProductSpecificationDetail::create([//màn hình
+            'product_id' => '',
+            'product_specification_id' => '12',
+	    'value' => '15.6 inch',
+  	]);
+        ProductSpecificationDetail::create([//độ phân giải
+            'product_id' => '',
+            'product_specification_id' => '13',
+            'value' => 'Full HD+ (1920 x 1080)',
+        ]);
+        ProductSpecificationDetail::create([//tần số quét
+            'product_id' => '',
+            'product_specification_id' => '14',
+            'value' => '60 Hz',
+        ]);
+        ProductSpecificationDetail::create([//độ phủ màu
+            'product_id' => '',
+            'product_specification_id' => '15',
+            'value' => '45% NTSC',
+        ]);
+        ProductSpecificationDetail::create([//công nghệ màn hình
+            'product_id' => '',
+            'product_specification_id' => '16',
+            'value' => 'Tấm nền TN, Chống chói Anti Glare, 250 nits',
+        ]);
+        ProductSpecificationDetail::create([//card màn hình
+            'product_id' => '',
+            'product_specification_id' => '17',
+            'value' => 'Card tích hợp - AMD Radeon Graphics',
+        ]);
+        ProductSpecificationDetail::create([//công nghệ âm thanh
+            'product_id' => '',
+            'product_specification_id' => '18',
+            'value' => 'SonicMaster audio',
+        ]);
+        ProductSpecificationDetail::create([//cổng giao tiếp
+            'product_id' => '',
+            'product_specification_id' => '19',
+            'value' => 'USB Type-C, 1 x USB 2.0, Jack tai nghe 3.5 mm, 1 x USB 3.2, HDMI',
+        ]);
+        ProductSpecificationDetail::create([//kết nối không dây
+            'product_id' => '',
+            'product_specification_id' => '20',
+            'value' => 'Wi-Fi 6E (802.11ax)Bluetooth 5.3',
+        ]);
+        ProductSpecificationDetail::create([//khe đọc thẻ nhớ
+            'product_id' => '',
+            'product_specification_id' => '21',
+            'value' => '',
+        ]);
+        ProductSpecificationDetail::create([//webcam
+            'product_id' => '',
+            'product_specification_id' => '22',
+            'value' => 'HD webcam',
+        ]);
+        ProductSpecificationDetail::create([//đèn pin
+            'product_id' => '',
+            'product_specification_id' => '23',
+            'value' => 'Không có',
+        ]);
+        ProductSpecificationDetail::create([//tính năng khác
+            'product_id' => '',
+            'product_specification_id' => '24',
+            'value' => 'Độ bền chuẩn quân đội MIL STD 810H, Bản lề mở 180 độ, Bảo mật vân tay, Công tắc khóa camera',
+        ]);
+        ProductSpecificationDetail::create([//kích thước, trọng lượng
+            'product_id' => '',
+            'product_specification_id' => '25',
+            'value' => 'Dài 360.3 mm - Rộng 232.5 mm - Dày 17.9 mm',
+        ]);
+        ProductSpecificationDetail::create([//chất liệu
+            'product_id' => '',
+	    'product_specification_id' => '26',
+            'value' => 'Vỏ nhựa',
+        ]);
+        ProductSpecificationDetail::create([//thông tin pin
+            'product_id' => '',
+            'product_specification_id' => '27',
+            'value' => '3-cell Li-ion, 42 Wh',
+        ]);
+        ProductSpecificationDetail::create([//công suất bộ sạc
+            'product_id' => '',
+            'product_specification_id' => '28',
+            'value' => '45 W',
+        ]);
+        ProductSpecificationDetail::create([ //hệ điều hành
+            'product_id' => '',
+            'product_specification_id' => '29',
+            'value' => 'Windows 11 Home SL',
+        ]);
+        ProductSpecificationDetail::create([ //màu sắc
+            'product_id' => '',
+            'product_specification_id' => '30',
+            'value' => 'Bạc',
+        ]);
+        ProductSpecificationDetail::create([ //bảo hành
+            'product_id' => '',
+            'product_specification_id' => '31',
+            'value' => '12 tháng',
+        ]);
+        ProductSpecificationDetail::create([ //ngày ra mắt
+            'product_id' => '',
+            'product_specification_id' => '32',
+            'value' => '2023',
+        ]);

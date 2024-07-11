@@ -20,6 +20,7 @@ class StoreUpdateRoleRequest extends FormRequest
                 'max:50',
                 'unique:roles,name,' . $this->id . ',id',
             ],
+            'permissions' => 'required'
         ];
     }
 
@@ -30,6 +31,8 @@ class StoreUpdateRoleRequest extends FormRequest
             'name.min' => "Tên phải chứa ít nhất :min ký tự",
             'name.max' => "Tên phải chứa tối đa :max ký tự",
             'name.unique' => "Tên đã tồn tại",
+
+            'permissions.required' => "Vui lòng chọn quyền cho vai trò.",
         ];
     }
 }
