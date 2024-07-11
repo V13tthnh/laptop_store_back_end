@@ -1,0 +1,171 @@
+Product::create([
+            'name' => 'Laptop HP OMEN 16 xf0070AX R9 7940HS/32GB/1TB/8GB RTX4070/240Hz/Win11 (8W945PA)',
+            'SKU' => '2784051369',
+            'slug' => 'hp-omen-16-xf0070ax-r9-8w945pa#top-tskt',
+            'description' => 'Đón chào sự trở lại của siêu phẩm laptop gaming OMEN đến từ nhà HP sau khoảng thời gian dài vắng bóng trên đường đua công nghệ, laptop HP OMEN 16 xf0070AX R9 7940HS (8W945PA) với bộ cấu hình vượt trội, màn hình 2K sắc nét có tốc độ quét cao,... đảm bảo cung cấp đầy đủ những yếu tố cần thiết nhất cho hành trình chiến game chuyên nghiệp của bạn. ',
+            'featured' => 1,
+            'status' => 1,
+            'brand_id' => 7,
+            'category_id' => 11,
+        ]);
+
+     ProductSpecificationDetail::create([//công nghệ cpu
+    'product_id' => '',
+    'product_specification_id' => '1',
+    'value' => 'AMD Ryzen 9 - 7940HS',
+]);
+ProductSpecificationDetail::create([//số nhân
+    'product_id' => '',
+    'product_specification_id' => '2',
+    'value' => '8',
+]);
+ProductSpecificationDetail::create([//số luồng
+    'product_id' => '',
+    'product_specification_id' => '3',
+    'value' => '16',
+]);
+ProductSpecificationDetail::create([//tốc độ cpu
+    'product_id' => '',
+    'product_specification_id' => '4',
+    'value' => '4.0 GHz',
+]);
+ProductSpecificationDetail::create([//tốc độ tối đa
+    'product_id' => '',
+    'product_specification_id' => '5',
+    'value' => 'Turbo Boost 5.20 GHz',
+]);
+ProductSpecificationDetail::create([//bộ nhớ đệm
+    'product_id' => '',
+    'product_specification_id' => '6',
+    'value' => '16 MB',
+]);
+ProductSpecificationDetail::create([//ram
+    'product_id' => '',
+    'product_specification_id' => '7',
+    'value' => '32 GB',
+]);
+ProductSpecificationDetail::create([//loại ram
+    'product_id' => '',
+    'product_specification_id' => '8',
+    'value' => 'DDR5 2 khe (1 khe 16 GB + 1 khe 16 GB)',
+]);
+ProductSpecificationDetail::create([//tốc độ bus ram
+    'product_id' => '',
+    'product_specification_id' => '9',
+    'value' => '5600 MHz',
+]);
+ProductSpecificationDetail::create([//hỗ trợ ram tối đa
+    'product_id' => '',
+    'product_specification_id' => '10',
+    'value' => '64 GB',
+]);
+ProductSpecificationDetail::create([//ổ cứng
+    'product_id' => '',
+    'product_specification_id' => '11',
+    'value' => '1 TB SSD M.2 PCIe Gen 4 (Có thể tháo ra, lắp thanh khác tối đa 2 TB)',
+]);
+ProductSpecificationDetail::create([//màn hình
+    'product_id' => '',
+    'product_specification_id' => '12',
+    'value' => '16.1 inch',
+]);
+ProductSpecificationDetail::create([//độ phân giải
+    'product_id' => '',
+    'product_specification_id' => '13',
+    'value' => 'QHD (2560 x 1440)',
+]);
+ProductSpecificationDetail::create([//tần số quét
+    'product_id' => '',
+    'product_specification_id' => '14',
+    'value' => '240 Hz',
+]);
+ProductSpecificationDetail::create([//độ phủ màu
+    'product_id' => '',
+    'product_specification_id' => '15',
+    'value' => '100% sRGB',
+]);
+ProductSpecificationDetail::create([//công nghệ màn hình
+    'product_id' => '',
+    'product_specification_id' => '16',
+    'value' => 'Low Blue Light, Thời gian phản hồi: 3 ms, Tấm nền IPS, Chống chói Anti Glare, Độ sáng 300 nits',
+]);
+ProductSpecificationDetail::create([//card màn hình
+    'product_id' => '',
+    'product_specification_id' => '17',
+    'value' => 'Card rời - NVIDIA GeForce RTX 4070, 8 GB',
+]);
+ProductSpecificationDetail::create([//công nghệ âm thanh
+    'product_id' => '',
+    'product_specification_id' => '18',
+    'value' => 'Audio by B&O, Realtek High Definition Audio, HP Audio Boost, DTS:X ULTRA',
+]);
+ProductSpecificationDetail::create([//cổng giao tiếp
+    'product_id' => '',
+    'product_specification_id' => '19',
+    'value' => 'LAN (RJ45), Jack tai nghe 3.5 mm, 2 x USB 3.2, HDMI, 2 x USB Type-C (hỗ trợ USB Power Delivery, DisplayPort 1.4)',
+]);
+ProductSpecificationDetail::create([//kết nối không dây
+    'product_id' => '',
+    'product_specification_id' => '20',
+    'value' => 'Wi-Fi 6E (802.11ax), Bluetooth 5.3',
+]);
+ProductSpecificationDetail::create([//khe đọc thẻ nhớ
+    'product_id' => '',
+    'product_specification_id' => '21',
+    'value' => '',
+]);
+ProductSpecificationDetail::create([//webcam
+    'product_id' => '',
+    'product_specification_id' => '22',
+    'value' => 'Full HD Webcam',
+]);
+ProductSpecificationDetail::create([//đèn pin
+    'product_id' => '',
+    'product_specification_id' => '23',
+    'value' => 'Không có',
+]);
+ProductSpecificationDetail::create([//tính năng khác
+    'product_id' => '',
+    'product_specification_id' => '24',
+    'value' => 'Công tắc khóa camera',
+]);
+ProductSpecificationDetail::create([//kích thước, trọng lượng
+    'product_id' => '',
+    'product_specification_id' => '25',
+    'value' => 'Dài 369 mm - Rộng 259.4 mm - Dày 23.5 mm',
+]);
+ProductSpecificationDetail::create([//chất liệu
+    'product_id' => '',
+    'product_specification_id' => '26',
+    'value' => 'Vỏ nhựa',
+]);
+ProductSpecificationDetail::create([//thông tin pin
+    'product_id' => '',
+    'product_specification_id' => '27',
+    'value' => '6-cell Li-ion, 83 Wh',
+]);
+ProductSpecificationDetail::create([//công suất bộ sạc
+    'product_id' => '',
+    'product_specification_id' => '28',
+    'value' => '280 W',
+]);
+ProductSpecificationDetail::create([ //hệ điều hành
+    'product_id' => '',
+    'product_specification_id' => '29',
+    'value' => 'Windows 11 Home SL',
+]);
+	ProductSpecificationDetail::create([ //màu sắc
+    	'product_id' => '',
+    	'product_specification_id' => '30',
+    	'value' => 'Đen',
+	]);
+	ProductSpecificationDetail::create([ //bảo hành
+    'product_id' => '',
+    	'product_specification_id' => '31',
+    	'value' => '12 tháng',
+	]);
+	ProductSpecificationDetail::create([ //ngày ra mắt
+    	'product_id' => '',
+    	'product_specification_id' => '32',
+    	'value' => '2024,
+	]);

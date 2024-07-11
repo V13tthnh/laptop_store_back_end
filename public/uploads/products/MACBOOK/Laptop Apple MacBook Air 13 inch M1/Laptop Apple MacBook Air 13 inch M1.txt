@@ -1,0 +1,171 @@
+Product::create([
+            'name' => 'Laptop Apple MacBook Air 13 inch M1 8GB/256GB (MGN63SA/A)',
+            'SKU' => '1849273650',
+            'slug' => 'apple-macbook-air-2020-mgn63saa#top-color-images-gallery-6',
+            'description' => 'Laptop Apple MacBook Air M1 2020 thuộc dòng laptop cao cấp sang trọng có cấu hình mạnh mẽ, chinh phục được các tính năng văn phòng lẫn đồ hoạ mà bạn mong muốn, thời lượng pin dài, thiết kế mỏng nhẹ sẽ đáp ứng tốt các nhu cầu làm việc của bạn.',
+            'featured' => 1,
+            'status' => 1,
+            'brand_id' => 6,
+            'category_id' => 10,
+        ]);
+
+        ProductSpecificationDetail::create([//công nghệ cpu
+            'product_id' => '',
+            'product_specification_id' => '1',
+            'value' => 'Apple M1',
+        ]);
+        ProductSpecificationDetail::create([//số nhân
+            'product_id' => '',
+            'product_specification_id' => '2',
+            'value' => '8',
+        ]);
+        ProductSpecificationDetail::create([//số luồng
+            'product_id' => '',
+            'product_specification_id' => '3',
+            'value' => 'Hãng không công bố',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ cpu
+            'product_id' => '',
+            'product_specification_id' => '4',
+            'value' => 'Hãng không công bố',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ tối đa
+            'product_id' => '',
+            'product_specification_id' => '5',
+            'value' => 'Hãng không công bố',
+        ]);
+        ProductSpecificationDetail::create([//bộ nhớ đệm
+            'product_id' => '',
+            'product_specification_id' => '6',
+            'value' => 'Hãng không công bố',
+        ]);
+        ProductSpecificationDetail::create([//ram
+            'product_id' => '',
+            'product_specification_id' => '7',
+            'value' => '8 GB',
+        ]);
+        ProductSpecificationDetail::create([//loại ram
+            'product_id' => '',
+            'product_specification_id' => '8',
+            'value' => 'Hãng không công bố',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ bus ram
+            'product_id' => '',
+            'product_specification_id' => '9',
+            'value' => 'Hãng không công bố',
+        ]);
+        ProductSpecificationDetail::create([//hỗ trợ ram tối đa
+            'product_id' => '',
+            'product_specification_id' => '10',
+            'value' => 'Hãng không công bố',
+        ]);
+        ProductSpecificationDetail::create([//ổ cứng
+            'product_id' => '',
+            'product_specification_id' => '11',
+            'value' => '256 GB SSD',
+        ]);
+        ProductSpecificationDetail::create([//màn hình
+            'product_id' => '',
+            'product_specification_id' => '12',
+	    'value' => '13.3 inch',
+  	]);
+        ProductSpecificationDetail::create([//độ phân giải
+            'product_id' => '',
+            'product_specification_id' => '13',
+            'value' => 'Retina (2560 x 1600)',
+        ]);
+        ProductSpecificationDetail::create([//tần số quét
+            'product_id' => '',
+            'product_specification_id' => '14',
+            'value' => 'Hãng không công bố',
+        ]);
+        ProductSpecificationDetail::create([//độ phủ màu
+            'product_id' => '',
+            'product_specification_id' => '15',
+            'value' => '',
+        ]);
+        ProductSpecificationDetail::create([//công nghệ màn hình
+            'product_id' => '',
+            'product_specification_id' => '16',
+            'value' => 'Tấm nền IPS, LED Backlit, 400 nits, True Tone Technology',
+        ]);
+        ProductSpecificationDetail::create([//card màn hình
+            'product_id' => '',
+            'product_specification_id' => '17',
+            'value' => 'Card tích hợp - 7 nhân GPU',
+        ]);
+        ProductSpecificationDetail::create([//công nghệ âm thanh
+            'product_id' => '',
+            'product_specification_id' => '18',
+            'value' => '3 microphones, Headphones, Loa kép (2 kênh),
+        ]);
+        ProductSpecificationDetail::create([//cổng giao tiếp
+            'product_id' => '',
+            'product_specification_id' => '19',
+            'value' => 'Jack tai nghe 3.5 mm2 x Thunderbolt 3 (USB-C)',
+        ]);
+        ProductSpecificationDetail::create([//kết nối không dây
+            'product_id' => '',
+            'product_specification_id' => '20',
+            'value' => 'Bluetooth 5.0Wi-Fi 6 (802.11ax)',
+        ]);
+        ProductSpecificationDetail::create([//khe đọc thẻ nhớ
+            'product_id' => '',
+            'product_specification_id' => '21',
+            'value' => '',
+        ]);
+        ProductSpecificationDetail::create([//webcam
+            'product_id' => '',
+            'product_specification_id' => '22',
+            'value' => '720p FaceTime Camera',
+        ]);
+        ProductSpecificationDetail::create([//đèn pin
+            'product_id' => '',
+            'product_specification_id' => '23',
+            'value' => 'Không có',
+        ]);
+        ProductSpecificationDetail::create([//tính năng khác
+            'product_id' => '',
+            'product_specification_id' => '24',
+            'value' => 'Bảo mật vân tay',
+        ]);
+        ProductSpecificationDetail::create([//kích thước, trọng lượng
+            'product_id' => '',
+            'product_specification_id' => '25',
+            'value' => 'Dài 304.1 mm - Rộng 212.4 mm - Dày 4.1 mm đến 16.1 mm',
+        ]);
+        ProductSpecificationDetail::create([//chất liệu
+            'product_id' => '',
+	    'product_specification_id' => '26',
+            'value' => 'Vỏ kim loại nguyên khối',
+        ]);
+        ProductSpecificationDetail::create([//thông tin pin
+            'product_id' => '',
+            'product_specification_id' => '27',
+            'value' => 'Lên đến 18 giờ (Hãng công bố)',
+        ]);
+        ProductSpecificationDetail::create([//công suất bộ sạc
+            'product_id' => '',
+            'product_specification_id' => '28',
+            'value' => '',
+        ]);
+        ProductSpecificationDetail::create([ //hệ điều hành
+            'product_id' => '',
+            'product_specification_id' => '29',
+            'value' => 'macOS',
+        ]);
+        ProductSpecificationDetail::create([ //màu sắc
+            'product_id' => '',
+            'product_specification_id' => '30',
+            'value' => 'Xám',
+        ]);
+        ProductSpecificationDetail::create([ //bảo hành
+            'product_id' => '',
+            'product_specification_id' => '31',
+            'value' => '12 tháng',
+        ]);
+        ProductSpecificationDetail::create([ //ngày ra mắt
+            'product_id' => '',
+            'product_specification_id' => '32',
+            'value' => '2020',
+        ]);

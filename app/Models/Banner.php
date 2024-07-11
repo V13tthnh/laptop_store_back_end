@@ -9,7 +9,8 @@ class Banner extends Model
 {
     use HasFactory;
 
-    protected $hidden = ['created_at', 'updated_at'];
+
+    protected $hidden = [ 'updated_at'];
 
     public function getCreatedAtAttribute($value)
     {

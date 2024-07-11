@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('provider')->nullable();
             $table->string('provider_id')->nullable();
             $table->boolean('status');
+            $table->timestamp('blocked_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

@@ -15,51 +15,49 @@ use App\Http\Controllers\API\ReviewController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
+//Auth API
 Route::post('login', [AuthController::class, 'login']);
+
 Route::get('auth/redirect/{provider}', [AuthController::class, 'redirect']);
 Route::get('auth/callback/{provider}', [AuthController::class, 'callback']);
+
 Route::post('register', [AuthController::class, 'register']);
 Route::get('email/verify/{id}', [MailController::class, 'verifyEmail']);
 Route::post('email/resend', [MailController::class, 'resend']);
 Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
-
+Route::post('reset-password', [AuthController::class, 'resetPassword']);
+//Category
 Route::get('/categories', [CategoryController::class, 'fetchAllCategories']);
+//Laptop
 Route::get('/laptops', [ProductController::class, 'fetchAllProductData']);
 Route::get('/laptop/{slug}', [ProductController::class, 'getProductBySlug']);
+Route::get('/laptop/search/{key}', [ProductController::class, 'search']);
 Route::get('/get-related-product', [ProductController::class, 'getRelatedProducts']);
-
+Route::post('/get-total-reviews-of-product', [ReviewController::class, 'getTotalReviewOfProduct']);
+Route::post('/fetch-reviews-of-product', [ReviewController::class, 'fetchPreviewOfProduct']);
+Route::get('/laptops/filter', [ProductController::class, 'filter']);
+Route::post('/related-laptops', [ProductController::class, 'getRelatedProducts']);
+Route::get('/featured-laptops', [ProductController::class, 'getFeaturedProducts']);
+//Brand
 Route::get('/brands', [BrandController::class, 'getAllBrand']);
 Route::get('/provinces', [AddressController::class, 'getProvinces']);
 Route::get('/provinces/{provinceId}/districts', [AddressController::class, 'getDistrictsByProvinceId']);
 Route::get('/districts/{districtId}/wards', [AddressController::class, 'getWardsByDistrictsId']);
+//Coupon
 Route::get('/coupons', [CouponController::class, 'getAllCoupons']);
-Route::get('/apply-coupon', [CouponController::class, 'applyCoupon']);
-Route::get('/laptop', [ProductController::class, 'filter']);
-Route::post('/related-laptops', [ProductController::class, 'getRelatedProducts']);
+Route::post('/apply-coupon', [CouponController::class, 'applyCoupon']);
+//Banner
 Route::get('/banners', [BannerController::class, 'banners']);
-Route::post('/get-total-reviews-of-product', [ReviewController::class, 'getTotalReviewOfProduct']);
-Route::post('/fetch-reviews-of-product', [ReviewController::class, 'fetchPreviewOfProduct']);
-Route::get('/laptop/search', [ProductController::class, 'search']);
-
-Route::post('/get-order-details', [OrderController::class, 'getOrderDetails']);
-Route::post('/get-orders', [OrderController::class, 'getAllOrders']);
-
-//Thanh toán vnpay
-route::get('/vnp/callback', [CheckoutController::class, 'vnPayCallBack']);
-Route::post('/checkout-online', [CheckoutController::class, 'onlineCheckout']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    //Quản lý thông tin người dùng
     Route::get('profile', [AuthController::class, 'profile']);
     Route::get('logout', [AuthController::class, 'logout']);
-
-    Route::post('/checkout', [OrderController::class, 'store']);
-    Route::post('/reset-password', [AuthController::class, 'resetPassword']);
     Route::post('/update-profile', [CustomerController::class, 'updateProfile']);
     Route::post('/change-password', [CustomerController::class, 'changePassword']);
 
     //mã giảm giá
     Route::post('/get-available-coupons', [CouponController::class, 'getAvailableCoupons']);
-
 
     //Quản lý địa chỉ
     Route::get('/addresses/{id}/all', [AddressController::class, 'getAllAddress']);
@@ -70,10 +68,18 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::delete('/addresses/{id}', [AddressController::class, 'delete']);
     Route::post('/address/{id}/set-default', [AddressController::class, 'setDefault']);
 
-    //Đơn hàng
+    //hóa đơn
+    Route::post('/get-order-detail', [OrderController::class, 'getOrderDetails']);
+    Route::post('/get-orders', [OrderController::class, 'getAllOrders']);
+    Route::post('/cancel-order', [OrderController::class, 'cancelOrder']);
+    Route::post('/re-order', [OrderController::class, 'reOrder']);
 
-
-    //Review
+    //Đánh giá
     Route::post('/store-review', [ReviewController::class, 'store']);
+
+    //Thanh toán
+    Route::post('/checkout', [OrderController::class, 'store']);
+    route::get('/vnp/callback', [CheckoutController::class, 'vnPayCallBack']);
+    Route::post('/checkout-online', [CheckoutController::class, 'onlineCheckout']);
 });
 

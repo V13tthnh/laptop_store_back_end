@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Image;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -12,7 +13,7 @@ class ProductController extends Controller
     public function fetchAllProductData()
     {
         try {
-            $products = Product::with(['images', 'productSpecificationDetails', 'productSpecificationDetails.productSpecification'])->get();
+            $products = Product::with(['firstImage', 'productSpecificationDetails', 'productSpecificationDetails.productSpecification'])->get();
 
             return response()->json([
                 'status' => true,
@@ -48,16 +49,11 @@ class ProductController extends Controller
         }
     }
 
-    public function search(Request $request)
+    public function search($key)
     {
         try {
-            $query = Product::query();
-
-            if ($request->has('search')) {
-                $query->where('name', 'like', '%' . $request->input('search') . '%');
-            }
-
-            $products = $query->get();
+            $products = Product::with(['firstImage', 'productSpecificationDetails', 'productSpecificationDetails.productSpecification'])
+                ->where('name', 'like', "%$key%")->get();
 
             return response()->json([
                 'status' => true,
@@ -80,7 +76,7 @@ class ProductController extends Controller
                 return response()->json(['message' => 'Không tìm thấy sản phẩm.'], 404);
             }
 
-            $relatedProducts = Product::with(['images', 'productSpecificationDetails', 'productSpecificationDetails.productSpecification'])->where('brand_id', $product->brand_id)
+            $relatedProducts = Product::with(['firstImage', 'productSpecificationDetails', 'productSpecificationDetails.productSpecification'])->where('brand_id', $product->brand_id)
                 ->where('id', '!=', $request->product_id)
                 ->get();
 
@@ -98,46 +94,129 @@ class ProductController extends Controller
         }
     }
 
+    public function getFeaturedProducts(Request $request)
+    {
+        try {
+            $product = Product::with(['firstImage', 'productSpecificationDetails', 'productSpecificationDetails.productSpecification'])->where('featured', 1)->take(10)->get();
+
+            return response()->json([
+                'status' => true,
+                'data' => $product
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
     public function filter(Request $request)
     {
         $query = Product::query();
 
-        if ($request->has('price_min')) {
-            $query->where('unit_price', '>=', $request->input('price_min'));
-        }
-
-        if ($request->has('price_max')) {
-            $query->where('unit_price', '<=', $request->input('price_max'));
-        }
-
-        if ($request->has('brand')) {
-            $query->where('brand_id', $request->input('brand'));
-        }
-
-        if ($request->has('specifications')) {
-            foreach ($request->input('specifications') as $specificationId => $value) {
-                $query->whereHas('specifications', function ($q) use ($specificationId, $value) {
-                    $q->where('product_specification_id', $specificationId)
-                        ->where('value', $value);
+        // Lọc theo RAM
+        if ($request->filled('ram')) {
+            $ramValues = $request->ram;
+            $query->whereHas('productSpecificationDetails', function ($q) use ($ramValues) {
+                $q->whereHas('productSpecification', function ($q) {
+                    $q->where('name', 'RAM');
+                })->where(function ($q) use ($ramValues) {
+                    foreach ($ramValues as $value) {
+                        $q->orWhere('value', 'like', '%' . $value . '%');
+                    }
                 });
-            }
+            });
         }
 
-        if ($request->has('sort')) {
-            switch ($request->input('sort')) {
+        // Lọc theo CPU
+        if ($request->filled('cpu')) {
+            $cpuValues = $request->cpu;
+            $query->whereHas('productSpecificationDetails', function ($q) use ($cpuValues) {
+                $q->whereHas('productSpecification', function ($q) {
+                    $q->where('name', 'Công nghệ CPU');
+                })->where(function ($q) use ($cpuValues) {
+                    foreach ($cpuValues as $value) {
+                        $q->orWhere('value', 'like', '%' . $value . '%');
+                    }
+                });
+            });
+        }
+
+        // Lọc theo thương hiệu
+        if ($request->filled('brand_id')) {
+            $query->whereIn('brand_id', $request->brand_id);
+        }
+
+        // Lọc theo ổ cứng
+        if ($request->filled('hardware')) {
+            $storageValues = $request->hardware;
+            $query->whereHas('productSpecificationDetails', function ($q) use ($storageValues) {
+                $q->whereHas('productSpecification', function ($q) {
+                    $q->where('name', 'Ổ cứng');
+                })->where(function ($q) use ($storageValues) {
+                    foreach ($storageValues as $value) {
+                        $q->orWhere('value', 'like', '%' . $value . '%');
+                    }
+                });
+            });
+        }
+
+        // Lọc theo màn hình
+        if ($request->filled('screen')) {
+            $screenSizeValues = $request->screen;
+            $query->whereHas('productSpecificationDetails', function ($q) use ($screenSizeValues) {
+                $q->whereHas('productSpecification', function ($q) {
+                    $q->where('name', 'Màn hình');
+                })->where(function ($q) use ($screenSizeValues) {
+                    foreach ($screenSizeValues as $value) {
+                        $q->orWhere('value', 'like', '%' . $value . '%');
+                    }
+                });
+            });
+        }
+
+        // Lọc theo khoảng giá
+        if ($request->filled('min_price') && $request->filled('max_price')) {
+            $query->whereBetween('unit_price', [$request->min_price, $request->max_price]);
+        }
+
+        // Lọc theo danh mục
+        if ($request->filled('categoryId')) {
+            $query->where('category_id', $request->category);
+        }
+
+        if ($request->filled('searchTerm')) {
+            $searchTerm = $request->searchTerm;
+            $query->where('name', 'like', '%' . $searchTerm . '%');
+        }
+
+        // Sắp xếp
+        if ($request->filled('sort_by')) {
+            switch ($request->sort_by) {
                 case 'price_asc':
                     $query->orderBy('unit_price', 'asc');
                     break;
                 case 'price_desc':
                     $query->orderBy('unit_price', 'desc');
                     break;
-                default:
+                case 'best_selling':
+                    $query->orderBy('overrate', 'desc');
+                    break;
+                case 'featured':
+                    $query->orderBy('featured', 'desc');
                     break;
             }
         }
 
-        $products = $query->get();
+        // Lấy sản phẩm với thông tin chi tiết và hình ảnh đầu tiên
+        $products = $query->with([
+            'firstImage',
+            'productSpecificationDetails.productSpecification',
+        ])->paginate(9);
 
         return response()->json($products);
+
     }
 }

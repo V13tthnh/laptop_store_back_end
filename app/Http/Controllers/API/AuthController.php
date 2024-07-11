@@ -39,7 +39,7 @@ class AuthController extends Controller
                 ], 401);
             }
             $token = $user->createToken('token')->plainTextToken;
-            $cookie = cookie('token', $token, 60 * 24, null, null, false, true);
+
             return response()->json([
                 'status' => true,
                 'message' => 'Đăng nhập thành công',
@@ -69,7 +69,7 @@ class AuthController extends Controller
                 'status' => true,
                 'message' => 'Đăng ký thành công',
                 'token' => $user->createToken("API TOKEN")->plainTextToken
-            ], 200);    
+            ], 200);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
@@ -77,7 +77,6 @@ class AuthController extends Controller
             ], 500);
         }
     }
-
 
     public function profile()
     {
@@ -102,10 +101,12 @@ class AuthController extends Controller
                     'message' => 'Email của bạn không tồn tại trong hệ thống.',
                 ]);
             }
-            DB::table('password_reset_tokens')->create(
-                ['email' => $request->email],
-                ['token' => $token]
-            );
+            DB::table('password_reset_tokens')->insert([
+                'email' => $request->email,
+                'token' => $token,
+                'created_at' => now(),
+            ]);
+
             $updateRememberToken = User::where('email', $request->email)->first();
             $updateRememberToken->remember_token = $token;
             $updateRememberToken->save();
@@ -127,14 +128,36 @@ class AuthController extends Controller
     public function resetPassword(ResetPasswordRequest $request)
     {
         try {
-            $user = auth()->user();
+
+            $passwordReset = DB::table('password_reset_tokens')
+                ->where('token', $request->token)
+                ->first();
+
+            if (!$passwordReset) {
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Mã reset không tồn tại.',
+                ], 200);
+            }
+
+            $user = User::where('email', $passwordReset->email)->first();
+
+            if (!$user) {
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Email không tồn tại trong hệ thống.',
+                ], 200);
+            }
+
             $user->password = Hash::make($request->new_password);
             $user->save();
 
+            DB::table('password_reset_tokens')->where('email', $user->email)->delete();
+
             return response()->json([
                 'status' => true,
-                'message' => 'Mật khẩu mới đã được cập nhật',
-            ], 200);
+                'message' => "Mật khẩu mới đã được cập nhật."
+            ]);
         } catch (\Throwable $th) {
             return response()->json([
                 'status' => false,
@@ -165,17 +188,24 @@ class AuthController extends Controller
     public function callback($provider)
     {
         try {
-            $userInfo = Socialite::driver($provider)->user();
+            $userInfo = Socialite::driver($provider)->stateless()->user();
             $user = $this->createUser($userInfo, $provider);
             $token = $user->createToken('token')->plainTextToken;
 
             return response()->json([
                 'status' => true,
                 'user' => $user,
-                'token' =>  $token,
+                'token' => $token,
                 'token_type' => 'Bearer',
             ], 200);
         } catch (\Exception $e) {
+            if ($e instanceof \Laravel\Socialite\Two\InvalidStateException) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Invalid state or code has already been used.',
+                    'redirect_url' => "http://localhost:3000/login"
+                ], 400);
+            }
             return response()->json([
                 'status' => false,
                 'message' => $e->getMessage(),
@@ -186,17 +216,35 @@ class AuthController extends Controller
 
     public function createUser($userInfo, $provider)
     {
+        if (!$userInfo) {
+            throw new \Exception('Không có thông tin người dùng.');
+        }
+
         $user = User::where('provider_id', $userInfo->id)->first();
         if (!$user) {
-            $user = User::updateOrCreate([
-                'email' => $userInfo->email,
+            $user = User::query()->firstOrCreate([
+                'email' => $userInfo->getEmail(),
             ], [
-                'name' => $userInfo->name,
+                'full_name' => $userInfo->getName(),
+                'password' => Hash::make('Abc@123456'),
                 'email_verified_at' => now(),
-                'provider_id' => $userInfo->token,
+                'provider_id' => $userInfo->getId(),
+                'provider' => $provider,
+                'status' => 1
+            ]);
+            Auth::login($user);
+            $user->assignRole('customer');
+        }
+        if (!$user) {
+            $user = User::query()->firstOrCreate([
+                'email' => $userInfo->getEmail() ?? '', // Kiểm tra và xử lý null ở đây
+            ], [
+                'name' => $userInfo->getName() ?? '', // Kiểm tra và xử lý null ở đây
+                'email_verified_at' => now(),
+                'provider_id' => $userInfo->getId() ?? '', // Kiểm tra và xử lý null ở đây
                 'provider' => $provider,
             ]);
-
+            Auth::login($user);
             $user->assignRole('customer');
         }
         return $user;

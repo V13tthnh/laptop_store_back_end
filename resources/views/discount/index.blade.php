@@ -486,9 +486,9 @@
                         <tr>
                             <th>CODE</th>
                             <th>Loại</th>
+                            <th>Mô tả</th>
                             <th>Ngày bắt đầu</th>
                             <th>Ngày kết thúc</th>
-                            <th>Mô tả</th>
                             <th>Trạng thái</th>
                             <th class="text-lg-center">Thao tác</th>
                         </tr>
@@ -499,8 +499,7 @@
         </div>
 
         <!-- Offcanvas to add new category -->
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddCoupon"
-            aria-labelledby="offcanvasAddCoupon">
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddCoupon" aria-labelledby="offcanvasAddCoupon">
             <!-- Offcanvas Header -->
             <div class="offcanvas-header py-4">
                 <h5 id="offcanvasAddCoupon" class="offcanvas-title">Thêm mới</h5>

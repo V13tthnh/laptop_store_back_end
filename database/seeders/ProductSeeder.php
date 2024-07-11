@@ -185,271 +185,6 @@ class ProductSeeder extends Seeder
             'value' => '2023',
         ]);
 
-        // 8
-        // Product::create([
-        //     'name' => 'Laptop Asus TUF Gaming F15 FX506HF i5 11400H/8GB/512GB/4GB RTX2050/144Hz/Win11 (HN014W) ',
-        //     'SKU' => '1234227891',
-        //     'slug' => 'asus-tuf-gaming-f15-fx506hf-i5-hn014w',
-        //     'description' => 'Với bộ vi xử lý Intel Core i5 dòng H mạnh mẽ và card đồ họa rời NVIDIA GeForce RTX 2050 4 GB, laptop Asus TUF Gaming F15 FX506HF là một trong những lựa chọn tuyệt vời cho các game thủ và những người dùng làm việc đa tác vụ hoặc liên quan đến đồ họa, kỹ thuật.',
-        //     'featured' => 0,
-        //     'status' => 1,
-        //     'brand_id' => 3,
-        //     'category_id' => 4,
-        // ]);
-
-        // ProductSpecificationDetail::create([//công nghệ cpu
-        //     'product_id' => '8',
-        //     'product_specification_id' => '1',
-        //     'value' => 'Intel Core i5 Tiger Lake - 11400H',
-        // ]);
-        // ProductSpecificationDetail::create([//số nhân
-        //     'product_id' => '8',
-        //     'product_specification_id' => '2',
-        //     'value' => '6',
-        // ]);
-        // ProductSpecificationDetail::create([//số luồng
-        //     'product_id' => '8',
-        //     'product_specification_id' => '3',
-        //     'value' => '12',
-        // ]);
-        // ProductSpecificationDetail::create([//tốc độ cpu
-        //    'product_id' => '8',
-        //     'product_specification_id' => '4',
-        //     'value' => '2.70 GHz',
-        // ]);
-        // ProductSpecificationDetail::create([//tốc độ tối đa
-        //     'product_id' => '8',
-        //     'product_specification_id' => '5',
-        //     'value' => 'Turbo Boost 4.5 GHz',
-        // ]);
-        // ProductSpecificationDetail::create([//bộ nhớ đệm
-        //     'product_id' => '8',
-        //     'product_specification_id' => '6',
-        //     'value' => '12 MB',
-        // ]);
-        // ProductSpecificationDetail::create([//ram
-        //    'product_id' => '8',
-        //     'product_specification_id' => '7',
-        //     'value' => '8 GB',
-        // ]);
-        // ProductSpecificationDetail::create([//loại ram
-        //    'product_id' => '8',
-        //     'product_specification_id' => '8',
-        //     'value' => 'DDR4 2 khe (1 khe 8 GB + 1 khe rời)',
-        // ]);
-        // ProductSpecificationDetail::create([//tốc độ bus ram
-        //    'product_id' => '8',
-        //     'product_specification_id' => '9',
-        //     'value' => '3200 MHz',
-        // ]);
-        // ProductSpecificationDetail::create([//hỗ trợ ram tối đa
-        //    'product_id' => '8',
-        //     'product_specification_id' => '10',
-        //     'value' => '512 GB SSD NVMe PCIe (Có thể tháo ra, lắp thanh khác tối đa 1 TB)Hỗ trợ thêm 1 khe cắm SSD M.2 PCIe mở rộng (nâng cấp tối đa 1 TB)',
-        // ]);
-        // ProductSpecificationDetail::create([//ổ cứng
-        //    'product_id' => '8',
-        //     'product_specification_id' => '11',
-        //     'value' => '512 GB SSD NVMe PCIe (Có thể tháo ra, lắp thanh khác tối đa 1 TB)',
-        // ]);
-        // ProductSpecificationDetail::create([//màn hình
-        //     'product_id' => '8',
-        //     'product_specification_id' => '12',
-        //     'value' => '15.6 inch',
-        // ]);
-        // ProductSpecificationDetail::create([//độ phân giải
-        //     'product_id' => '8',
-        //     'product_specification_id' => '13',
-        //     'value' => 'Full HD (1920 x 1080)',
-        // ]);
-        // ProductSpecificationDetail::create([//tần số quét
-        //     'product_id' => '8',
-        //     'product_specification_id' => '14',
-        //     'value' => '144 Hz',
-        // ]);
-        // ProductSpecificationDetail::create([//độ phủ màu
-        //     'product_id' => '8',
-        //     'product_specification_id' => '15',
-        //     'value' => '45% NTSC',
-        // ]);
-        // ProductSpecificationDetail::create([//công nghệ màn hình
-        //    'product_id' => '8',
-        //     'product_specification_id' => '16',
-        //     'value' => 'Tấm nền IPS, Chống chói Anti Glare, Adaptive-Sync',
-        // ]);
-        // ProductSpecificationDetail::create([//card màn hình
-        //    'product_id' => '8',
-        //     'product_specification_id' => '17',
-        //     'value' => 'Card rời - NVIDIA GeForce RTX 2050, 4 GB',
-        // ]);
-        // ProductSpecificationDetail::create([//công nghệ âm thanh
-        //     'product_id' => '8',
-        //     'product_specification_id' => '18',
-        //     'value' => 'DTS software',
-        // ]);
-        // ProductSpecificationDetail::create([//cổng giao tiếp
-        //    'product_id' => '8',
-        //     'product_specification_id' => '19',
-        //     'value' => 'LAN (RJ45),Jack tai nghe 3.5 mm, 3 x USB 3.2, HDMI, 1 x Thunderbolt 4 (hỗ trợ DisplayPort)',
-        // ]);
-        // ProductSpecificationDetail::create([//kết nối không dây
-        //     'product_id' => '8',
-        //     'product_specification_id' => '19',
-        //     'value' => 'Bluetooth 5.2Wi-Fi 6 (802.11ax)',
-        // ]);
-        // ProductSpecificationDetail::create([//khe đọc thẻ nhớ
-        //     'product_id' => '8',
-        //     'product_specification_id' => '21',
-        //     'value' => 'Không có',
-        // ]);
-        // ProductSpecificationDetail::create([//webcam
-        //     'product_id' => '8',
-        //     'product_specification_id' => '22',
-        //     'value' => 'HD webcam',
-        // ]);
-        // ProductSpecificationDetail::create([//đèn pin
-        //     'product_id' => '8',
-        //     'product_specification_id' => '23',
-        //     'value' => 'Đèn chuyển màu RGB',
-        // ]);
-        // ProductSpecificationDetail::create([//tính năng khác
-        //     'product_id' => '8',
-        //     'product_specification_id' => '24',
-        //     'value' => 'Độ bền chuẩn quân đội MIL STD 810H',
-        // ]);
-        // ProductSpecificationDetail::create([//kích thước, trọng lượng
-        //   'product_id' => '8',
-        //     'product_specification_id' => '25',
-        //     'value' => 'Dài 359 mm - Rộng 256 mm - Dày 22.8 ~ 24.5 mm',
-        // ]);
-        // ProductSpecificationDetail::create([//chất liệu
-        //     'product_id' => '8',
-        //     'product_specification_id' => '26',
-        //     'value' => 'Vỏ nhựa - nắp lưng bằng kim loại',
-        // ]);
-        // ProductSpecificationDetail::create([//thông tin pin
-        //     'product_id' => '8',
-        //     'product_specification_id' => '27',
-        //     'value' => '3-cell Li-ion, 48 Wh',
-        // ]);
-        // ProductSpecificationDetail::create([//công suất bộ sạc
-        //     'product_id' => '8',
-        //     'product_specification_id' => '28',
-        //     'value' => '45 W',
-        // ]);
-        // ProductSpecificationDetail::create([ //hệ điều hành
-        //     'product_id' => '8',
-        //     'product_specification_id' => '29',
-        //     'value' => 'Windows 11 Home SL',
-        // ]);
-        // ProductSpecificationDetail::create([ //màu sắc
-        //     'product_id' => '8',
-        //     'product_specification_id' => '30',
-        //     'value' => 'Đen',
-        // ]);
-        // ProductSpecificationDetail::create([ //bảo hành
-        //    'product_id' => '8',
-        //     'product_specification_id' => '31',
-        //     'value' => '12 tháng',
-        // ]);
-        // ProductSpecificationDetail::create([ //ngày ra mắt
-        //     'product_id' => '8',
-        //     'product_specification_id' => '32',
-        //     'value' => '2023',
-        // ]);
-
-        // Product::create([
-        //     'name' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U/16GB/512GB/Chuột/Win11 (NJ776W)',
-        //     'SKU' => '1234567891',
-        //     'slug' => 'asus-vivobook-go-15-e1504fa-r5-nj776w',
-        //     'description' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U (NJ776W) mang phong cách thiết kế sang trọng, hiệu năng mạnh mẽ cùng tính đa năng sử dụng, chắc chắn sẽ giúp bạn đáp ứng mọi tác vụ công việc và học tập hàng ngày một cách hiệu quả và chuyên nghiệp nhất.',
-        //     'featured' => 1,
-        //     'status' => 1,
-        //     'brand_id' => 3,
-        //     'category_id' => 4,
-        // ]);
-
-        // Product::create([
-        //     'name' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U/16GB/512GB/Chuột/Win11 (NJ776W)',
-        //     'SKU' => '1234567891',
-        //     'slug' => 'asus-vivobook-go-15-e1504fa-r5-nj776w',
-        //     'description' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U (NJ776W) mang phong cách thiết kế sang trọng, hiệu năng mạnh mẽ cùng tính đa năng sử dụng, chắc chắn sẽ giúp bạn đáp ứng mọi tác vụ công việc và học tập hàng ngày một cách hiệu quả và chuyên nghiệp nhất.',
-        //     'featured' => 1,
-        //     'status' => 1,
-        //     'brand_id' => 3,
-        //     'category_id' => 4,
-        // ]);
-
-        // Product::create([
-        //     'name' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U/16GB/512GB/Chuột/Win11 (NJ776W)',
-        //     'SKU' => '1234567891',
-        //     'slug' => 'asus-vivobook-go-15-e1504fa-r5-nj776w',
-        //     'description' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U (NJ776W) mang phong cách thiết kế sang trọng, hiệu năng mạnh mẽ cùng tính đa năng sử dụng, chắc chắn sẽ giúp bạn đáp ứng mọi tác vụ công việc và học tập hàng ngày một cách hiệu quả và chuyên nghiệp nhất.',
-        //     'featured' => 1,
-        //     'status' => 1,
-        //     'brand_id' => 3,
-        //     'category_id' => 4,
-        // ]);
-
-
-        // Product::create([
-        //     'name' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U/16GB/512GB/Chuột/Win11 (NJ776W)',
-        //     'SKU' => '1234567891',
-        //     'slug' => 'asus-vivobook-go-15-e1504fa-r5-nj776w',
-        //     'description' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U (NJ776W) mang phong cách thiết kế sang trọng, hiệu năng mạnh mẽ cùng tính đa năng sử dụng, chắc chắn sẽ giúp bạn đáp ứng mọi tác vụ công việc và học tập hàng ngày một cách hiệu quả và chuyên nghiệp nhất.',
-        //     'featured' => 1,
-        //     'status' => 1,
-        //     'brand_id' => 3,
-        //     'category_id' => 4,
-        // ]);
-
-
-        // Product::create([
-        //     'name' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U/16GB/512GB/Chuột/Win11 (NJ776W)',
-        //     'SKU' => '1234567891',
-        //     'slug' => 'asus-vivobook-go-15-e1504fa-r5-nj776w',
-        //     'description' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U (NJ776W) mang phong cách thiết kế sang trọng, hiệu năng mạnh mẽ cùng tính đa năng sử dụng, chắc chắn sẽ giúp bạn đáp ứng mọi tác vụ công việc và học tập hàng ngày một cách hiệu quả và chuyên nghiệp nhất.',
-        //     'featured' => 1,
-        //     'status' => 1,
-        //     'brand_id' => 3,
-        //     'category_id' => 4,
-        // ]);
-
-
-        // Product::create([
-        //     'name' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U/16GB/512GB/Chuột/Win11 (NJ776W)',
-        //     'SKU' => '1234567891',
-        //     'slug' => 'asus-vivobook-go-15-e1504fa-r5-nj776w',
-        //     'description' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U (NJ776W) mang phong cách thiết kế sang trọng, hiệu năng mạnh mẽ cùng tính đa năng sử dụng, chắc chắn sẽ giúp bạn đáp ứng mọi tác vụ công việc và học tập hàng ngày một cách hiệu quả và chuyên nghiệp nhất.',
-        //     'featured' => 1,
-        //     'status' => 1,
-        //     'brand_id' => 3,
-        //     'category_id' => 4,
-        // ]);
-
-
-        // Product::create([
-        //     'name' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U/16GB/512GB/Chuột/Win11 (NJ776W)',
-        //     'SKU' => '1234567891',
-        //     'slug' => 'asus-vivobook-go-15-e1504fa-r5-nj776w',
-        //     'description' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U (NJ776W) mang phong cách thiết kế sang trọng, hiệu năng mạnh mẽ cùng tính đa năng sử dụng, chắc chắn sẽ giúp bạn đáp ứng mọi tác vụ công việc và học tập hàng ngày một cách hiệu quả và chuyên nghiệp nhất.',
-        //     'featured' => 1,
-        //     'status' => 1,
-        //     'brand_id' => 3,
-        //     'category_id' => 4,
-        // ]);
-
-
-        // Product::create([
-        //     'name' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U/16GB/512GB/Chuột/Win11 (NJ776W)',
-        //     'SKU' => '1234567891',
-        //     'slug' => 'asus-vivobook-go-15-e1504fa-r5-nj776w',
-        //     'description' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U (NJ776W) mang phong cách thiết kế sang trọng, hiệu năng mạnh mẽ cùng tính đa năng sử dụng, chắc chắn sẽ giúp bạn đáp ứng mọi tác vụ công việc và học tập hàng ngày một cách hiệu quả và chuyên nghiệp nhất.',
-        //     'featured' => 1,
-        //     'status' => 1,
-        //     'brand_id' => 3,
-        //     'category_id' => 4,
-        // ]);
         //HP
         Product::create([
             'name' => 'Laptop HP 15s fq5229TU i3 1215U/8GB/512GB/Win11 (8U237PA)',
@@ -622,51 +357,6 @@ class ProductSeeder extends Seeder
             'product_specification_id' => '32',
             'value' => '2023',
         ]);
-
-        // Product::create([
-        //     'name' => 'Laptop HP 245 G10 R5 7530U/8GB/512GB/Win11 (A20TDPT)',
-        //     'SKU' => '1234561111',
-        //     'slug' => 'hp-245-g10-r5-a20tdpt',
-        //     'description' => 'Với một mức giá thành lý tưởng, bạn đã có thể sở hữu cho mình một mẫu laptop học tập - văn phòng có hiệu năng ổn định, ngoại hình thanh lịch cùng các tính năng hiện đại. Laptop HP 15s fq5229TU i3 1215U (8U237PA) chắc chắn sẽ đáp ứng đầy đủ nhu cầu làm việc, học tập và giải trí thường ngày của sinh viên cũng như người đi làm.',
-        //     'featured' => 1,
-        //     'status' => 1,
-        //     'brand_id' => 7,
-        //     'category_id' => 8,
-        // ]);
-
-        // Product::create([
-        //     'name' => 'Laptop HP 15s fq5229TU i3 1215U/8GB/512GB/Win11 (8U237PA)',
-        //     'SKU' => '1234567811',
-        //     'slug' => 'hp-15s-fq5229tu-i3-8u237pa',
-        //     'description' => 'Với một mức giá thành lý tưởng, bạn đã có thể sở hữu cho mình một mẫu laptop học tập - văn phòng có hiệu năng ổn định, ngoại hình thanh lịch cùng các tính năng hiện đại. Laptop HP 15s fq5229TU i3 1215U (8U237PA) chắc chắn sẽ đáp ứng đầy đủ nhu cầu làm việc, học tập và giải trí thường ngày của sinh viên cũng như người đi làm.',
-        //     'featured' => 1,
-        //     'status' => 1,
-        //     'brand_id' => 1,
-        //     'category_id' => 1,
-        // ]);
-
-
-        // Product::create([
-        //     'name' => 'Laptop HP 15s fq5229TU i3 1215U/8GB/512GB/Win11 (8U237PA)',
-        //     'SKU' => '1234567811',
-        //     'slug' => 'hp-15s-fq5229tu-i3-8u237pa',
-        //     'description' => 'Với một mức giá thành lý tưởng, bạn đã có thể sở hữu cho mình một mẫu laptop học tập - văn phòng có hiệu năng ổn định, ngoại hình thanh lịch cùng các tính năng hiện đại. Laptop HP 15s fq5229TU i3 1215U (8U237PA) chắc chắn sẽ đáp ứng đầy đủ nhu cầu làm việc, học tập và giải trí thường ngày của sinh viên cũng như người đi làm.',
-        //     'featured' => 1,
-        //     'status' => 1,
-        //     'brand_id' => 1,
-        //     'category_id' => 1,
-        // ]);
-
-        // Product::create([
-        //     'name' => 'Laptop HP 15s fq5229TU i3 1215U/8GB/512GB/Win11 (8U237PA)',
-        //     'SKU' => '1234567811',
-        //     'slug' => 'hp-15s-fq5229tu-i3-8u237pa',
-        //     'description' => 'Với một mức giá thành lý tưởng, bạn đã có thể sở hữu cho mình một mẫu laptop học tập - văn phòng có hiệu năng ổn định, ngoại hình thanh lịch cùng các tính năng hiện đại. Laptop HP 15s fq5229TU i3 1215U (8U237PA) chắc chắn sẽ đáp ứng đầy đủ nhu cầu làm việc, học tập và giải trí thường ngày của sinh viên cũng như người đi làm.',
-        //     'featured' => 1,
-        //     'status' => 1,
-        //     'brand_id' => 1,
-        //     'category_id' => 1,
-        // ]);
 
         //LENOVO
         Product::create([
@@ -1534,38 +1224,522 @@ class ProductSeeder extends Seeder
         ]);
 
 
-        // Product::create([
-        //     'name' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U/16GB/512GB/Chuột/Win11 (NJ776W)',
-        //     'SKU' => '1234567891',
-        //     'slug' => 'asus-vivobook-go-15-e1504fa-r5-nj776w',
-        //     'description' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U (NJ776W) mang phong cách thiết kế sang trọng, hiệu năng mạnh mẽ cùng tính đa năng sử dụng, chắc chắn sẽ giúp bạn đáp ứng mọi tác vụ công việc và học tập hàng ngày một cách hiệu quả và chuyên nghiệp nhất.',
-        //     'featured' => 1,
-        //     'status' => 1,
-        //     'brand_id' => 1,
-        //     'category_id' => 1,
-        // ]);
+        // 8
+        Product::create([
+            'name' => 'Laptop Asus TUF Gaming F15 FX506HF i5 11400H/8GB/512GB/4GB RTX2050/144Hz/Win11 (HN014W) ',
+            'SKU' => '1234227891',
+            'slug' => 'asus-tuf-gaming-f15-fx506hf-i5-hn014w',
+            'description' => 'Với bộ vi xử lý Intel Core i5 dòng H mạnh mẽ và card đồ họa rời NVIDIA GeForce RTX 2050 4 GB, laptop Asus TUF Gaming F15 FX506HF là một trong những lựa chọn tuyệt vời cho các game thủ và những người dùng làm việc đa tác vụ hoặc liên quan đến đồ họa, kỹ thuật.',
+            'featured' => 0,
+            'status' => 1,
+            'brand_id' => 3,
+            'category_id' => 4,
+        ]);
+
+        ProductSpecificationDetail::create([//công nghệ cpu
+            'product_id' => '8',
+            'product_specification_id' => '1',
+            'value' => 'Intel Core i5 Tiger Lake - 11400H',
+        ]);
+        ProductSpecificationDetail::create([//số nhân
+            'product_id' => '8',
+            'product_specification_id' => '2',
+            'value' => '6',
+        ]);
+        ProductSpecificationDetail::create([//số luồng
+            'product_id' => '8',
+            'product_specification_id' => '3',
+            'value' => '12',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ cpu
+            'product_id' => '8',
+            'product_specification_id' => '4',
+            'value' => '2.70 GHz',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ tối đa
+            'product_id' => '8',
+            'product_specification_id' => '5',
+            'value' => 'Turbo Boost 4.5 GHz',
+        ]);
+        ProductSpecificationDetail::create([//bộ nhớ đệm
+            'product_id' => '8',
+            'product_specification_id' => '6',
+            'value' => '12 MB',
+        ]);
+        ProductSpecificationDetail::create([//ram
+            'product_id' => '8',
+            'product_specification_id' => '7',
+            'value' => '8 GB',
+        ]);
+        ProductSpecificationDetail::create([//loại ram
+            'product_id' => '8',
+            'product_specification_id' => '8',
+            'value' => 'DDR4 2 khe (1 khe 8 GB + 1 khe rời)',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ bus ram
+            'product_id' => '8',
+            'product_specification_id' => '9',
+            'value' => '3200 MHz',
+        ]);
+        ProductSpecificationDetail::create([//hỗ trợ ram tối đa
+            'product_id' => '8',
+            'product_specification_id' => '10',
+            'value' => '512 GB SSD NVMe PCIe (Có thể tháo ra, lắp thanh khác tối đa 1 TB)Hỗ trợ thêm 1 khe cắm SSD M.2 PCIe mở rộng (nâng cấp tối đa 1 TB)',
+        ]);
+        ProductSpecificationDetail::create([//ổ cứng
+            'product_id' => '8',
+            'product_specification_id' => '11',
+            'value' => '512 GB SSD NVMe PCIe (Có thể tháo ra, lắp thanh khác tối đa 1 TB)',
+        ]);
+        ProductSpecificationDetail::create([//màn hình
+            'product_id' => '8',
+            'product_specification_id' => '12',
+            'value' => '15.6 inch',
+        ]);
+        ProductSpecificationDetail::create([//độ phân giải
+            'product_id' => '8',
+            'product_specification_id' => '13',
+            'value' => 'Full HD (1920 x 1080)',
+        ]);
+        ProductSpecificationDetail::create([//tần số quét
+            'product_id' => '8',
+            'product_specification_id' => '14',
+            'value' => '144 Hz',
+        ]);
+        ProductSpecificationDetail::create([//độ phủ màu
+            'product_id' => '8',
+            'product_specification_id' => '15',
+            'value' => '45% NTSC',
+        ]);
+        ProductSpecificationDetail::create([//công nghệ màn hình
+            'product_id' => '8',
+            'product_specification_id' => '16',
+            'value' => 'Tấm nền IPS, Chống chói Anti Glare, Adaptive-Sync',
+        ]);
+        ProductSpecificationDetail::create([//card màn hình
+            'product_id' => '8',
+            'product_specification_id' => '17',
+            'value' => 'Card rời - NVIDIA GeForce RTX 2050, 4 GB',
+        ]);
+        ProductSpecificationDetail::create([//công nghệ âm thanh
+            'product_id' => '8',
+            'product_specification_id' => '18',
+            'value' => 'DTS software',
+        ]);
+        ProductSpecificationDetail::create([//cổng giao tiếp
+            'product_id' => '8',
+            'product_specification_id' => '19',
+            'value' => 'LAN (RJ45),Jack tai nghe 3.5 mm, 3 x USB 3.2, HDMI, 1 x Thunderbolt 4 (hỗ trợ DisplayPort)',
+        ]);
+        ProductSpecificationDetail::create([//kết nối không dây
+            'product_id' => '8',
+            'product_specification_id' => '19',
+            'value' => 'Bluetooth 5.2Wi-Fi 6 (802.11ax)',
+        ]);
+        ProductSpecificationDetail::create([//khe đọc thẻ nhớ
+            'product_id' => '8',
+            'product_specification_id' => '21',
+            'value' => 'Không có',
+        ]);
+        ProductSpecificationDetail::create([//webcam
+            'product_id' => '8',
+            'product_specification_id' => '22',
+            'value' => 'HD webcam',
+        ]);
+        ProductSpecificationDetail::create([//đèn pin
+            'product_id' => '8',
+            'product_specification_id' => '23',
+            'value' => 'Đèn chuyển màu RGB',
+        ]);
+        ProductSpecificationDetail::create([//tính năng khác
+            'product_id' => '8',
+            'product_specification_id' => '24',
+            'value' => 'Độ bền chuẩn quân đội MIL STD 810H',
+        ]);
+        ProductSpecificationDetail::create([//kích thước, trọng lượng
+            'product_id' => '8',
+            'product_specification_id' => '25',
+            'value' => 'Dài 359 mm - Rộng 256 mm - Dày 22.8 ~ 24.5 mm',
+        ]);
+        ProductSpecificationDetail::create([//chất liệu
+            'product_id' => '8',
+            'product_specification_id' => '26',
+            'value' => 'Vỏ nhựa - nắp lưng bằng kim loại',
+        ]);
+        ProductSpecificationDetail::create([//thông tin pin
+            'product_id' => '8',
+            'product_specification_id' => '27',
+            'value' => '3-cell Li-ion, 48 Wh',
+        ]);
+        ProductSpecificationDetail::create([//công suất bộ sạc
+            'product_id' => '8',
+            'product_specification_id' => '28',
+            'value' => '45 W',
+        ]);
+        ProductSpecificationDetail::create([ //hệ điều hành
+            'product_id' => '8',
+            'product_specification_id' => '29',
+            'value' => 'Windows 11 Home SL',
+        ]);
+        ProductSpecificationDetail::create([ //màu sắc
+            'product_id' => '8',
+            'product_specification_id' => '30',
+            'value' => 'Đen',
+        ]);
+        ProductSpecificationDetail::create([ //bảo hành
+            'product_id' => '8',
+            'product_specification_id' => '31',
+            'value' => '12 tháng',
+        ]);
+        ProductSpecificationDetail::create([ //ngày ra mắt
+            'product_id' => '8',
+            'product_specification_id' => '32',
+            'value' => '2023',
+        ]);
+
+        //9
+        Product::create([
+            'name' => 'Laptop Acer Aspire Lite 15 51M 55NB i5 1155G7/8GB/512GB/Win11 (NX.KRSSV.001)',
+            'SKU' => '9231233211',
+            'slug' => 'acer-aspire-lite-15-51m-55nb-i5-nxkrssv001',
+            'description' => 'Laptop Acer Aspire Lite 15 51M 55NB i5 1155G7 (NX.KRSSV.001) đem đến sự hòa quyện giữa thiết kế tinh tế và hiệu suất ổn định. Mẫu laptop này thực sự là một biểu tượng của sự tiện lợi và đa năng, với màn hình rộng, bàn phím tiện ích và hiệu suất ổn định, laptop này hứa hẹn sẽ là một người bạn đồng hành đáng tin cậy cho cả công việc và giải trí hàng ngày.',
+            'featured' => 1,
+            'status' => 1,
+            'brand_id' => 8,
+            'category_id' => 4,
+        ]);
+        ProductSpecificationDetail::create([//công nghệ cpu
+            'product_id' => '9',
+            'product_specification_id' => '1',
+            'value' => 'Intel Core i5 Tiger Lake - 1155G7',
+        ]);
+        ProductSpecificationDetail::create([//số nhân
+            'product_id' => '9',
+            'product_specification_id' => '2',
+            'value' => '4',
+        ]);
+        ProductSpecificationDetail::create([//số luồng
+            'product_id' => '9',
+            'product_specification_id' => '3',
+            'value' => '8',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ cpu
+            'product_id' => '9',
+            'product_specification_id' => '4',
+            'value' => '2.50 GHz',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ tối đa
+            'product_id' => '9',
+            'product_specification_id' => '5',
+            'value' => 'Turbo Boost 4.5 GHz',
+        ]);
+        ProductSpecificationDetail::create([//bộ nhớ đệm
+            'product_id' => '9',
+            'product_specification_id' => '6',
+            'value' => '8 MB',
+        ]);
+        ProductSpecificationDetail::create([//ram
+            'product_id' => '9',
+            'product_specification_id' => '7',
+            'value' => '8 GB',
+        ]);
+        ProductSpecificationDetail::create([//loại ram
+            'product_id' => '9',
+            'product_specification_id' => '8',
+            'value' => 'DDR4 2 khe (1 khe 8 GB + 1 khe rời)',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ bus ram
+            'product_id' => '9',
+            'product_specification_id' => '9',
+            'value' => '3200 MHz',
+        ]);
+        ProductSpecificationDetail::create([//hỗ trợ ram tối đa
+            'product_id' => '9',
+            'product_specification_id' => '10',
+            'value' => '32 GB',
+        ]);
+        ProductSpecificationDetail::create([//ổ cứng
+            'product_id' => '9',
+            'product_specification_id' => '11',
+            'value' => '512 GB SSD NVMe PCIe (Có thể tháo ra, lắp thanh khác tối đa 1 TB)',
+        ]);
+        ProductSpecificationDetail::create([//màn hình
+            'product_id' => '9',
+            'product_specification_id' => '12',
+            'value' => '15.6 inch',
+        ]);
+        ProductSpecificationDetail::create([//độ phân giải
+            'product_id' => '9',
+            'product_specification_id' => '13',
+            'value' => 'Full HD (1920 x 1080)',
+        ]);
+        ProductSpecificationDetail::create([//tần số quét
+            'product_id' => '9',
+            'product_specification_id' => '14',
+            'value' => '60 Hz',
+        ]);
+        ProductSpecificationDetail::create([//độ phủ màu
+            'product_id' => '9',
+            'product_specification_id' => '15',
+            'value' => '45% NTSC',
+        ]);
+        ProductSpecificationDetail::create([//công nghệ màn hình
+            'product_id' => '9',
+            'product_specification_id' => '16',
+            'value' => '220 nitsAcer ComfyView',
+        ]);
+        ProductSpecificationDetail::create([//card màn hình
+            'product_id' => '9',
+            'product_specification_id' => '17',
+            'value' => 'Card tích hợp - Intel Iris Xe Graphics',
+        ]);
+        ProductSpecificationDetail::create([//công nghệ âm thanh
+            'product_id' => '9',
+            'product_specification_id' => '18',
+            'value' => 'Stereo speakers',
+        ]);
+        ProductSpecificationDetail::create([//cổng giao tiếp
+            'product_id' => '9',
+            'product_specification_id' => '19',
+            'value' => 'USB Type-C, Jack tai nghe 3.5 mm, 1 x USB 3.2, HDMI, LAN (RJ45), 2 x USB 2.0',
+        ]);
+        ProductSpecificationDetail::create([//kết nối không dây
+            'product_id' => '9',
+            'product_specification_id' => '19',
+            'value' => 'Bluetooth 5.0Wi-Fi 802.11 a/b/g/n/ac',
+        ]);
+        ProductSpecificationDetail::create([//khe đọc thẻ nhớ
+            'product_id' => '9',
+            'product_specification_id' => '21',
+            'value' => 'Không có',
+        ]);
+        ProductSpecificationDetail::create([//webcam
+            'product_id' => '9',
+            'product_specification_id' => '22',
+            'value' => 'HD webcam',
+        ]);
+        ProductSpecificationDetail::create([//đèn pin
+            'product_id' => '9',
+            'product_specification_id' => '23',
+            'value' => 'Không có đèn',
+        ]);
+        ProductSpecificationDetail::create([//tính năng khác
+            'product_id' => '9',
+            'product_specification_id' => '24',
+            'value' => 'Không có',
+        ]);
+        ProductSpecificationDetail::create([//kích thước, trọng lượng
+            'product_id' => '9',
+            'product_specification_id' => '25',
+            'value' => 'Dài 360.4 mm - Rộng 239.3 mm - Dày 19.7 mm',
+        ]);
+        ProductSpecificationDetail::create([//chất liệu
+            'product_id' => '9',
+            'product_specification_id' => '26',
+            'value' => 'Vỏ nhựa - nắp lưng bằng kim loại',
+        ]);
+        ProductSpecificationDetail::create([//thông tin pin
+            'product_id' => '9',
+            'product_specification_id' => '27',
+            'value' => 'Li-ion, 36 Wh',
+        ]);
+        ProductSpecificationDetail::create([//công suất bộ sạc
+            'product_id' => '9',
+            'product_specification_id' => '28',
+            'value' => '45 W',
+        ]);
+        ProductSpecificationDetail::create([ //hệ điều hành
+            'product_id' => '9',
+            'product_specification_id' => '29',
+            'value' => 'Windows 11 Home SL',
+        ]);
+        ProductSpecificationDetail::create([ //màu sắc
+            'product_id' => '9',
+            'product_specification_id' => '30',
+            'value' => 'Đen',
+        ]);
+        ProductSpecificationDetail::create([ //bảo hành
+            'product_id' => '9',
+            'product_specification_id' => '31',
+            'value' => '12 tháng',
+        ]);
+        ProductSpecificationDetail::create([ //ngày ra mắt
+            'product_id' => '9',
+            'product_specification_id' => '32',
+            'value' => '2024',
+        ]);
 
 
-        // Product::create([
-        //     'name' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U/16GB/512GB/Chuột/Win11 (NJ776W)',
-        //     'SKU' => '1234567891',
-        //     'slug' => 'asus-vivobook-go-15-e1504fa-r5-nj776w',
-        //     'description' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U (NJ776W) mang phong cách thiết kế sang trọng, hiệu năng mạnh mẽ cùng tính đa năng sử dụng, chắc chắn sẽ giúp bạn đáp ứng mọi tác vụ công việc và học tập hàng ngày một cách hiệu quả và chuyên nghiệp nhất.',
-        //     'featured' => 1,
-        //     'status' => 1,
-        //     'brand_id' => 1,
-        //     'category_id' => 1,
-        // ]);
-
-        // Product::create([
-        //     'name' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U/16GB/512GB/Chuột/Win11 (NJ776W)',
-        //     'SKU' => '1234567891',
-        //     'slug' => 'asus-vivobook-go-15-e1504fa-r5-nj776w',
-        //     'description' => 'Laptop Asus Vivobook Go 15 E1504FA R5 7520U (NJ776W) mang phong cách thiết kế sang trọng, hiệu năng mạnh mẽ cùng tính đa năng sử dụng, chắc chắn sẽ giúp bạn đáp ứng mọi tác vụ công việc và học tập hàng ngày một cách hiệu quả và chuyên nghiệp nhất.',
-        //     'featured' => 1,
-        //     'status' => 1,
-        //     'brand_id' => 1,
-        //     'category_id' => 1,
-        // ]);
+        //10
+        Product::create([
+            'name' => 'Laptop MSI Modern 15 B12MO i5 1235U/16GB/512GB/Win11 (628VN)',
+            'SKU' => '1412131517',
+            'slug' => 'msi-modern-15-b12mo-i5-628vn',
+            'description' => 'Thiết kế sang trọng, hiệu năng mạnh mẽ và nhiều tiện ích hiện đại là những gì được gói gọn trong chiếc laptop MSI Modern 15 B12MO i5 1235U (628VN). Đây chính xác là một mẫu laptop học tập - văn phòng sẽ thỏa mãn mọi yêu cầu làm việc, giải trí hàng ngày, phù hợp với sinh viên hay nhân viên văn phòng.',
+            'featured' => 1,
+            'status' => 1,
+            'brand_id' => 5,
+            'category_id' => 9,
+        ]);
+        ProductSpecificationDetail::create([//công nghệ cpu
+            'product_id' => '10',
+            'product_specification_id' => '1',
+            'value' => 'Intel Core i5 Alder Lake - 1235U',
+        ]);
+        ProductSpecificationDetail::create([//số nhân
+            'product_id' => '10',
+            'product_specification_id' => '2',
+            'value' => '10',
+        ]);
+        ProductSpecificationDetail::create([//số luồng
+            'product_id' => '10',
+            'product_specification_id' => '3',
+            'value' => '12',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ cpu
+            'product_id' => '10',
+            'product_specification_id' => '4',
+            'value' => '1.30 GHz',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ tối đa
+            'product_id' => '10',
+            'product_specification_id' => '5',
+            'value' => 'Turbo Boost 4.4 GHz',
+        ]);
+        ProductSpecificationDetail::create([//bộ nhớ đệm
+            'product_id' => '10',
+            'product_specification_id' => '6',
+            'value' => '12 MB',
+        ]);
+        ProductSpecificationDetail::create([//ram
+            'product_id' => '10',
+            'product_specification_id' => '7',
+            'value' => '16 GB',
+        ]);
+        ProductSpecificationDetail::create([//loại ram
+            'product_id' => '10',
+            'product_specification_id' => '8',
+            'value' => 'DDR4 (Onboard)',
+        ]);
+        ProductSpecificationDetail::create([//tốc độ bus ram
+            'product_id' => '10',
+            'product_specification_id' => '9',
+            'value' => '3200 MHz',
+        ]);
+        ProductSpecificationDetail::create([//hỗ trợ ram tối đa
+            'product_id' => '10',
+            'product_specification_id' => '10',
+            'value' => 'Không hỗ trợ nâng cấp',
+        ]);
+        ProductSpecificationDetail::create([//ổ cứng
+            'product_id' => '10',
+            'product_specification_id' => '11',
+            'value' => '512 GB SSD NVMe PCIe',
+        ]);
+        ProductSpecificationDetail::create([//màn hình
+            'product_id' => '10',
+            'product_specification_id' => '12',
+            'value' => '15.6 inch',
+        ]);
+        ProductSpecificationDetail::create([//độ phân giải
+            'product_id' => '10',
+            'product_specification_id' => '13',
+            'value' => 'Full HD (1920 x 1080)',
+        ]);
+        ProductSpecificationDetail::create([//tần số quét
+            'product_id' => '10',
+            'product_specification_id' => '14',
+            'value' => '60 Hz',
+        ]);
+        ProductSpecificationDetail::create([//độ phủ màu
+            'product_id' => '10',
+            'product_specification_id' => '15',
+            'value' => '45% NTSC',
+        ]);
+        ProductSpecificationDetail::create([//công nghệ màn hình
+            'product_id' => '10',
+            'product_specification_id' => '16',
+            'value' => 'Tấm nền IPS',
+        ]);
+        ProductSpecificationDetail::create([//card màn hình
+            'product_id' => '10',
+            'product_specification_id' => '17',
+            'value' => 'Card tích hợp - Intel Iris Xe Graphics',
+        ]);
+        ProductSpecificationDetail::create([//công nghệ âm thanh
+            'product_id' => '10',
+            'product_specification_id' => '18',
+            'value' => '2 x 2W Speaker',
+        ]);
+        ProductSpecificationDetail::create([//cổng giao tiếp
+            'product_id' => '10',
+            'product_specification_id' => '19',
+            'value' => 'Jack tai nghe 3.5 mm, 1 x USB 3.2, HDMI, 2 x USB 2.0, 1 x USB Type-C (chỉ hỗ trợ Power Delivery)',
+        ]);
+        ProductSpecificationDetail::create([//kết nối không dây
+            'product_id' => '10',
+            'product_specification_id' => '19',
+            'value' => 'Bluetooth 5.2Wi-Fi 6 (802.11ax)',
+        ]);
+        ProductSpecificationDetail::create([//khe đọc thẻ nhớ
+            'product_id' => '10',
+            'product_specification_id' => '21',
+            'value' => 'Micro SD',
+        ]);
+        ProductSpecificationDetail::create([//webcam
+            'product_id' => '10',
+            'product_specification_id' => '22',
+            'value' => 'HD webcam',
+        ]);
+        ProductSpecificationDetail::create([//đèn pin
+            'product_id' => '10',
+            'product_specification_id' => '23',
+            'value' => 'Đơn sắc - Màu trắng',
+        ]);
+        ProductSpecificationDetail::create([//tính năng khác
+            'product_id' => '10',
+            'product_specification_id' => '24',
+            'value' => 'TPM 2.0, Bản lề mở 180 độ',
+        ]);
+        ProductSpecificationDetail::create([//kích thước, trọng lượng
+            'product_id' => '10',
+            'product_specification_id' => '25',
+            'value' => 'Dài 359 mm - Rộng 241 mm - Dày 19.9 mm, 1.7 kg',
+        ]);
+        ProductSpecificationDetail::create([//chất liệu
+            'product_id' => '10',
+            'product_specification_id' => '26',
+            'value' => 'Vỏ nhựa - nắp lưng bằng kim loại',
+        ]);
+        ProductSpecificationDetail::create([//thông tin pin
+            'product_id' => '10',
+            'product_specification_id' => '27',
+            'value' => '3-Cell, 39.3 Wh',
+        ]);
+        ProductSpecificationDetail::create([//công suất bộ sạc
+            'product_id' => '10',
+            'product_specification_id' => '28',
+            'value' => '65 W',
+        ]);
+        ProductSpecificationDetail::create([ //hệ điều hành
+            'product_id' => '10',
+            'product_specification_id' => '29',
+            'value' => 'Windows 11 Home SL',
+        ]);
+        ProductSpecificationDetail::create([ //màu sắc
+            'product_id' => '10',
+            'product_specification_id' => '30',
+            'value' => 'Đen',
+        ]);
+        ProductSpecificationDetail::create([ //bảo hành
+            'product_id' => '10',
+            'product_specification_id' => '31',
+            'value' => '12 tháng',
+        ]);
+        ProductSpecificationDetail::create([ //ngày ra mắt
+            'product_id' => '10',
+            'product_specification_id' => '32',
+            'value' => '2023',
+        ]);
     }
 }

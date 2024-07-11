@@ -131,7 +131,6 @@
                     search: '<i class="ti ti-search"></i>',
                     searchPlaceholder: 'Tìm kiếm'
                 },
-                // Buttons with Dropdown
                 buttons: [],
             });
             $('.dataTables_length').addClass('mt-0 mt-md-3 ms-n2');
@@ -202,6 +201,7 @@
 
                             var $name = product.name,
                                 $image = product.images[0]?.url;
+                            var truncatedName = $name.length > 50 ? $name.substring(0, 50) + '...' : $name;
                             if ($image) {
                                 // For Avatar image
                                 var $output =
@@ -226,7 +226,7 @@
                                 '</div>' +
                                 '<div class="d-flex flex-column">' +
                                 '<a href="" class="text-body text-truncate"><span class="fw-medium">' +
-                                $name +
+                                truncatedName +
                                 '</span></a>' +
                                 '</div>' +
                                 '</div>';

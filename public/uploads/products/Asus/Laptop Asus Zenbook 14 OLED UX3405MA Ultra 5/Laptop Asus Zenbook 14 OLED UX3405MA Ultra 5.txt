@@ -1,0 +1,171 @@
+Product::create([
+    'name' => 'Laptop Asus Zenbook 14 OLED UX3405MA Ultra 5 125H/16GB/512GB/Túi/Win11 (PP151W) ',
+    'SKU' => '5098763124',
+    'slug' => 'asus-zenbook-14-oled-ux3405ma-ultra-5-pp151w?utm_flashsale=1#top-color-images-gallery-4',
+    'description' => 'Mở đầu cho kỷ nguyên laptop mới, hiện đại, thông minh, laptop Asus Zenbook 14 OLED UX3405MA Ultra 5 (PP151W) sở hữu con chip Intel Meteor Lake hoàn toàn mới, được tích hợp hàng loạt những tính năng AI hữu ích, màn hình chuẩn sắc nét. Mẫu sản phẩm này chắc chắn sẽ nâng tầm đáng kể cho phong cách làm việc của bạn.',
+    'featured' => 1,
+    'status' => 1,
+    'brand_id' => 3,
+    'category_id' => 7,
+]);
+
+ProductSpecificationDetail::create([//công nghệ cpu
+    'product_id' => '',
+    'product_specification_id' => '1',
+    'value' => 'Intel Core Ultra 5 Meteor Lake - 125H',
+]);
+ProductSpecificationDetail::create([//số nhân
+    'product_id' => '',
+    'product_specification_id' => '2',
+    'value' => '14',
+]);
+ProductSpecificationDetail::create([//số luồng
+    'product_id' => '',
+    'product_specification_id' => '3',
+    'value' => '18',
+]);
+ProductSpecificationDetail::create([//tốc độ cpu
+    'product_id' => '',
+    'product_specification_id' => '4',
+    'value' => '1.20 GHz',
+]);
+ProductSpecificationDetail::create([//tốc độ tối đa
+    'product_id' => '',
+    'product_specification_id' => '8',
+    'value' => 'Turbo Boost 4.5 GHz',
+]);
+ProductSpecificationDetail::create([//bộ nhớ đệm
+    'product_id' => '',
+    'product_specification_id' => '6',
+    'value' => '18 MB',
+]);
+ProductSpecificationDetail::create([//ram
+    'product_id' => '',
+    'product_specification_id' => '7',
+    'value' => '16 GB',
+]);
+ProductSpecificationDetail::create([//loại ram
+    'product_id' => '',
+    'product_specification_id' => '8',
+    'value' => 'LPDDR5X (Onboard)',
+]);
+ProductSpecificationDetail::create([//tốc độ bus ram
+    'product_id' => '',
+    'product_specification_id' => '9',
+    'value' => '5200 MHz',
+]);
+ProductSpecificationDetail::create([//hỗ trợ ram tối đa
+    'product_id' => '',
+    'product_specification_id' => '10',
+    'value' => 'Không hỗ trợ nâng cấp',
+]);
+ProductSpecificationDetail::create([//ổ cứng
+    'product_id' => '',
+    'product_specification_id' => '11',
+    'value' => '512 GB SSD NVMe PCIe Gen 4.0',
+]);
+ProductSpecificationDetail::create([//màn hình
+    'product_id' => '',
+    'product_specification_id' => '12',
+    'value' => '14 inch',
+]);
+ProductSpecificationDetail::create([//độ phân giải
+    'product_id' => '',
+    'product_specification_id' => '13',
+    'value' => '2.8K (2880 x 1800) - OLED 16:10',
+]);
+ProductSpecificationDetail::create([//tần số quét
+    'product_id' => '',
+    'product_specification_id' => '14',
+    'value' => '120 Hz',
+]);
+ProductSpecificationDetail::create([//độ phủ màu
+    'product_id' => '',
+    'product_specification_id' => '15',
+    'value' => '100% DCI-P3',
+]);
+ProductSpecificationDetail::create([//công nghệ màn hình
+    'product_id' => '',
+    'product_specification_id' => '16',
+    'value' => 'Thời gian phản hồi 0.2 ms, Màn hình bảo vệ mắt - EYE CARE, Low Blue Light, LED Backlit, Màn hình OLED, 400 nits, 600 nits (Khi bật HDR), 1.07 tỷ màu',
+]);
+ProductSpecificationDetail::create([//card màn hình
+    'product_id' => '',
+    'product_specification_id' => '17',
+    'value' => 'Card tích hợp - Intel Arc Graphics',
+]);
+ProductSpecificationDetail::create([//công nghệ âm thanh
+    'product_id' => '',
+    'product_specification_id' => '18',
+    'value' => 'Công nghệ Smart AMP, Audio by Harman/Kardon, Dolby Atmos',
+]);
+ProductSpecificationDetail::create([//cổng giao tiếp
+    'product_id' => '',
+    'product_specification_id' => '19',
+    'value' => 'Jack tai nghe 3.5 mm, 1 x USB 3.2, HDMI, 2 x Thunderbolt 4 (hỗ trợ Power Delivery, DisplayPort)',
+]);
+ProductSpecificationDetail::create([//kết nối không dây
+    'product_id' => '',
+    'product_specification_id' => '20',
+    'value' => 'Wi-Fi 6E (802.11ax)Bluetooth 5.3',
+]);
+ProductSpecificationDetail::create([//khe đọc thẻ nhớ
+            'product_id' => '',
+            'product_specification_id' => '21',
+            'value' => '',
+        ]);
+ProductSpecificationDetail::create([//webcam
+    'product_id' => '',
+    'product_specification_id' => '22',
+    'value' => 'Full HD Webcam, Camera IR',
+]);
+ProductSpecificationDetail::create([//đèn pin
+            'product_id' => '',
+            'product_specification_id' => '23',
+            'value' => 'Không có',
+        ]);
+ProductSpecificationDetail::create([//tính năng khác
+    'product_id' => '',
+    'product_specification_id' => '24',
+    'value' => 'Độ bền chuẩn quân đội MIL STD 810H, Tiêu chuẩn Nền Intel Evo, Bản lề mở 180 độ, Công tắc khóa camera, Numberpad, Mở khóa khuôn mặt',
+]);
+ProductSpecificationDetail::create([//kích thước, trọng lượng
+    'product_id' => '',
+    'product_specification_id' => '25',
+    'value' => 'Dài 312.4 mm - Rộng 220.1 mm - Dày 14.9 mm',
+]);
+ProductSpecificationDetail::create([//chất liệu
+    'product_id' => '',
+    'product_specification_id' => '26',
+    'value' => 'Vỏ kim loại - Nhôm',
+]);
+ProductSpecificationDetail::create([//thông tin pin
+    'product_id' => '',
+    'product_specification_id' => '27',
+    'value' => '4-cell Li-ion, 75 Wh',
+]);
+ProductSpecificationDetail::create([//công suất bộ sạc
+    'product_id' => '',
+    'product_specification_id' => '28',
+    'value' => '65 W',
+]);
+ProductSpecificationDetail::create([ //hệ điều hành
+    'product_id' => '',
+    'product_specification_id' => '29',
+    'value' => 'Windows 11 Home SL',
+]);
+  ProductSpecificationDetail::create([ //màu sắc
+            'product_id' => '',
+            'product_specification_id' => '30',
+            'value' => 'Xanh dươnng',
+        ]);
+        ProductSpecificationDetail::create([ //bảo hành
+            'product_id' => '',
+            'product_specification_id' => '31',
+            'value' => '12 tháng',
+        ]);
+ProductSpecificationDetail::create([ //thời điểm ra mắt
+    'product_id' => '',
+    'product_specification_id' => '32',
+    'value' => '2023',
+]);

@@ -9,11 +9,11 @@ Route::prefix('roles')->group(function () {
     Route::name('roles.')->group(function () {
         Route::get('/', [RoleController::class, 'index'])->name('index');
         Route::get('data-table', [RoleController::class, 'listDataTableRoles'])->name('data-table');
-        Route::post('store', [RoleController::class, 'store'])->name('store')->middleware('permission:store role');
+        Route::post('store', [RoleController::class, 'store'])->name('store');
         Route::get('{id}/edit', [RoleController::class, 'edit'])->name('edit');
         Route::post('{id}/update', [RoleController::class, 'update'])->name('update');
         Route::delete('{id}', [RoleController::class, 'destroy'])->name('destroy');
-        Route::put('{id}/assign-permission', [RoleController::class, 'assignPermission'])->name('assign.permission');
+        Route::put('{id}/assign-permission', [RoleController::class, 'assignPermission']);
     });
 });
 

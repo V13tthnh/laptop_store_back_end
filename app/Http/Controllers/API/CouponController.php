@@ -21,7 +21,8 @@ class CouponController extends Controller
     public function applyCoupon(Request $request)
     {
         try {
-            $coupon = Coupon::where('code', $request->code)->get();
+            $couponCode = strtolower($request->code);
+            $coupon = Coupon::whereRaw('LOWER(code) = ?', [$couponCode])->first();
 
             if (!$coupon) {
                 return response()->json(['status' => false, 'message' => 'Mã giảm giá không hợp lệ.']);
@@ -34,7 +35,6 @@ class CouponController extends Controller
                 'message' => 'Có lỗi xảy ra vui lòng thử lại sau.'
             ], 500);
         }
-
     }
 
     public function getAvailableCoupons(Request $request)

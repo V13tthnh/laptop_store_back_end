@@ -14,8 +14,9 @@ class EmployeeController extends Controller
 {
     public function index()
     {
-        $roles = Role::all();
-        return view('employee.index', compact('roles'));
+        $roles = Role::with('permissions')->get();
+        $permissions = Permission::with('roles')->OrderBy('id')->get();
+        return view('employee.index', compact('roles', 'permissions'));
     }
 
     public function listDataTableUsers()
@@ -58,6 +59,17 @@ class EmployeeController extends Controller
         return response()->json([
             'success' => 200,
             'message' => "Thêm thành công"
+        ]);
+    }
+
+    public function addRole(Request $request, $id){
+        $data = $request->all();
+        $user = User::find($id);
+        $user->syncRoles($data['role']);
+        $role_id = $user->roles()->first()->id;
+        return response()->json([
+            'status' => true,
+            'message' => "Thêm vai trò thành công."
         ]);
     }
 

@@ -1,0 +1,171 @@
+Product::create([
+            'name' => 'Laptop HP Pavilion X360 14 ek1049TU i5 1335U/16GB/512GB/Touch/Pen/Win11 (80R27PA)',
+            'SKU' => '7062831945',
+            'slug' => 'hp-pavilion-x360-14-ek1049tu-i5-80r27pa#top-tskt',
+            'description' => 'Với sức mạnh hiệu năng vượt trội đến từ con chip Intel Gen 13 tân tiến, vẻ ngoài đơn giản mà hiện đại cùng lối thiết kế độc đáo, laptop HP Pavilion X360 14 ek1049TU i5 1335U (80R27PA) sẽ là sự lựa chọn hoàn hảo đáp ứng tốt các tác vụ học tập, làm việc cũng như xem phim, chơi game giải trí.',
+            'featured' => 1,
+            'status' => 1,
+            'brand_id' => 7,
+            'category_id' => 11,
+        ]);
+
+     ProductSpecificationDetail::create([//công nghệ cpu
+    'product_id' => '',
+    'product_specification_id' => '1',
+    'value' => 'Intel Core i5 Raptor Lake - 1335U',
+]);
+ProductSpecificationDetail::create([//số nhân
+    'product_id' => '',
+    'product_specification_id' => '2',
+    'value' => '10',
+]);
+ProductSpecificationDetail::create([//số luồng
+    'product_id' => '',
+    'product_specification_id' => '3',
+    'value' => '12',
+]);
+ProductSpecificationDetail::create([//tốc độ cpu
+    'product_id' => '',
+    'product_specification_id' => '4',
+    'value' => '1.30 GHz',
+]);
+ProductSpecificationDetail::create([//tốc độ tối đa
+    'product_id' => '',
+    'product_specification_id' => '5',
+    'value' => 'Turbo Boost 4.6 GHz',
+]);
+ProductSpecificationDetail::create([//bộ nhớ đệm
+    'product_id' => '',
+    'product_specification_id' => '6',
+    'value' => '12 MB',
+]);
+ProductSpecificationDetail::create([//ram
+    'product_id' => '',
+    'product_specification_id' => '7',
+    'value' => '16 GB',
+]);
+ProductSpecificationDetail::create([//loại ram
+    'product_id' => '',
+    'product_specification_id' => '8',
+    'value' => 'DDR4 (Onboard)',
+]);
+ProductSpecificationDetail::create([//tốc độ bus ram
+    'product_id' => '',
+    'product_specification_id' => '9',
+    'value' => '3200 MHz',
+]);
+ProductSpecificationDetail::create([//hỗ trợ ram tối đa
+    'product_id' => '',
+    'product_specification_id' => '10',
+    'value' => 'Không hỗ trợ nâng cấp',
+]);
+ProductSpecificationDetail::create([//ổ cứng
+    'product_id' => '',
+    'product_specification_id' => '11',
+    'value' => '512 GB SSD NVMe PCIe',
+]);
+ProductSpecificationDetail::create([//màn hình
+    'product_id' => '',
+    'product_specification_id' => '12',
+    'value' => '14 inch',
+]);
+ProductSpecificationDetail::create([//độ phân giải
+    'product_id' => '',
+    'product_specification_id' => '13',
+    'value' => 'Full HD (1920 x 1080)',
+]);
+ProductSpecificationDetail::create([//tần số quét
+    'product_id' => '',
+    'product_specification_id' => '14',
+    'value' => '60 Hz',
+]);
+ProductSpecificationDetail::create([//độ phủ màu
+    'product_id' => '',
+    'product_specification_id' => '15',
+    'value' => '',
+]);
+ProductSpecificationDetail::create([//công nghệ màn hình
+    'product_id' => '',
+    'product_specification_id' => '16',
+    'value' => 'Tấm nền IPS, Chống chói Anti Glare',
+]);
+ProductSpecificationDetail::create([//card màn hình
+    'product_id' => '',
+    'product_specification_id' => '17',
+    'value' => 'Card tích hợp - Intel Iris Xe Graphics',
+]);
+ProductSpecificationDetail::create([//công nghệ âm thanh
+    'product_id' => '',
+    'product_specification_id' => '18',
+    'value' => 'Audio by B&O, Realtek High Definition Audio',
+]);
+ProductSpecificationDetail::create([//cổng giao tiếp
+    'product_id' => '',
+    'product_specification_id' => '19',
+    'value' => 'Jack tai nghe 3.5 mm, 2 x USB 3.2, HDMI, 1 x USB Type-C 3.2 (hỗ trợ Power Delivery và DisplayPort)',
+]);
+ProductSpecificationDetail::create([//kết nối không dây
+    'product_id' => '',
+    'product_specification_id' => '20',
+    'value' => 'Bluetooth 5.2, Wi-Fi 6E (802.11ax)',
+]);
+ProductSpecificationDetail::create([//khe đọc thẻ nhớ
+    'product_id' => '',
+    'product_specification_id' => '21',
+    'value' => 'Micro SD',
+]);
+ProductSpecificationDetail::create([//webcam
+    'product_id' => '',
+    'product_specification_id' => '22',
+    'value' => 'Camera 5.0 MP',
+]);
+ProductSpecificationDetail::create([//đèn pin
+    'product_id' => '',
+    'product_specification_id' => '23',
+    'value' => 'Không có',
+]);
+ProductSpecificationDetail::create([//tính năng khác
+    'product_id' => '',
+    'product_specification_id' => '24',
+    'value' => 'Màn hình gập 360 độ, Bảo mật vân tay, Công tắc khóa camera',
+]);
+ProductSpecificationDetail::create([//kích thước, trọng lượng
+    'product_id' => '',
+    'product_specification_id' => '25',
+    'value' => 'Dài 322 mm - Rộng 210 mm - Dày 19.9 mm',
+]);
+ProductSpecificationDetail::create([//chất liệu
+    'product_id' => '',
+    'product_specification_id' => '26',
+    'value' => 'Vỏ kim loại - Nắp lưng bằng nhựa',
+]);
+ProductSpecificationDetail::create([//thông tin pin
+    'product_id' => '',
+    'product_specification_id' => '27',
+    'value' => '3-cell Li-ion, 43 Wh',
+]);
+ProductSpecificationDetail::create([//công suất bộ sạc
+    'product_id' => '',
+    'product_specification_id' => '28',
+    'value' => '45 W',
+]);
+	ProductSpecificationDetail::create([ //hệ điều hành
+    'product_id' => '',
+    'product_specification_id' => '29',
+    'value' => 'Windows 11 Home SL',
+]);
+	ProductSpecificationDetail::create([ //màu sắc
+    	'product_id' => '',
+    	'product_specification_id' => '30',
+    	'value' => 'Vàng',
+	]);
+	ProductSpecificationDetail::create([ //bảo hành
+    'product_id' => '',
+    	'product_specification_id' => '31',
+    	'value' => '12 tháng',
+	]);
+	ProductSpecificationDetail::create([ //ngày ra mắt
+    	'product_id' => '',
+    	'product_specification_id' => '32',
+    	'value' => '2023,
+	]);

@@ -15,12 +15,14 @@ class CustomerController extends Controller
     {
         try {
             $user = User::find($request->user_id);
+
             $user->full_name = $request->full_name;
             $user->gender = $request->gender;
             $user->phone = $request->phone;
             $user->email = $request->email;
             $user->birthday = $request->birthday;
             $user->save();
+
 
             return response()->json([
                 'sucesss' => true,
@@ -43,7 +45,7 @@ class CustomerController extends Controller
             return response()->json([
                 'sucesss' => true,
                 'message' => "Đổi mật khẩu thành công."
-            ]);
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'sucesss' => false,

@@ -42,16 +42,16 @@
                                             fill="#7367F0')}}" />
                                     </svg>
                                 </div>
-                                <span class="app-brand-text fw-bold fs-4"> Laptop </span>
+                                <span class="app-brand-text fw-bold fs-4"> Laptop Thành Nghĩa </span>
                             </div>
                             <p class="mb-2">Tân Định, hẻm 48 Bùi Thị Xuân</p>
                             <p class="mb-0">(+84) 123 456 7891</p>
                         </div>
                         <div>
-                            <h4 class="fw-medium mb-2">Hóa đơn #{{1}}</h4>
+                            <h4 class="fw-medium mb-2">Hóa đơn #{{$order->id}}</h4>
                             <div class="mb-2 pt-1">
                                 <span>Ngày tạo:</span>
-                                <span class="fw-medium">{{'27/06/2024'}}</span>
+                                <span class="fw-medium">{{$order->created_at}}</span>
                             </div>
                         </div>
                     </div>
@@ -61,9 +61,9 @@
                     <div class="row p-sm-3 p-0">
                         <div class="col-xl-6 col-md-12 col-sm-5 col-12 mb-xl-0 mb-md-4 mb-sm-0 mb-4">
                             <h6 class="mb-3">Khách hàng:</h6>
-                            <p class="mb-1">Thomas shelby</p>
-                            <p class="mb-1">718-986-6062</p>
-                            <p class="mb-0">peakyFBlinders@gmail.com</p>
+                            <p class="mb-1">{{$order->user->full_name}}</p>
+                            <p class="mb-1">{{$order->user->phone}}</p>
+                            <p class="mb-0">{{$order->user->email}}</p>
                         </div>
                         <div class="col-xl-6 col-md-12 col-sm-7 col-12">
                             <h6 class="mb-4">Hóa đơn:</h6>
@@ -71,19 +71,22 @@
                                 <tbody>
                                     <tr>
                                         <td class="pe-4">Tổng tiền:</td>
-                                        <td class="fw-medium">$12,110.55</td>
+                                        <td class="fw-medium">{{$order->total}}</td>
                                     </tr>
                                     <tr>
                                         <td class="pe-4">SĐT</td>
-                                        <td>American Bank</td>
+                                        <td>{{$order->user->phone}}</td>
                                     </tr>
                                     <tr>
                                         <td class="pe-4">Địa chỉ:</td>
-                                        <td>United States</td>
+                                        <td>{{$order->address->address_detail}}, {{$order->address->ward}},
+                                            {{$order->address->district}},
+                                            {{$order->address->provinces}}
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="pe-4">Phương thức thanh toán:</td>
-                                        <td>Tiền mặt</td>
+                                        <td>{{$order->formality === 1 ? 'Thanh toán VNPAY' : 'Thanh toán tiền mặt'}}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -102,56 +105,36 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                            <td>1</td>
-                                <td class="text-nowrap">Vuexy Admin Template</td>
-
-                                <td>$32</td>
-                                <td>1</td>
-                                <td>$32.00</td>
-                            </tr>
-                            <tr>
-                            <td>2</td>
-                                <td class="text-nowrap">Frest Admin Template</td>
-
-                                <td>$22</td>
-                                <td>1</td>
-                                <td>$22.00</td>
-                            </tr>
-                            <tr>
-                            <td>3</td>
-                                <td class="text-nowrap">Apex Admin Template</td>
-
-                                <td>$17</td>
-                                <td>2</td>
-                                <td>$34.00</td>
-                            </tr>
-                            <tr>
-                            <td>4</td>
-                                <td class="text-nowrap">Robust Admin Template</td>
-
-                                <td>$66</td>
-                                <td>1</td>
-                                <td>$66.00</td>
-                            </tr>
-                            <tr>
-                                <td colspan="3" class="align-top px-4 py-4">
-                                    <p class="mb-2 mt-3">
-                                        <span class="ms-3 fw-medium">Người bán:</span>
-                                        <span>Laptop</span>
-                                    </p>
-                                    <span class="ms-3">Cảm ơn vì đã mua hàng </span>
-                                </td>
-                                <td class="text-end pe-3 py-4">
-                                    <p class="mb-2 pt-3">Tổng tạm</p>
-                                    <p class="mb-2">Giảm giá</p>
-                                    <p class="mb-0 pb-3"><strong>Tổng:</strong></p>
-                                </td>
-                                <td class="ps-2 py-4">
-                                    <p class="fw-medium mb-2 pt-3">$154.25</p>
-                                    <p class="fw-medium mb-2">$50.00</p>
-                                    <p class="fw-medium mb-0 pb-3"><strong>$204.25</strong></p>
-                                </td>
+                            @foreach($order->products as $product)
+                                <tr>
+                                    <td><img src="/{{$product->firstImage->url ?? '<span class="avatar-initial rounded-circle bg-label-success">P</span>'}}"
+                                            alt={{$product->name}} width="100"></td>
+                                    <td>{{ $product->name }}</td>
+                                    <td>{{ $product->pivot->quantity }}</td>
+                                    <td>{{ number_format($product->pivot->price, 0, ',', '.') . ' đ' }}</td>
+                                    <td>{{ number_format($product->pivot->price * $product->pivot->quantity, 0, ',', '.') . ' đ'  }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                            <td colspan="3" class="align-top px-4 py-4">
+                                <p class="mb-2 mt-3">
+                                    <span class="ms-3 fw-medium">Người bán:</span>
+                                    <span>Thành & Nghĩa</span>
+                                </p>
+                                <span class="ms-3">Cảm ơn vì đã mua hàng </span>
+                            </td>
+                            <td class="text-end pe-3 py-4">
+                                <p class="mb-2 ">Tổng tạm:</p>
+                                <p class="mb-2">Giảm giá:</p>
+                                <p class="mb-0 pb-3"><strong>Tổng:</strong></p>
+                            </td>
+                            <td class="ps-2 py-4">
+                                <p class="fw-medium mb-2 pt-3">
+                                    {{number_format($order->subtotal, 0, ',', '.') . ' đ' }}
+                                </p>
+                                <p class="fw-medium mb-2">{{number_format($order->discount, 0, ',', '.') . ' đ'}}</p>
+                                <p class="fw-medium mb-0 pb-3"><strong>{{$order->total}}</strong></p>
+                            </td>
                             </tr>
                         </tbody>
                     </table>
@@ -160,7 +143,7 @@
                 <div class="card-body mx-3">
                     <div class="row">
                         <div class="col-12">
-                            <span class="fw-medium">Ghi chú:</span>
+                            <span class="fw-medium">Ghi chú: {{$order->note}}</span>
                             <span></span>
                         </div>
                     </div>
@@ -173,14 +156,14 @@
         <div class="col-xl-3 col-md-4 col-12 invoice-actions">
             <div class="card">
                 <div class="card-body">
-                    <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas"
+                    <!-- <button class="btn btn-primary d-grid w-100 mb-2" data-bs-toggle="offcanvas"
                         data-bs-target="#sendInvoiceOffcanvas">
                         <span class="d-flex align-items-center justify-content-center text-nowrap"><i
                                 class="ti ti-send ti-xs me-2"></i>Gửi đến</span>
                     </button>
-                    <button class="btn btn-label-secondary d-grid w-100 mb-2">Tải xuống</button>
+                    <button class="btn btn-label-secondary d-grid w-100 mb-2">Tải xuống</button> -->
                     <a class="btn btn-label-secondary d-grid w-100 mb-2" target="_blank"
-                        href="/admin/orders/1/print">
+                        href="/admin/orders/{{$order->id}}/print">
                         In hóa đơn
                     </a>
 
@@ -194,18 +177,18 @@
     <!-- Send Invoice Sidebar -->
     <div class="offcanvas offcanvas-end" id="sendInvoiceOffcanvas" aria-hidden="true">
         <div class="offcanvas-header my-1">
-            <h5 class="offcanvas-title">Send Invoice</h5>
+            <h5 class="offcanvas-title">Gửi hóa đơn đến</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body pt-0 flex-grow-1">
             <form>
                 <div class="mb-3">
-                    <label for="invoice-from" class="form-label">From</label>
+                    <label for="invoice-from" class="form-label">Từ</label>
                     <input type="text" class="form-control" id="invoice-from" value="shelbyComapny@email.com"
                         placeholder="company@email.com')}}" />
                 </div>
                 <div class="mb-3">
-                    <label for="invoice-to" class="form-label">To</label>
+                    <label for="invoice-to" class="form-label">Nhận</label>
                     <input type="text" class="form-control" id="invoice-to" value="qConsolidated@email.com"
                         placeholder="company@email.com')}}" />
                 </div>

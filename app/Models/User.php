@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable, HasRoles, SoftDeletes, HasApiTokens;
@@ -52,11 +54,12 @@ class User extends Authenticatable implements MustVerifyEmail
     // {
     //     return \Carbon\Carbon::parse($value)->format('d/m/Y');
     // }
+
     protected function birthday(): Attribute
     {
         return Attribute::make(
-            get: fn (string $value) => \Carbon\Carbon::parse($value)->format('d/m/Y'),
-            set: fn (string $value) => \Carbon\Carbon::parse($value)->format('Y-m-d'),
+            get: fn($value) => $value ? Carbon::parse($value)->format('d/m/Y') : null,
+            set: fn($value) => $value ? Carbon::parse($value)->format('Y-m-d') : null,
         );
     }
 
@@ -66,12 +69,18 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
 
-    public function orders(){
+    public function orders()
+    {
         return $this->hasMany(Order::class);
     }
 
-    public function reviews(){
+    public function reviews()
+    {
         return $this->hasMany(Review::class);
+    }
+
+    public function groups(){
+        return $this->belongsToMany(Group::class, 'group_users', 'user_id', 'group_id');
     }
 
 }

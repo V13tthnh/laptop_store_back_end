@@ -4,12 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUpdateRoleRequest;
 use Request;
+use DB;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Yajra\DataTables\DataTables;
+use Illuminate\Routing\Controllers\Middleware;
 
-class RoleController extends Controller
+class RoleController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(middleware: 'permission:thêm vai trò|sửa vai trò|xóa vai trò', only: ['index', 'store']),
+            new Middleware(middleware: 'permission:thêm vai trò', only: ['create', 'store']),
+            new Middleware(middleware: 'permission:sửa vai trò', only: ['edit', 'update']),
+            new Middleware(middleware: 'permission:xóa vai trò', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $roles = Role::with('permissions')->get();
@@ -26,21 +38,26 @@ class RoleController extends Controller
 
     public function store(StoreUpdateRoleRequest $request)
     {
-        $role = new Role;
-        $role->name = $request->name;
-        $role->save();
+        $role = Role::create(['name' => $request->name]);
 
+        if ($request->has('permissions')) {
+            $permissions = Permission::whereIn('id', $request->permissions)->get();
+            $role->syncPermissions($permissions);
+        }
 
-        $role->asyncPermission($request->permissions);
         return response()->json([
             'success' => 200,
-            'message' => 'Thêm thành công'
+            'message' => 'Thêm thành công.'
         ]);
     }
 
     public function edit(string $id)
     {
-        $role = Role::find($id);
+        $role = Role::with('permissions')->find($id);
+        if (!$role) {
+            return response()->json(['message' => 'Role not found'], 404);
+        }
+
         if (empty($role)) {
             return response()->json([
                 'success' => 404,
@@ -49,22 +66,20 @@ class RoleController extends Controller
         }
         return response()->json([
             'success' => 200,
-            'data' => $role
+            'data' => $role,
         ]);
     }
 
     public function update(StoreUpdateRoleRequest $request, string $id)
     {
-        $request->validate([
-            'permissions' => 'required'
-        ]);
-
-        $permissions = explode(',', $request->permissions); // Chuyển đổi chuỗi thành mảng
-        $permissions = array_map('intval', $permissions);
-
         $role = Role::findOrFail($id);
-        $role->syncPermissions($permissions);
+        $role->name = $request->name;
+        $role->save();
 
+        if ($request->has('permissions')) {
+            $permissions = Permission::whereIn('id', $request->permissions)->get();
+            $role->syncPermissions($permissions);
+        }
         if (empty($role)) {
             return response()->json([
                 'success' => 404,

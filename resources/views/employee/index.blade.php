@@ -32,6 +32,11 @@
     const select2ForEditRole = $('.edit-user-role-select2');
     const formDataStore = new FormData();
     const formDataUpdate = new FormData();
+    const selectPicker = $('.selectpicker');
+
+    if (selectPicker.length) {
+        selectPicker.selectpicker();
+    }
 
 
     if (userAddBirthday || userEditBirthday) {
@@ -102,7 +107,7 @@
                                 '</div>' +
                                 '</div>' +
                                 '<div class="d-flex flex-column">' +
-                                '<a href="/admin/employees/'+full['id']+'" class="text-body text-truncate"><span class="fw-medium">' +
+                                '<a href="/admin/employees/' + full['id'] + '" class="text-body text-truncate"><span class="fw-medium">' +
                                 $name +
                                 '</span></a>' +
                                 '<small class="text-muted">' +
@@ -162,7 +167,7 @@
                                 '<a href="javascript:;" class="text-body dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm mx-1"></i></a>' +
                                 '<div class="dropdown-menu dropdown-menu-end m-0">' +
                                 // '<a href="" class="dropdown-item">Xem chi tiết</a>' +
-                                '<a href="{{route('roles.index')}}" class="dropdown-item">Phân quyền</a>' +
+                                '<button class="dropdown-item" data-bs-target="#addRoleModal" data-bs-toggle="modal">Phân quyền</button>' +
                                 '</div>' +
                                 '</div>'
                             );
@@ -211,8 +216,7 @@
                                 text: '<i class="ti ti-printer me-2" ></i>Print',
                                 className: 'dropdown-item',
                                 exportOptions: {
-                                    columns: [1, 2, 3, 4, 5],
-                                    // prevent avatar to be print
+                                    columns: [0, 1, 2, 3, 4],
                                     format: {
                                         body: function (inner, coldex, rowdex) {
                                             if (inner.length <= 0) return inner;
@@ -248,7 +252,7 @@
                                 text: '<i class="ti ti-file-text me-2" ></i>Csv',
                                 className: 'dropdown-item',
                                 exportOptions: {
-                                    columns: [1, 2, 3, 4, 5],
+                                    columns: [0, 1, 2, 3, 4],
                                     // prevent avatar to be display
                                     format: {
                                         body: function (inner, coldex, rowdex) {
@@ -272,7 +276,7 @@
                                 text: '<i class="ti ti-file-spreadsheet me-2"></i>Excel',
                                 className: 'dropdown-item',
                                 exportOptions: {
-                                    columns: [1, 2, 3, 4, 5],
+                                    columns: [0, 1, 2, 3, 4],
                                     // prevent avatar to be display
                                     format: {
                                         body: function (inner, coldex, rowdex) {
@@ -296,7 +300,7 @@
                                 text: '<i class="ti ti-file-code-2 me-2"></i>Pdf',
                                 className: 'dropdown-item',
                                 exportOptions: {
-                                    columns: [1, 2, 3, 4, 5],
+                                    columns: [0, 1, 2, 3, 4],
                                     // prevent avatar to be display
                                     format: {
                                         body: function (inner, coldex, rowdex) {
@@ -320,7 +324,7 @@
                                 text: '<i class="ti ti-copy me-2" ></i>Copy',
                                 className: 'dropdown-item',
                                 exportOptions: {
-                                    columns: [1, 2, 3, 4, 5],
+                                    columns: [0, 1, 2, 3, 4],
                                     // prevent avatar to be display
                                     format: {
                                         body: function (inner, coldex, rowdex) {
@@ -451,8 +455,6 @@
                 $('#edit-user-gender').val(res.data.gender == 'nam' || 'Nam' ? 1 : res.data.gender == 'nữ' | 'Nữ' ? 2 : 3);
                 $('#edit-user-password').val(res.data.password);
                 $('#edit-user-role').val(res.data.roles[0].id);
-                $("#edit-user-role").trigger('change');
-
                 $('#edit-user-status').val(res.data.status);
             });
         });
@@ -500,11 +502,17 @@
         $('.datatables-users').on('click', '.delete-btn', function () {
             var id = $(this).val();
             Swal.fire({
-                title: 'Bạn muốn xóa mục này',
-                text: 'Dữ liệu bị xóa vẫn có thể khôi phục!',
+                title: 'Bạn có chắc không?',
+                text: "Dữ liệu này không thể khôi phục!",
                 icon: 'warning',
-                confirmButtonText: 'Đồng ý',
-                cancelButtonText: 'Hủy bỏ'
+                showCancelButton: true,
+                confirmButtonText: 'Đúng, Hãy xóa nó!',
+                cancelButtonText: 'Hủy',
+                customClass: {
+                    confirmButton: 'btn btn-primary me-3 waves-effect waves-light',
+                    cancelButton: 'btn btn-label-secondary waves-effect waves-light'
+                },
+                buttonsStyling: false
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
@@ -540,15 +548,12 @@
         //Notification if request successfully
         function successfulNotification(message) {
             Swal.fire({
-                position: 'top-end',
                 icon: 'success',
-                title: message,
-                showConfirmButton: false,
-                timer: 1500,
+                title: 'Đã xóa thành công!',
+                text: 'Bảng nhân viên đã được cập nhật.',
                 customClass: {
-                    confirmButton: 'btn btn-primary waves-effect waves-light'
-                },
-                buttonsStyling: false
+                    confirmButton: 'btn btn-success waves-effect waves-light'
+                }
             });
         }
 
@@ -723,14 +728,12 @@
                         <div class="text-danger add-user-phone-error"></div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label" for="add-user-gender">Giới tính<span style="color: red">
-                                *</span></label>
-                        <select id="add-user-gender" class="form-select">
+                        <label for="add-user-gender" class="form-label">Giới tính</label>
+                        <select id="add-user-gender" class="selectpicker w-100" data-style="btn-default">
                             <option selected value="1">Nam</option>
                             <option value="2">Nữ</option>
                             <option value="3">Khác</option>
                         </select>
-                        <div class="text-danger edit-user-status-error"></div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="add-user-avatar">Ảnh đại diện</label>
@@ -739,18 +742,18 @@
                         <div class="text-danger add-user-avatar-error"></div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label" for="user-role">Vai trò</label>
-                        <select id="add-user-role" class="add-user-role-select2 form-select">
+                        <label for="add-user-role" class="form-label">Vai trò</label>
+                        <select id="add-user-role" class="selectpicker w-100" data-style="btn-default">
                             <option disabled selected value="0">Chọn vai trò</option>
                             @foreach ($roles as $role)
                                 <option value="{{$role->id}}">{{$role->name}}</option>
                             @endforeach
                         </select>
-                        <div class="text-danger add-user-role-error"></div>
                     </div>
+
                     <div class="mb-3">
-                        <label class="form-label" for="user-status">Trạng thái<span style="color: red"> *</span></label>
-                        <select id="add-user-status" class="form-select">
+                        <label class="form-label" for="add-user-status">Trạng thái</label>
+                        <select id="add-user-status" class="selectpicker w-100" data-style="btn-default">
                             <option selected value="1">Hoạt động</option>
                             <option value="0">Không hoạt động</option>
                         </select>
@@ -801,7 +804,7 @@
                     <div class="mb-3">
                         <label class="form-label" for="edit-user-gender">Giới tính<span style="color: red">
                                 *</span></label>
-                        <select id="edit-user-gender" class="form-select">
+                        <select id="edit-user-gender" class="selectpicker w-100" data-style="btn-default">
                             <option selected value="1">Nam</option>
                             <option value="2">Nữ</option>
                             <option value="3">Khác</option>
@@ -816,7 +819,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="edit-user-role">Vai trò</label>
-                        <select id="edit-user-role" class="edit-user-role-select2 form-select">
+                        <select id="edit-user-role" class="selectpicker w-100" data-style="btn-default">
                             <option disabled selected value="0">Chọn vai trò</option>
                             @foreach ($roles as $role)
                                 <option value="{{$role->id}}">{{$role->name}}</option>
@@ -827,7 +830,7 @@
                     <div class="mb-3">
                         <label class="form-label" for="edit-user-status">Trạng thái<span style="color: red">
                                 *</span></label>
-                        <select id="edit-user-status" class="form-select">
+                        <select id="edit-user-status" class="selectpicker w-100" data-style="btn-default">
                             <option selected value="1">Hoạt động</option>
                             <option value="0">Không hoạt động</option>
                         </select>
@@ -836,6 +839,61 @@
                     <button type="submit" id="update-btn" class="btn btn-primary me-sm-3 me-1 data-submit">Lưu</button>
                     <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">Hủy</button>
                 </form>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="addRoleModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-add-new-role">
+                <div class="modal-content p-3 p-md-5">
+                    <button type="button" class="btn-close btn-pinned" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                    <div class="modal-body">
+                        <div class="text-center mb-4">
+                            <h3 class="role-title mb-2">Thêm vai trò mới</h3>
+                            <p class="text-muted">Cài đặt quyền cho vai trò</p>
+                        </div>
+                        <!-- Add role form -->
+                        <form id="addRoleForm" class="row g-3" onsubmit="return false">
+                            <div class="col-12">
+                                <h5>Chọn quyền</h5>
+                                <!-- Permission table -->
+                                <div class="table-responsive">
+                                    <table class="table table-flush-spacing">
+                                        <tbody>
+                                            @foreach ($roles as $role)
+                                                <tr>
+                                                    <td class="text-nowrap fw-medium">{{$role->name}}</td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            @foreach ($role->permissions as $permission)
+                                                                <div class="form-check me-3 me-lg-5">
+                                                                    <input class="form-check-input" type="checkbox"
+                                                                        id="contentManagementRead" />
+                                                                    <label class="form-check-label" for="contentManagementRead">
+                                                                        {{$permission->name}} </label>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- Permission table -->
+                            </div>
+                            <div class="col-12 text-center mt-4">
+                                <button type="submit" class="btn btn-primary me-sm-3 me-1" id="add-btn">Lưu</button>
+                                <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                    Huỷ
+                                </button>
+                            </div>
+                        </form>
+                        <!--/ Add role form -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>

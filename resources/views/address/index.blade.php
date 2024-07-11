@@ -161,7 +161,7 @@
                                 text: '<i class="ti ti-printer me-2" ></i>Print',
                                 className: 'dropdown-item',
                                 exportOptions: {
-                                    columns: [1, 2, 3],
+                                    columns: [0, 1, 2, 3, 4, 5],
                                     // prevent avatar to be print
                                     format: {
                                         body: function (inner, coldex, rowdex) {
@@ -198,7 +198,7 @@
                                 text: '<i class="ti ti-file-text me-2" ></i>Csv',
                                 className: 'dropdown-item',
                                 exportOptions: {
-                                    columns: [1, 2, 3],
+                                    columns: [0, 1, 2, 3, 4, 5],
                                     // prevent avatar to be display
                                     format: {
                                         body: function (inner, coldex, rowdex) {
@@ -222,8 +222,7 @@
                                 text: '<i class="ti ti-file-spreadsheet me-2"></i>Excel',
                                 className: 'dropdown-item',
                                 exportOptions: {
-                                    columns: [1, 2, 3],
-                                    // prevent avatar to be display
+                                    columns: [0, 1, 2, 3, 4, 5],
                                     format: {
                                         body: function (inner, coldex, rowdex) {
                                             if (inner.length <= 0) return inner;
@@ -246,8 +245,7 @@
                                 text: '<i class="ti ti-file-code-2 me-2"></i>Pdf',
                                 className: 'dropdown-item',
                                 exportOptions: {
-                                    columns: [1, 2, 3],
-                                    // prevent avatar to be display
+                                    columns: [0, 1, 2, 3, 4, 5],
                                     format: {
                                         body: function (inner, coldex, rowdex) {
                                             if (inner.length <= 0) return inner;
@@ -270,8 +268,7 @@
                                 text: '<i class="ti ti-copy me-2" ></i>Copy',
                                 className: 'dropdown-item',
                                 exportOptions: {
-                                    columns: [1, 2, 3],
-                                    // prevent avatar to be display
+                                    columns: [0, 1, 2, 3, 4, 5],
                                     format: {
                                         body: function (inner, coldex, rowdex) {
                                             if (inner.length <= 0) return inner;
@@ -418,9 +415,7 @@
             }
         });
 
-
-
-        //add new user
+        //add new address
         $('#add-btn').click(function (e) {
             e.preventDefault();
 
@@ -461,15 +456,21 @@
             });
         });
 
-        //delete employee
+        //delete address
         $('.datatables-addresses').on('click', '.delete-btn', function () {
             var id = $(this).val();
             Swal.fire({
-                title: 'Bạn muốn xóa mục này',
-                text: 'Dữ liệu bị xóa vẫn có thể khôi phục!',
+                title: 'Bạn có chắc không?',
+                text: "Dữ liệu này không thể khôi phục!",
                 icon: 'warning',
-                confirmButtonText: 'Đồng ý',
-                cancelButtonText: 'Hủy bỏ'
+                showCancelButton: true,
+                confirmButtonText: 'Đúng, Hãy xóa nó!',
+                cancelButtonText: 'Hủy',
+                customClass: {
+                    confirmButton: 'btn btn-primary me-3 waves-effect waves-light',
+                    cancelButton: 'btn btn-label-secondary waves-effect waves-light'
+                },
+                buttonsStyling: false
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
@@ -505,15 +506,12 @@
         //Notification if request successfully
         function successfulNotification(message) {
             Swal.fire({
-                position: 'top-end',
                 icon: 'success',
-                title: message,
-                showConfirmButton: false,
-                timer: 1500,
+                title: 'Đã xóa thành công!',
+                text: 'Địa chỉ đã được cập nhật.',
                 customClass: {
-                    confirmButton: 'btn btn-primary waves-effect waves-light'
-                },
-                buttonsStyling: false
+                    confirmButton: 'btn btn-success waves-effect waves-light'
+                }
             });
         }
 
@@ -599,6 +597,7 @@
 
 @section('main-content')
 <div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="py-3 mb-4"><span class="text-muted fw-light">Trang chủ /</span> Sổ địa chỉ</h4>
     <!-- Suppliers List Table -->
     <div class="card">
         <div class="card-datatable table-responsive">

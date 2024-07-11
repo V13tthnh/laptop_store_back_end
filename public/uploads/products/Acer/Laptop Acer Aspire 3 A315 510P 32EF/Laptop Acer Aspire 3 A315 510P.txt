@@ -1,0 +1,151 @@
+Product::create([
+    'name' => 'Laptop Acer Aspire 5 A515-56-36UT i3 N305/8GB/256GB/Win11 (NX.A84SV.001)',
+    'SKU' => '5893204567',
+    'slug' => 'acer-aspire-5-a515-56-36ut-i3-n305#top-color-images-gallery-1173',
+    'description' => 'Laptop Acer Aspire 5 A515-56-36UT i3 N305 là lựa chọn lý tưởng cho học tập và làm việc với hiệu năng ổn định, màn hình sắc nét và các tính năng hiện đại.',
+    'featured' => 1,
+    'status' => 1,
+    'brand_id' => 4,
+    'category_id' => 8,
+]);
+
+ProductSpecificationDetail::create([//công nghệ cpu
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => 'Intel Core i3 Alder Lake chuỗi N - N305',
+]);
+ProductSpecificationDetail::create([//số nhân
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => '8',
+]);
+ProductSpecificationDetail::create([//số luồng
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => '8',
+]);
+ProductSpecificationDetail::create([//tốc độ cpu
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => 'Hãng không công bố',
+]);
+ProductSpecificationDetail::create([//tốc độ tối đa
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => 'Turbo Boost 3.8 GHz',
+]);
+ProductSpecificationDetail::create([//bộ nhớ đệm
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => '6 MB',
+]);
+ProductSpecificationDetail::create([//ram
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => '8 GB',
+]);
+ProductSpecificationDetail::create([//loại ram
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => 'LPDDR5 (Onboard)',
+]);
+ProductSpecificationDetail::create([//tốc độ bus ram
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => '4800 MHz',
+]);
+ProductSpecificationDetail::create([//hỗ trợ ram tối đa
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => 'Không hỗ trợ nâng cấp',
+]);
+ProductSpecificationDetail::create([//ổ cứng
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => '256 GB SSD NVMe PCIe (Có thể tháo ra, lắp thanh khác tối đa 1 TB)',
+]);
+ProductSpecificationDetail::create([//màn hình
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => '15.6 inch',
+]);
+ProductSpecificationDetail::create([//độ phân giải
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => 'Full HD (1920 x 1080)',
+]);
+ProductSpecificationDetail::create([//tần số quét
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => '60 Hz',
+]);
+ProductSpecificationDetail::create([//công nghệ màn hình
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => 'Tấm nền IPS, Acer ComfyView',
+]);
+ProductSpecificationDetail::create([//card màn hình
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => 'Card tích hợp - Intel UHD Graphics',
+]);
+ProductSpecificationDetail::create([//công nghệ âm thanh
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => 'Stereo speakers',
+]);
+ProductSpecificationDetail::create([//cổng giao tiếp
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => 'Jack tai nghe 3.5 mm, 2 x USB 3.2, HDMI, 1 x USB Type-C (hỗ trợ USB 3.2, DisplayPort)',
+]);
+ProductSpecificationDetail::create([//kết nối không dây
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => 'Wi-Fi 6 (802.11ax), Bluetooth',
+]);
+ProductSpecificationDetail::create([//webcam
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => 'HD webcam',
+]);
+ProductSpecificationDetail::create([//đèn bàn phím
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => 'Không có',
+]);
+ProductSpecificationDetail::create([//kích thước
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => 'Dài 362.9 mm - Rộng 237.5 mm - Dày 18.9 mm',
+]);
+ProductSpecificationDetail::create([//khối lượng tịnh
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => '1.7 kg',
+]);
+ProductSpecificationDetail::create([//chất liệu
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => 'Vỏ nhựa',
+]);
+ProductSpecificationDetail::create([//thông tin pin
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => '40 Wh',
+]);
+ProductSpecificationDetail::create([//công suất bộ sạc
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => '45 W',
+]);
+ProductSpecificationDetail::create([ //hệ điều hành
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => 'Windows 11 Home SL',
+]);
+ProductSpecificationDetail::create([ //thời điểm ra mắt
+    'product_id' => '',
+    'product_specification_id' => '',
+    'value' => '2023',
+]);

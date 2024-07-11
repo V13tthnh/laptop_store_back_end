@@ -196,30 +196,7 @@
                         }
                     }
                 },
-                initComplete: function () {
-                    // Adding role filter once table initialized
-                    this.api()
-                        .columns(1)
-                        .every(function () {
-                            var column = this;
-                            var select = $(
-                                '<select id="UserRole" class="form-select text-capitalize"><option value=""> Chọn quyền </option></select>'
-                            )
-                                .appendTo('.user_role')
-                                .on('change', function () {
-                                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                                    column.search(val ? '^' + val + '$' : '', true, false).draw();
-                                });
 
-                            column
-                                .data()
-                                .unique()
-                                .sort()
-                                .each(function (d, j) {
-                                    select.append('<option value="' + d + '" class="text-capitalize">' + d + '</option>');
-                                });
-                        });
-                }
             });
         }
         // Filter form control to default size
@@ -232,23 +209,26 @@
         //For store role
         $('#add-btn').click(function (e) {
             e.preventDefault();
-            var name = $('#store-name').val();
+            let roleName = $('#store-name').val();
+            var selectedPermissions = [];
 
-            formDataStore.append("_token", "{{csrf_token()}}");
-            formDataStore.append("name", name);
+            $('.check-store-permission:checked').each(function () {
+                selectedPermissions.push($(this).val());
+            });
 
             $.ajax({
-                url: "{{route('roles.store')}}",
-                method: "post",
-                data: formDataStore,
-                contentType: false,
-                processData: false,
-            }).done(function (res) {
-                if (res.success == 200) {
+                url: '{{route('roles.store')}}',
+                type: 'POST',
+                data: {
+                    'name': roleName,
+                    'permissions': selectedPermissions,
+                    '_token': '{{ csrf_token() }}'
+                },
+                success: function (response) {
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
-                        title: res.message,
+                        title: "Thêm thành công.",
                         showConfirmButton: false,
                         timer: 1500,
                         customClass: {
@@ -256,16 +236,35 @@
                         },
                         buttonsStyling: false
                     });
-                    $('#addRoleModal').modal('hide');
+                    $('#store-name').modal('hide');
+                    $('.check-update-permission').prop('checked', false);
                     dtRole.ajax.reload();
+                    $('#addRoleModal').modal('hide');
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: "Có lỗi xảy ra vui lỏng thử lại sau.",
+                        showConfirmButton: false,
+                        timer: 1500,
+                        customClass: {
+                            confirmButton: 'btn btn-primary waves-effect waves-light'
+                        },
+                        buttonsStyling: false
+                    });
                 }
-            }).fail(function (res) {
-                var errors = res.responseJSON.errors;
-                $('#create-form').addClass('was-validated');
-                $.each(errors, function (key, value) {
-                    $('.store-' + key + '-error').text(value[0]);
-                });
             });
+        });
+
+        $('#addRoleModal').on('hidden.bs.modal', function () {
+            $('#store-name').modal('hide');
+            $('.check-update-permission').prop('checked', false);
+        });
+
+        $('#editRoleModal').on('hidden.bs.modal', function () {
+            $('#update-name').modal('hide');
+            $('.check-update-permission').prop('checked', false);
         });
 
         //For edit category
@@ -275,12 +274,12 @@
                 url: "roles/" + id + "/edit",
                 method: "get",
             }).done(function (res) {
-                if (res.success !== 200) {
-                    Swal.fire({ title: res.message, icon: 'error', confirmButtonText: 'OK' });
-                    return;
-                }
                 $('#update-id').val(res.data.id);
                 $('#update-name').val(res.data.name);
+                console.log(res.data);
+                res.data.permissions.forEach(function (permission) {
+                    $(`#update-check-permission-${permission.id}`).prop('checked', true); // Check the permissions
+                });
             });
         });
 
@@ -290,7 +289,8 @@
             var id = $('#update-id').val();
             var name = $('#update-name').val();
             var permissions = [];
-            $('.update-permissions:checked').each(function () {
+
+            $('.check-update-permissions:checked').each(function () {
                 permissions.push($(this).val());
             });
 
@@ -301,27 +301,26 @@
             $.ajax({
                 url: 'roles/' + id + '/update',
                 method: "post",
-                data: formDataUpdate,
-                contentType: false,
-                processData: false,
+                data: {
+                    'name': name,
+                    'permissions': permissions,
+                    '_token': '{{ csrf_token() }}'
+                },
             }).done(function (res) {
-                if (res.success == 200) {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: res.message,
-                        showConfirmButton: false,
-                        timer: 1500,
-                        customClass: {
-                            confirmButton: 'btn btn-primary waves-effect waves-light'
-                        },
-                        buttonsStyling: false
-                    });
-                    $('#editRoleModal').modal('hide');
-                    dtRole.ajax.reload();
-                } else {
-                    return;
-                }
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: res.message,
+                    showConfirmButton: false,
+                    timer: 1500,
+                    customClass: {
+                        confirmButton: 'btn btn-primary waves-effect waves-light'
+                    },
+                    buttonsStyling: false
+                });
+                $('#editRoleModal').modal('hide');
+                dtRole.ajax.reload();
+
             }).fail(function (res) {
                 var errors = res.responseJSON.errors;
                 $('#create-form').addClass('was-validated');
@@ -467,498 +466,103 @@
                             <!-- Permission table -->
                             <div class="table-responsive">
                                 <table class="table table-flush-spacing">
-                                    <tbody>
-                                        <tr>
-                                            <td class="text-nowrap fw-medium">
-                                                Quản trị viên
-                                                <i class="ti ti-info-circle" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top"
-                                                    title="Cho phép truy cập toàn bộ hệ thống"></i>
-                                            </td>
-                                            <td>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="selectAll" />
-                                                    <label class="form-check-label" for="selectAll"> Select All </label>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-nowrap fw-medium">Quản lý người dùng</td>
-                                            <td>
-                                                <div class="d-flex">
-                                                    @foreach ($permissions as $permission)
-
+                                    <tbody class="permissions-table">
+                                        @foreach ($permissions as $permission)
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex">
                                                         <div class="form-check me-3 me-lg-5">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                class="store-permissions[]" id="userManagementRead"
-                                                                value={{$permission->id}} />
-                                                            <label class="form-check-label" for="userManagementRead">
+                                                            <input class="form-check-input check-store-permission"
+                                                                type="checkbox" id="{{$permission->id}}"
+                                                                name="permissions[]" value="{{$permission->id}}" />
+                                                            <label class="form-check-label" for="{{$permission->id}}">
+                                                                {{$permission->name}} </label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- Permission table -->
+                        </div>
+                        <div class="col-12 text-center mt-4">
+                            <button type="submit" class="btn btn-primary me-sm-3 me-1" id="add-btn">Lưu</button>
+                            <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                                aria-label="Close">
+                                Huỷ
+                            </button>
+                        </div>
+                    </form>
+                    <!--/ Add role form -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ Add Role Modal -->
+
+    <!-- Edit Role Modal -->
+    <div class="modal fade" id="editRoleModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-add-new-role">
+            <div class="modal-content p-3 p-md-5">
+                <button type="button" class="btn-close btn-pinned" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <h3 class="role-title mb-2">Sửa vai trò</h3>
+                        <p class="text-muted">Cài đặt quyền cho vai trò</p>
+                    </div>
+                    <!-- Edit role form -->
+                    <form id="addRoleForm" class="row g-3" onsubmit="return false">
+                        <div class="col-12 mb-4">
+                            <label class="form-label" for="modalRoleName">Tên vai trò</label>
+                            <input type="number" id="update-id" hidden />
+                            <input type="text" id="update-name" name="modalRoleName" class="form-control"
+                                placeholder="Tên vai trò" tabindex="-1" />
+                            <div class="text-danger update-name-error"></div>
+                        </div>
+                        <div class="col-12">
+                            <h5>Chọn quyền</h5>
+                            <!-- Permission table -->
+                            <div class="table-responsive">
+                                <table class="table table-flush-spacing">
+                                    <tbody>
+                                        @foreach ($permissions as $index => $permission)
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <div class="form-check me-3 me-lg-5">
+                                                            <input class="form-check-input check-update-permissions"
+                                                                type="checkbox"
+                                                                id="update-check-permission-{{$permission->id}}"
+                                                                name="permissions[]" value="{{$permission->id}}" />
+                                                            <label class="form-check-label"
+                                                                for="permission{{$permission->id}}">
                                                                 {{$permission->name}}
                                                             </label>
                                                         </div>
-                                                        <!-- <div class="form-check me-3 me-lg-5">
-                                                                    <input class="form-check-input" type="checkbox"
-                                                                        id="userManagementWrite" />
-                                                                    <label class="form-check-label" for="userManagementWrite"> Write
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox"
-                                                                        id="userManagementCreate" />
-                                                                    <label class="form-check-label" for="userManagementCreate">
-                                                                        Tạo </label> -->
-
-                                                    @endforeach
-                                                </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
-                            </td>
-                            </tr>
-                            <tr>
-                                <td class="text-nowrap fw-medium">Content Management</td>
-                                <td>
-                                    <div class="d-flex">
-                                        <div class="form-check me-3 me-lg-5">
-                                            <input class="form-check-input" type="checkbox"
-                                                id="contentManagementRead" />
-                                            <label class="form-check-label" for="contentManagementRead">
-                                                Read </label>
-                                        </div>
-                                        <div class="form-check me-3 me-lg-5">
-                                            <input class="form-check-input" type="checkbox"
-                                                id="contentManagementWrite" />
-                                            <label class="form-check-label" for="contentManagementWrite">
-                                                Write </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox"
-                                                id="contentManagementCreate" />
-                                            <label class="form-check-label" for="contentManagementCreate">
-                                                Create </label>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-nowrap fw-medium">Disputes Management</td>
-                                <td>
-                                    <div class="d-flex">
-                                        <div class="form-check me-3 me-lg-5">
-                                            <input class="form-check-input" type="checkbox" id="dispManagementRead" />
-                                            <label class="form-check-label" for="dispManagementRead"> Read
-                                            </label>
-                                        </div>
-                                        <div class="form-check me-3 me-lg-5">
-                                            <input class="form-check-input" type="checkbox" id="dispManagementWrite" />
-                                            <label class="form-check-label" for="dispManagementWrite"> Write
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="dispManagementCreate" />
-                                            <label class="form-check-label" for="dispManagementCreate">
-                                                Create </label>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-nowrap fw-medium">Database Management</td>
-                                <td>
-                                    <div class="d-flex">
-                                        <div class="form-check me-3 me-lg-5">
-                                            <input class="form-check-input" type="checkbox" id="dbManagementRead" />
-                                            <label class="form-check-label" for="dbManagementRead"> Read
-                                            </label>
-                                        </div>
-                                        <div class="form-check me-3 me-lg-5">
-                                            <input class="form-check-input" type="checkbox" id="dbManagementWrite" />
-                                            <label class="form-check-label" for="dbManagementWrite"> Write
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="dbManagementCreate" />
-                                            <label class="form-check-label" for="dbManagementCreate"> Create
-                                            </label>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-nowrap fw-medium">Financial Management</td>
-                                <td>
-                                    <div class="d-flex">
-                                        <div class="form-check me-3 me-lg-5">
-                                            <input class="form-check-input" type="checkbox" id="finManagementRead" />
-                                            <label class="form-check-label" for="finManagementRead"> Read
-                                            </label>
-                                        </div>
-                                        <div class="form-check me-3 me-lg-5">
-                                            <input class="form-check-input" type="checkbox" id="finManagementWrite" />
-                                            <label class="form-check-label" for="finManagementWrite"> Write
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="finManagementCreate" />
-                                            <label class="form-check-label" for="finManagementCreate">
-                                                Create </label>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-nowrap fw-medium">Reporting</td>
-                                <td>
-                                    <div class="d-flex">
-                                        <div class="form-check me-3 me-lg-5">
-                                            <input class="form-check-input" type="checkbox" id="reportingRead" />
-                                            <label class="form-check-label" for="reportingRead"> Read
-                                            </label>
-                                        </div>
-                                        <div class="form-check me-3 me-lg-5">
-                                            <input class="form-check-input" type="checkbox" id="reportingWrite" />
-                                            <label class="form-check-label" for="reportingWrite"> Write
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="reportingCreate" />
-                                            <label class="form-check-label" for="reportingCreate"> Create
-                                            </label>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-nowrap fw-medium">API Control</td>
-                                <td>
-                                    <div class="d-flex">
-                                        <div class="form-check me-3 me-lg-5">
-                                            <input class="form-check-input" type="checkbox" id="apiRead" />
-                                            <label class="form-check-label" for="apiRead"> Read </label>
-                                        </div>
-                                        <div class="form-check me-3 me-lg-5">
-                                            <input class="form-check-input" type="checkbox" id="apiWrite" />
-                                            <label class="form-check-label" for="apiWrite"> Write </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="apiCreate" />
-                                            <label class="form-check-label" for="apiCreate"> Create </label>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-nowrap fw-medium">Repository Management</td>
-                                <td>
-                                    <div class="d-flex">
-                                        <div class="form-check me-3 me-lg-5">
-                                            <input class="form-check-input" type="checkbox" id="repoRead" />
-                                            <label class="form-check-label" for="repoRead"> Read </label>
-                                        </div>
-                                        <div class="form-check me-3 me-lg-5">
-                                            <input class="form-check-input" type="checkbox" id="repoWrite" />
-                                            <label class="form-check-label" for="repoWrite"> Write </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="repoCreate" />
-                                            <label class="form-check-label" for="repoCreate"> Create
-                                            </label>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-nowrap fw-medium">Payroll</td>
-                                <td>
-                                    <div class="d-flex">
-                                        <div class="form-check me-3 me-lg-5">
-                                            <input class="form-check-input" type="checkbox" id="payrollRead" />
-                                            <label class="form-check-label" for="payrollRead"> Read </label>
-                                        </div>
-                                        <div class="form-check me-3 me-lg-5">
-                                            <input class="form-check-input" type="checkbox" id="payrollWrite" />
-                                            <label class="form-check-label" for="payrollWrite"> Write
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="payrollCreate" />
-                                            <label class="form-check-label" for="payrollCreate"> Create
-                                            </label>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                            </table>
+                            <!-- Permission table -->
                         </div>
-                        <!-- Permission table -->
+
                 </div>
                 <div class="col-12 text-center mt-4">
-                    <button type="submit" class="btn btn-primary me-sm-3 me-1" id="add-btn">Lưu</button>
+                    <button type="submit" class="btn btn-primary me-sm-3 me-1" id="update-btn">Lưu</button>
                     <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal" aria-label="Close">
                         Huỷ
                     </button>
                 </div>
                 </form>
-                <!--/ Add role form -->
+                <!--/ Edit role form -->
             </div>
         </div>
     </div>
-</div>
-<!--/ Add Role Modal -->
-
-<!-- Edit Role Modal -->
-<div class="modal fade" id="editRoleModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-add-new-role">
-        <div class="modal-content p-3 p-md-5">
-            <button type="button" class="btn-close btn-pinned" data-bs-dismiss="modal" aria-label="Close"></button>
-            <div class="modal-body">
-                <div class="text-center mb-4">
-                    <h3 class="role-title mb-2">Sửa vai trò</h3>
-                    <p class="text-muted">Cài đặt quyền cho vai trò</p>
-                </div>
-                <!-- Edit role form -->
-                <form id="addRoleForm" class="row g-3" onsubmit="return false">
-                    <div class="col-12 mb-4">
-                        <label class="form-label" for="modalRoleName">Tên vai trò</label>
-                        <input type="number" id="update-id" hidden />
-                        <input type="text" id="update-name" name="modalRoleName" class="form-control"
-                            placeholder="Tên vai trò" tabindex="-1" />
-                        <div class="text-danger update-name-error"></div>
-                    </div>
-                    <div class="col-12">
-                        <h5>Chọn quyền</h5>
-                        <!-- Permission table -->
-                        <div class="table-responsive">
-                            <table class="table table-flush-spacing">
-                                <tbody>
-                                    <tr>
-                                        <td class="text-nowrap fw-medium">
-                                            Quản trị viên
-                                            <i class="ti ti-info-circle" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" title="Cho phép truy cập toàn bộ hệ thống"></i>
-                                        </td>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="selectAll" />
-                                                <label class="form-check-label" for="selectAll"> Select All </label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-nowrap fw-medium">Quản lý người dùng</td>
-                                        <td>
-                                            <div class="d-flex">
-                                                @foreach ($permissions as $permission)
-                                                    <div class="form-check me-3 me-lg-5">
-                                                        <input class="form-check-input update-permissions" type="checkbox"
-                                                            name="update-permissions[]"
-                                                            value='{{$permission->id}}' />
-                                                        <label class="form-check-label" for="update-permissions">
-                                                            {{$permission->name}}
-                                                        </label>
-                                                    </div>
-                                                    <!-- <div class="form-check me-3 me-lg-5">
-                                                                    <input class="form-check-input" type="checkbox"
-                                                                        id="userManagementWrite" />
-                                                                    <label class="form-check-label" for="userManagementWrite"> Write
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox"
-                                                                        id="userManagementCreate" />
-                                                                    <label class="form-check-label" for="userManagementCreate">
-                                                                        Tạo </label> -->
-
-                                                @endforeach
-                                            </div>
-                        </div>
-                        </td>
-                        </tr>
-                        <tr>
-                            <td class="text-nowrap fw-medium">Content Management</td>
-                            <td>
-                                <div class="d-flex">
-                                    <div class="form-check me-3 me-lg-5">
-                                        <input class="form-check-input" type="checkbox" id="contentManagementRead" />
-                                        <label class="form-check-label" for="contentManagementRead">
-                                            Read </label>
-                                    </div>
-                                    <div class="form-check me-3 me-lg-5">
-                                        <input class="form-check-input" type="checkbox" id="contentManagementWrite" />
-                                        <label class="form-check-label" for="contentManagementWrite">
-                                            Write </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="contentManagementCreate" />
-                                        <label class="form-check-label" for="contentManagementCreate">
-                                            Create </label>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-nowrap fw-medium">Disputes Management</td>
-                            <td>
-                                <div class="d-flex">
-                                    <div class="form-check me-3 me-lg-5">
-                                        <input class="form-check-input" type="checkbox" id="dispManagementRead" />
-                                        <label class="form-check-label" for="dispManagementRead"> Read
-                                        </label>
-                                    </div>
-                                    <div class="form-check me-3 me-lg-5">
-                                        <input class="form-check-input" type="checkbox" id="dispManagementWrite" />
-                                        <label class="form-check-label" for="dispManagementWrite"> Write
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="dispManagementCreate" />
-                                        <label class="form-check-label" for="dispManagementCreate">
-                                            Create </label>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-nowrap fw-medium">Database Management</td>
-                            <td>
-                                <div class="d-flex">
-                                    <div class="form-check me-3 me-lg-5">
-                                        <input class="form-check-input" type="checkbox" id="dbManagementRead" />
-                                        <label class="form-check-label" for="dbManagementRead"> Read
-                                        </label>
-                                    </div>
-                                    <div class="form-check me-3 me-lg-5">
-                                        <input class="form-check-input" type="checkbox" id="dbManagementWrite" />
-                                        <label class="form-check-label" for="dbManagementWrite"> Write
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="dbManagementCreate" />
-                                        <label class="form-check-label" for="dbManagementCreate"> Create
-                                        </label>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-nowrap fw-medium">Financial Management</td>
-                            <td>
-                                <div class="d-flex">
-                                    <div class="form-check me-3 me-lg-5">
-                                        <input class="form-check-input" type="checkbox" id="finManagementRead" />
-                                        <label class="form-check-label" for="finManagementRead"> Read
-                                        </label>
-                                    </div>
-                                    <div class="form-check me-3 me-lg-5">
-                                        <input class="form-check-input" type="checkbox" id="finManagementWrite" />
-                                        <label class="form-check-label" for="finManagementWrite"> Write
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="finManagementCreate" />
-                                        <label class="form-check-label" for="finManagementCreate">
-                                            Create </label>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-nowrap fw-medium">Reporting</td>
-                            <td>
-                                <div class="d-flex">
-                                    <div class="form-check me-3 me-lg-5">
-                                        <input class="form-check-input" type="checkbox" id="reportingRead" />
-                                        <label class="form-check-label" for="reportingRead"> Read
-                                        </label>
-                                    </div>
-                                    <div class="form-check me-3 me-lg-5">
-                                        <input class="form-check-input" type="checkbox" id="reportingWrite" />
-                                        <label class="form-check-label" for="reportingWrite"> Write
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="reportingCreate" />
-                                        <label class="form-check-label" for="reportingCreate"> Create
-                                        </label>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-nowrap fw-medium">API Control</td>
-                            <td>
-                                <div class="d-flex">
-                                    <div class="form-check me-3 me-lg-5">
-                                        <input class="form-check-input" type="checkbox" id="apiRead" />
-                                        <label class="form-check-label" for="apiRead"> Read </label>
-                                    </div>
-                                    <div class="form-check me-3 me-lg-5">
-                                        <input class="form-check-input" type="checkbox" id="apiWrite" />
-                                        <label class="form-check-label" for="apiWrite"> Write </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="apiCreate" />
-                                        <label class="form-check-label" for="apiCreate"> Create </label>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-nowrap fw-medium">Repository Management</td>
-                            <td>
-                                <div class="d-flex">
-                                    <div class="form-check me-3 me-lg-5">
-                                        <input class="form-check-input" type="checkbox" id="repoRead" />
-                                        <label class="form-check-label" for="repoRead"> Read </label>
-                                    </div>
-                                    <div class="form-check me-3 me-lg-5">
-                                        <input class="form-check-input" type="checkbox" id="repoWrite" />
-                                        <label class="form-check-label" for="repoWrite"> Write </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="repoCreate" />
-                                        <label class="form-check-label" for="repoCreate"> Create
-                                        </label>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-nowrap fw-medium">Payroll</td>
-                            <td>
-                                <div class="d-flex">
-                                    <div class="form-check me-3 me-lg-5">
-                                        <input class="form-check-input" type="checkbox" id="payrollRead" />
-                                        <label class="form-check-label" for="payrollRead"> Read </label>
-                                    </div>
-                                    <div class="form-check me-3 me-lg-5">
-                                        <input class="form-check-input" type="checkbox" id="payrollWrite" />
-                                        <label class="form-check-label" for="payrollWrite"> Write
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="payrollCreate" />
-                                        <label class="form-check-label" for="payrollCreate"> Create
-                                        </label>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                        </table>
-                    </div>
-                    <!-- Permission table -->
-            </div>
-            <div class="col-12 text-center mt-4">
-                <button type="submit" class="btn btn-primary me-sm-3 me-1" id="update-btn">Lưu</button>
-                <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal" aria-label="Close">
-                    Huỷ
-                </button>
-            </div>
-            </form>
-            <!--/ Edit role form -->
-        </div>
-    </div>
-</div>
 </div>
 <!--/ Edit Role Modal -->
 
