@@ -102,7 +102,7 @@
                                 '<div class="d-flex justify-content-sm-center align-items-sm-center">' +
                                 '<button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>' +
                                 '<div class="dropdown-menu dropdown-menu-end m-0">' +
-                                '<button class="dropdown-item detail-btn">Xem</button>' +
+                                '<a class="dropdown-item detail-btn" href="/admin/products/'+data+'/show">Xem</a>' +
                                 '<button class="dropdown-item edit-btn" value="'+data+'">Cập nhật</button>' +
                                 '<button class="dropdown-item delete-btn" value="'+data+'">' +
                                 'Xóa' +
@@ -113,7 +113,7 @@
                         }
                     }
                 ],
-                order: [3, 'asc'], //set any columns order asc/desc
+                order: [[1, 'desc']],
                 dom:
                     '<"card-header pb-md-2 d-flex flex-column flex-md-row align-items-start align-items-md-center"<f><"d-flex align-items-md-center justify-content-md-end mt-2 mt-md-0 gap-2"l<"dt-action-buttons"B>>' +
                     '>t' +
@@ -151,7 +151,7 @@
                                 text: '<i class="ti ti-printer me-2"></i>Print',
                                 className: 'dropdown-item',
                                 exportOptions: {
-                                    columns: [2, 3, 4, 5, 6, 7],
+                                    columns: [0, 1, 2,3, 4],
                                     format: {
                                         body: function (inner, coldex, rowdex) {
                                             if (inner.length <= 0) return inner;
@@ -187,7 +187,7 @@
                                 text: '<i class="ti ti-file me-2"></i>Csv',
                                 className: 'dropdown-item',
                                 exportOptions: {
-                                    columns: [2, 3, 4, 5, 6, 7],
+                                    columns: [0, 1, 2,3, 4],
                                     format: {
                                         body: function (inner, coldex, rowdex) {
                                             if (inner.length <= 0) return inner;
@@ -210,7 +210,7 @@
                                 text: '<i class="ti ti-file-export me-2"></i>Excel',
                                 className: 'dropdown-item',
                                 exportOptions: {
-                                    columns: [2, 3, 4, 5, 6, 7],
+                                    columns: [0, 1, 2,3, 4],
                                     format: {
                                         body: function (inner, coldex, rowdex) {
                                             if (inner.length <= 0) return inner;
@@ -233,7 +233,7 @@
                                 text: '<i class="ti ti-file-text me-2"></i>Pdf',
                                 className: 'dropdown-item',
                                 exportOptions: {
-                                    columns: [2, 3, 4, 5, 6, 7],
+                                    columns: [0, 1, 2,3, 4],
                                     format: {
                                         body: function (inner, coldex, rowdex) {
                                             if (inner.length <= 0) return inner;
@@ -256,7 +256,7 @@
                                 text: '<i class="ti ti-copy me-2"></i>Copy',
                                 className: 'dropdown-item',
                                 exportOptions: {
-                                    columns: [2, 3, 4, 5, 6, 7],
+                                    columns: [0, 1, 2,3, 4],
                                     format: {
                                         body: function (inner, coldex, rowdex) {
                                             if (inner.length <= 0) return inner;
@@ -363,28 +363,6 @@
                                     select.append('<option value="">' + d + '</option>');
                                 });
                         });
-                    // Adding stock filter once table initialized
-                    // this.api()
-                    //     .columns(5)
-                    //     .every(function () {
-                    //         var column = this;
-                    //         var select = $(
-                    //             '<select id="ProductStatus" class="form-select select2 text-capitalize"><option value=""> Trạng thái </option></select>'
-                    //         )
-                    //             .appendTo('.product_status')
-                    //             .on('change', function () {
-                    //                 var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                    //                 column.search(val ? '^' + val + '$' : '', true, false).draw();
-                    //             });
-
-                    //         column
-                    //             .data()
-                    //             .unique()
-                    //             .sort()
-                    //             .each(function (d, j) {
-                    //                 select.append('<option value="' + d + '">' + d + '</option>');
-                    //             });
-                    //     });
                 }
             });
             $('.dataTables_length').addClass('mt-0 mt-md-3 ms-n2');
@@ -396,11 +374,17 @@
         $('.datatables-products').on('click', '.delete-btn', function () {
             var id = $(this).val();
             Swal.fire({
-                title: 'Bạn muốn xóa mục này',
-                text: 'Dữ liệu bị xóa vẫn có thể khôi phục!',
+                title: 'Bạn có chắc không?',
+                text: "Dữ liệu này không thể khôi phục!",
                 icon: 'warning',
-                confirmButtonText: 'Đồng ý',
-                cancelButtonText: 'Hủy bỏ'
+                showCancelButton: true,
+                confirmButtonText: 'Đúng, Hãy xóa nó!',
+                cancelButtonText: 'Hủy',
+                customClass: {
+                    confirmButton: 'btn btn-primary me-3 waves-effect waves-light',
+                    cancelButton: 'btn btn-label-secondary waves-effect waves-light'
+                },
+                buttonsStyling: false
             }).then((result) => {
                 if (result.value) {
                     $.ajax({

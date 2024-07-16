@@ -43,14 +43,14 @@ class MailController extends Controller
         }
     }
 
-    public function verifyEmail(Request $request, $id)
+    public function verifyEmail( $email)
     {
-        $user = User::findOrFail($id);
+        $user = User::where('email', $email)->whereNull('email_verified_at')->firstOrFail();
 
         if (!$user->hasVerifiedEmail()) {
             $user->markEmailAsVerified();
         }
-
+        $user->email_verified_at = date('Y-m-d');
         $user->status = 1;
         $user->save();
 

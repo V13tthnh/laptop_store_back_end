@@ -232,10 +232,13 @@
                             if (!exists) {
                                 dt_invoices_p.row.add([
                                     '<input type="checkbox" class="dt-checkboxes form-check-input invoices_p_ids" value="' + product.id + '" name="invoices_p_ids[]">',
-                                    product.name,
+                                    $row_output,
                                     '<input class="form-control invoices_p_quantities" min="1" type="number" value="1" name="invoices_p_quantities[]">',
+
                                     '<input class="form-control invoices_p_cost_prices" min="1" type="number" name="invoices_p_cost_prices[]">',
+
                                     '<span class="invoices_p_totals"></span>'
+
                                 ]).draw(false);
                             }
                         });
@@ -256,24 +259,27 @@
             }
             let supplier_id = $('#invoices_p_supplier').val();
             let formality = $('#invoice_p_formality').val();
+            let profit = parseFloat($('#invoice_p_profit').val()) / 100;
 
             formData.append('_token', "{{csrf_token()}}");
             formData.append('supplier_id', supplier_id);
             formData.append('formality', formality);
+            formData.append('profit', profit);
 
+            formData.delete('product_id[]');
+            formData.delete('quantity[]');
+            formData.delete('cost_price[]');
+            formData.delete('total[]');
             dt_invoices_p.rows().every(function () {
                 var $row = $(this.node());
                 let product_id = $row.find('.invoices_p_ids').val();
                 var quantity = $row.find('.invoice_p_quantities').val();
                 var cost_price = $row.find('.invoice_p_cost_prices').val();
-                var profit = parseFloat($('#invoice_p_profit').val()) / 100;
-
                 var total = $row.find('.invoices_p_totals').val();
 
                 formData.append('product_id[]', product_id);
                 formData.append('quantity[]', quantity);
                 formData.append('cost_price[]', cost_price);
-                formData.append('profit', profit);
                 formData.append('total[]', total);
             });
 
@@ -313,11 +319,17 @@
         $('#update-p-invoice-btn').click(function (e) {
             e.preventDefault();
             Swal.fire({
-                title: 'Lưu ý: Những thay đổi từ trước đó sẽ không thể cập nhật lại',
+                title: 'Những thay đổi từ trước đó sẽ không thể cập nhật lại',
                 text: 'Hãy kiểm tra cẩn thận dữ liệu 1 lần nữa trước khi lưu',
                 icon: 'warning',
+                showCancelButton: true,
                 confirmButtonText: 'Lưu thông tin',
-                cancelButtonText: 'Hủy bỏ'
+                cancelButtonText: 'Hủy',
+                customClass: {
+                    confirmButton: 'btn btn-primary me-3 waves-effect waves-light',
+                    cancelButton: 'btn btn-label-secondary waves-effect waves-light'
+                },
+                buttonsStyling: false
             }).then((result) => {
                 if (result.value) {
                     dt_invoices_p.rows().every(function () {
@@ -331,6 +343,7 @@
                         $row.find('.invoices_p_quantities').replaceWith('<span>' + quantity + '</span>' + '<input class="form-control invoice_p_quantities" type="number" value="' + quantity + '" hidden>');
                     });
                     invoice_total = calculateTotalSum();
+                    console.log(invoice_total);
                     $('#total').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(calculateTotalSum()));
                     $('#subtotal').text(new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(calculateTotalSum()));
                     successNotification("Cập nhật thành công");
@@ -416,6 +429,28 @@
             return totalSum;
         }
 
+        $('.datatables-invoice-products').on('input', '.invoices_p_quantities, .invoices_p_cost_prices', function () {
+            let inputValue = $(this).val().trim();
+
+            inputValue = inputValue.replace(/[^\d.]/g, '');
+
+            if (/^\d*\.?\d*$/.test(inputValue) && !inputValue.includes('-')) {
+                $(this).val(inputValue);
+            } else {
+                $(this).val('');
+            }
+        });
+
+        $('#invoice_p_profit').on('input', function () {
+            let inputValue = $(this).val().trim();
+
+            // Loại bỏ các ký tự không phải số
+            inputValue = inputValue.replace(/[^\d]/g, '');
+
+            // Kiểm tra và cập nhật lại giá trị vào input
+            $(this).val(inputValue);
+        });
+
         function successNotification(message) {
             Swal.fire({
                 position: 'center',
@@ -443,6 +478,7 @@
                 buttonsStyling: false
             });
         }
+
         setTimeout(() => {
             $('.dataTables_filter .form-control').removeClass('form-control-sm');
             $('.dataTables_length .form-select').removeClass('form-select-sm');
@@ -478,7 +514,7 @@
         </div>
 
         <div class="row">
-            <div class="col-12 col-lg-7">
+            <div class="col-12 col-lg-5">
                 <form id="add-invoice-form">
                     <div class="card mb-4">
                         <div class="card-header">
@@ -568,7 +604,7 @@
             </div>
 
 
-            <div class="col-12 col-lg-5">
+            <div class="col-12 col-lg-7">
                 <div class="card mb-4">
                     <div class="card-header">
                         <h5 class="card-title mb-0">Sản phẩm</h5>
@@ -620,34 +656,40 @@
                                     <tbody>
                                         @php
                                             $invoiceProducts = [];
-                                        @endphp
-                                        @foreach ($invoiceDetails as $detail)
-                                            @php
-                                                $productId = $detail->product->id;
-                                                $productQuantity = $detail->quantity;
-                                                $productCostPrice = $detail->cost_price;
-                                                $productTotal = $productQuantity * $productCostPrice;
+                                            use Illuminate\Support\Str;
 
-                                                // Kiểm tra nếu sản phẩm đã tồn tại trong mảng $invoiceProducts
-                                                if (array_key_exists($productId, $invoiceProducts)) {
-                                                    // Nếu tồn tại, tăng số lượng và cập nhật tổng tiền
-                                                    $invoiceProducts[$productId]['quantity'] += $productQuantity;
-                                                    $invoiceProducts[$productId]['total'] += $productTotal;
-                                                } else {
-                                                    // Nếu chưa tồn tại, thêm mới vào mảng
-                                                    $invoiceProducts[$productId] = [
-                                                        'name' => $detail->product->name,
-                                                        'quantity' => $productQuantity,
-                                                        'cost_price' => $productCostPrice,
-                                                        'images' => $detail->product->images,
-                                                        'total' => $productTotal,
-                                                    ];
-                                                }
-                                            @endphp
+                                        @endphp
+
+                                        @foreach ($invoiceDetails as $detail)
+                                                                                @php
+                                                                                    $productId = $detail->product->id;
+                                                                                    $productQuantity = $detail->quantity;
+                                                                                    $productCostPrice = $detail->cost_price;
+                                                                                    $productTotal = $productQuantity * $productCostPrice;
+
+                                                                                    // Kiểm tra nếu sản phẩm đã tồn tại trong mảng $invoiceProducts
+                                                                                    if (array_key_exists($productId, $invoiceProducts)) {
+                                                                                        // Nếu tồn tại, tăng số lượng và cập nhật tổng tiền
+                                                                                        $invoiceProducts[$productId]['quantity'] += $productQuantity;
+                                                                                        $invoiceProducts[$productId]['total'] += $productTotal;
+                                                                                    } else {
+                                                                                        // Nếu chưa tồn tại, thêm mới vào mảng
+                                                                                        $invoiceProducts[$productId] = [
+                                                                                            'name' => $detail->product->name,
+                                                                                            'quantity' => $productQuantity,
+                                                                                            'cost_price' => $productCostPrice,
+                                                                                            'images' => $detail->product->images,
+                                                                                            'total' => $productTotal,
+                                                                                        ];
+                                                                                    }
+                                                                                @endphp
                                         @endforeach
                                         @foreach ($invoiceProducts as $productId => $product)
-                                            <tr>
-                                                <td><input type="checkbox"
+                                            @php
+
+                                            @endphp
+                                            <tr class="odd">
+                                                <td class="sorting_1 dtr-control"><input type="checkbox"
                                                         class="dt-checkboxes form-check-input invoices_p_ids"
                                                         value="{{$productId}}" name="invoices_p_ids[]"></td>
                                                 <td>
@@ -666,7 +708,7 @@
                                                         <div class="d-flex flex-column">
                                                             <a href="" class="text-body text-truncate"><span
                                                                     class="fw-medium">
-                                                                    {{$product['name']}}
+                                                                    {{Str::limit($product['name'], 40, '...');}}
                                                                 </span></a>
                                                         </div>
                                                     </div>
@@ -677,7 +719,7 @@
                                                 <td><input class="form-control invoices_p_cost_prices" min="1" type="number"
                                                         value="{{$product['cost_price']}}" name="invoices_p_cost_prices[]">
                                                 </td>
-                                                <td><span class="invoices_p_totals">{{$product['total']}}</span></td>
+                                                <td><span value="{{$product['total']}}" class="invoices_p_totals">{{number_format($product['total'], 0, ',', '.') . ' ₫';}}</span></td>
                                             </tr>
                                         @endforeach
                                     </tbody>

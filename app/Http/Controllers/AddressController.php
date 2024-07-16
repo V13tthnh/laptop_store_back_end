@@ -10,9 +10,16 @@ use Yajra\DataTables\DataTables;
 use Vanthao03596\HCVN\Models\Province;
 use Vanthao03596\HCVN\Models\District;
 use Vanthao03596\HCVN\Models\Ward;
-
-class AddressController extends Controller
+use Illuminate\Routing\Controllers\Middleware;
+class AddressController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(middleware: 'permission:xóa địa chỉ', only: ['destroy']),
+        ];
+    }
     public function index()
     {
         $users = User::all();

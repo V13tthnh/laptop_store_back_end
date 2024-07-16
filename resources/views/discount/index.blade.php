@@ -11,9 +11,11 @@
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css')}}" />
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css')}}" />
 <link rel="stylesheet" href="{{asset('assets/vendor/libs/jquery-timepicker/jquery-timepicker.css')}}" />
+<link rel="stylesheet" href="{{asset('assets/vendor/libs/bootstrap-select/bootstrap-select.css')}}" />
 @endsection
 
 @section('js')
+<script src="{{asset('assets/vendor/libs/bootstrap-select/bootstrap-select.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/moment/moment.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js')}}"></script>
 <script src="{{asset('assets/vendor/libs/select2/select2.js')}}"></script>
@@ -74,6 +76,10 @@
         });
     }
 
+    const selectPicker = $('.selectpicker');
+    if (selectPicker.length) {
+        selectPicker.selectpicker();
+    }
     // Datatable (jquery)
     $(function () {
         let borderColor, bodyBg, headingColor;
@@ -123,7 +129,7 @@
                     {
                         data: 'type', render: function (data, type, full, meta) {
                             let statusObj = {
-                                1: { title: 'Giảm theo %', class: 'bg-label-warning' },
+                                1: { title: 'Giảm theo phần trăm', class: 'bg-label-warning' },
                                 2: { title: 'Giảm theo giá tiền', class: 'bg-label-info' },
                                 3: { title: 'Giảm giá giao hàng ', class: 'bg-label-success' }
                             };
@@ -162,7 +168,6 @@
                     }
                 ],
                 columnDefs: [],
-
                 dom:
                     '<"card-header d-flex flex-wrap pb-2"' +
                     '<f>' +
@@ -241,7 +246,6 @@
         }
 
         // Filter form control to default size
-        // ? setTimeout used for multilingual table initialization
         setTimeout(() => {
             $('.dataTables_filter .form-control').removeClass('form-control-sm');
             $('.dataTables_length .form-select').removeClass('form-select-sm');
@@ -257,13 +261,12 @@
             $('#store-code').val("");
             $('#store-value').val("");
             $('#store-minimum_spend').val("");
+            $('#store-usage_limit').val("");
             couponAddStartDate.clear();
             couponAddEndDate.clear();
             $('#store-type').val($("#store-parent-category option:first").val());
             quillStore.setContents([{ insert: '\n' }]);
-            $(".store-value-error").text("");
-            $(".store-code-error").text("");
-            $(".store-minimum_spend-error").text("");
+            resetErrorFormStore();
         });
 
         //Clear form update after hiden form
@@ -283,17 +286,18 @@
             $(".update-minimum_spend-error").text("");
         });
 
-        //For store category
+        //For store coupon
         $('#add-btn').click(function (e) {
             e.preventDefault();
-
+            resetErrorFormStore();
             var code = $('#store-code').val();
-            var value = $('#store-value').val();
-            var minimum_spend = $('#store-minimum_spend').val();
+            var value = $('#store-value-hidden').val();
+            var minimum_spend = $('#store-minimum_spend-hidden').val();
             var start_date = $('#store-start_date').val();
             var end_date = $('#store-end_date').val();
             var type = $('#store-type option:selected').val();
             var description = $('#store-description').text();
+            var usage_limit = $('#store-usage_limit').val();
 
             formDataStore.append("_token", "{{csrf_token()}}");
             formDataStore.append("code", code);
@@ -303,6 +307,7 @@
             formDataStore.append("end_date", end_date);
             formDataStore.append("type", type);
             formDataStore.append("description", description);
+            formDataStore.append("usage_limit", usage_limit);
 
             $.ajax({
                 url: "{{route('coupons.store')}}",
@@ -334,11 +339,13 @@
                     $('.store-' + key + '-error').text(value[2]);
                     $('.store-' + key + '-error').text(value[3]);
                     $('.store-' + key + '-error').text(value[4]);
+                    $('.store-' + key + '-error').text(value[5]);
+                    $('.store-' + key + '-error').text(value[7]);
                 });
             });
         });
 
-        //For edit category
+        //For edit coupon
         $('.datatables-category-list').on('click', '.editBtn', function () {
             var id = $(this).val();
             $.ajax({
@@ -351,26 +358,31 @@
                 }
                 $('#update-id').val(res.data.id);
                 $('#update-code').val(res.data.code);
-                $('#update-value').val(res.data.value);
-                $('#update-minimum_spend').val(res.data.minimum_spend);
+                $('#update-value').val(res.data.value.toLocaleString('vi-VN'));
+                $('#update-minimum_spend').val(res.data.minimum_spend.toLocaleString('vi-VN'));
+                $('#update-value-hidden').val(res.data.value);
+                $('#update-minimum_spend-hidden').val(res.data.minimum_spend);
                 $('#update-start_date').val(res.data.start_date);
                 $('#update-end_date').val(res.data.end_date);
                 $('#update-type').val(res.data.type);
+                $('#update-usage_limit').val(res.data.usage_limit);
                 quillUpdate.setText(res.data.description)
             });
         });
 
-        //For update category
+        //For update coupon
         $('#update-btn').click(function (e) {
             e.preventDefault();
+            resetErrorFormUpdate();
             var id = $('#update-id').val();
             var code = $('#update-code').val();
-            var value = $('#update-value').val();
-            var minimum_spend = $('#update-minimum_spend').val();
+            var value = $('#update-value-hidden').val();
+            var minimum_spend = $('#update-minimum_spend-hidden').val();
             var start_date = $('#update-start_date').val();
             var end_date = $('#update-end_date').val();
             var type = $('#update-type option:selected').val();
             var description = $('#update-description').text();
+            var usage_limit = $('#update-usage_limit').val();
 
             formDataUpdate.append("_token", "{{ csrf_token() }}");
             formDataUpdate.append("code", code);
@@ -380,6 +392,7 @@
             formDataUpdate.append("end_date", end_date);
             formDataUpdate.append("type", type);
             formDataUpdate.append("description", description);
+            formDataUpdate.append("usage_limit", usage_limit);
 
             $.ajax({
                 url: 'coupons/' + id + '/update',
@@ -416,11 +429,13 @@
                     $('.update-' + key + '-error').text(value[2]);
                     $('.update-' + key + '-error').text(value[3]);
                     $('.update-' + key + '-error').text(value[4]);
+                    $('.update-' + key + '-error').text(value[5]);
+                    $('.update-' + key + '-error').text(value[7]);
                 });
             });
         });
 
-        //For delete category
+        //For delete coupon
         $('.datatables-category-list').on('click', '.deleteBtn', function () {
             var id = $(this).val();
             Swal.fire({
@@ -458,6 +473,144 @@
             });
         });
 
+        $('#generate_coupon_store').click(function () {
+            function generateCouponCode(length) {
+                var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                var result = '';
+                for (var i = 0; i < length; i++) {
+                    result += characters.charAt(Math.floor(Math.random() * characters.length));
+                }
+                return result;
+            }
+
+            var couponCode = generateCouponCode(10);
+
+            $('#store-code').val(couponCode);
+        });
+
+        $('#generate_coupon_update').click(function () {
+            // Hàm để tạo mã giảm giá random
+            function generateCouponCode(length) {
+                var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                var result = '';
+                for (var i = 0; i < length; i++) {
+                    result += characters.charAt(Math.floor(Math.random() * characters.length));
+                }
+                return result;
+            }
+
+            // Sử dụng hàm generateCouponCode để tạo mã giảm giá với độ dài 10 ký tự
+            var couponCode = generateCouponCode(10);
+
+            // Hiển thị mã giảm giá trong input
+            $('#update-code').val(couponCode);
+        });
+
+        $('#store-value').on('input', function () {
+            var displayValue = $(this).val();
+
+            var numericValue = displayValue.replace(/[^0-9]/g, '');
+
+            numericValue = parseInt(numericValue);
+
+            if (isNaN(numericValue) || numericValue < 0) {
+                numericValue = '';
+                displayValue = '';
+            } else {
+                displayValue = numericValue.toLocaleString('vi-VN');
+            }
+
+            $('#store-value-hidden').val(numericValue);
+
+            $(this).val(displayValue);
+        });
+
+        $('#store-minimum_spend').on('input', function () {
+            var displayValue = $(this).val();
+
+            var numericValue = displayValue.replace(/[^0-9]/g, '');
+
+            numericValue = parseInt(numericValue);
+
+            if (isNaN(numericValue) || numericValue < 0) {
+                numericValue = '';
+                displayValue = '';
+            } else {
+                displayValue = numericValue.toLocaleString('vi-VN');
+            }
+
+            $('#store-minimum_spend-hidden').val(numericValue);
+
+            $(this).val(displayValue);
+        });
+
+        $('#store-usage_limit').on('input', function () {
+            let value = $(this).val();
+
+            if (/^\d*$/.test(value)) {
+                $('#store-usage_limit').val(value);
+            } else {
+                $(this).val(value.replace(/[^\d]/g, ''));
+            }
+        });
+
+        $('#update-value').on('input', function () {
+            var displayValue = $(this).val();
+
+            var numericValue = displayValue.replace(/[^0-9]/g, '');
+
+            numericValue = parseInt(numericValue);
+
+            if (isNaN(numericValue) || numericValue < 0) {
+                numericValue = '';
+                displayValue = '';
+            } else {
+                displayValue = numericValue.toLocaleString('vi-VN');
+            }
+
+            $('#update-value-hidden').val(numericValue);
+
+            $(this).val(displayValue);
+        });
+
+        $('#update-minimum_spend').on('input', function () {
+            var displayValue = $(this).val();
+
+            var numericValue = displayValue.replace(/[^0-9]/g, '');
+
+            numericValue = parseInt(numericValue);
+
+            if (isNaN(numericValue) || numericValue < 0) {
+                numericValue = '';
+                displayValue = '';
+            } else {
+                displayValue = numericValue.toLocaleString('vi-VN');
+            }
+
+            $('#update-minimum_spend-hidden').val(numericValue);
+
+            $(this).val(displayValue);
+        });
+
+        function resetErrorFormStore() {
+            $(".store-value-error").text("");
+            $(".store-code-error").text("");
+            $(".store-minimum_spend-error").text("");
+            $(".store-start_date-error").text("");
+            $(".store-end_date-error").text("");
+            $(".store-type-error").text("");
+            $(".store-usage_limit-error").text("");
+        }
+
+        function resetErrorFormUpdate() {
+            $(".update-value-error").text("");
+            $(".update-code-error").text("");
+            $(".update-minimum_spend-error").text("");
+            $(".update-start_date-error").text("");
+            $(".update-end_date-error").text("");
+            $(".update-type-error").text("");
+            $(".update-usage_limit-error").text("");
+        }
 
         //close offcanvas add-user
         function closeOffCanvas() {
@@ -498,7 +651,7 @@
             </div>
         </div>
 
-        <!-- Offcanvas to add new category -->
+        <!-- Offcanvas to add new coupon-->
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddCoupon" aria-labelledby="offcanvasAddCoupon">
             <!-- Offcanvas Header -->
             <div class="offcanvas-header py-4">
@@ -515,13 +668,19 @@
                     <!-- Title -->
                     <div class="mb-3">
                         <label class="form-label" for="store-code">Mã giảm giá<span style="color: red"> *</span></label>
-                        <input type="text" class="form-control" id="store-code" placeholder="Vui lòng nhập mã giảm"
-                            aria-label="category title" required />
+                        <div class="row">
+                            <div class="col-md-8"> <input type="text" class="form-control" id="store-code"
+                                    placeholder="Vui lòng nhập mã giảm" aria-label="category title" readonly />
+                            </div>
+                            <div class="col-md-4"> <button id="generate_coupon_store" type="button"
+                                    class="btn bg-label-info">Tạo mã</button></div>
+                        </div>
                         <div class="text-danger store-code-error"></div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label" for="store-value">Giá trị<span style="color: red"> *</span></label>
+                        <input type="hidden" id="store-value-hidden" />
                         <input type="text" class="form-control" id="store-value" placeholder="Vui lòng nhập Giá trị"
                             aria-label="category title" required />
                         <div class="text-danger store-value-error"></div>
@@ -529,6 +688,7 @@
 
                     <div class="mb-3 ecommerce-select2-dropdown">
                         <label class="form-label" for="store-minimum_spend">Chi phí tối thiểu</label>
+                        <input type="hidden" id="store-minimum_spend-hidden" />
                         <input type="text" class="form-control" id="store-minimum_spend"
                             placeholder="Vui lòng nhập chi phí tối thiểu" aria-label="category title" required />
                         <div class="text-danger store-minimum_spend-error"></div>
@@ -538,27 +698,34 @@
                         <label for="update-start_date" class="form-label">Ngày bắt đầu<span style="color: red">
                                 *</span></label>
                         <input type="text" class="form-control" placeholder="DD-MM-YYY" id="store-start_date" />
-                        <div class="text-danger edit-start_date-error"></div>
+                        <div class="text-danger store-start_date-error"></div>
                     </div>
 
                     <div class="mb-3">
                         <label for="update-end_date" class="form-label">Ngày kết thúc<span style="color: red">
                                 *</span></label>
                         <input type="text" class="form-control" placeholder="DD-MM-YYY" id="store-end_date" />
-                        <div class="text-danger edit-end_date-error"></div>
+                        <div class="text-danger store-end_date-error"></div>
                     </div>
 
 
                     <div class="mb-3">
-
                         <label for="update-end_date" class="form-label">Loại giảm giá<span style="color: red">
                                 *</span></label>
-
-                        <select name="form-select" class="form-select" id="store-type">
+                        <select name="form-select" class="selectpicker w-100" id="store-type" data-style="btn-default">
                             <option value="1" selected>Phần trăm đơn hàng(%)</option>
                             <option value="2">Giảm giá tiền</option>
                             <option value="3">Giao hàng</option>
                         </select>
+                        <div class="text-danger store-type-error"></div>
+                    </div>
+
+                    <div class="mb-3 ecommerce-select2-dropdown">
+                        <label class="form-label" for="store-minimum_spend">Số lần sử dụng tối đa</label>
+                        <input type="hidden" id="store-usage_limit-hidden" />
+                        <input type="number" class="form-control" id="store-usage_limit"
+                            placeholder="Số lần sử dụng tối đã(mặc định 1 lần)" required />
+                        <div class="text-danger" id="store-usage_limit-error"></div>
                     </div>
 
                     <div class="mb-3">
@@ -590,7 +757,7 @@
                 </form>
             </div>
         </div>
-        <!-- Offcanvas to edit category -->
+        <!-- Offcanvas to edit coupon-->
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEditCoupon"
             aria-labelledby="offcanvasEditCoupon">
             <!-- Offcanvas Header -->
@@ -610,13 +777,20 @@
                     <div class="mb-3">
                         <label class="form-label" for="update-code">Mã giảm giá<span style="color: red">
                                 *</span></label>
-                        <input type="text" class="form-control" id="update-code" placeholder="Vui lòng nhập mã giảm giá"
-                            aria-label="category title" required />
+                        <div class="row">
+                            <div class="col-md-8"> <input type="text" class="form-control" id="update-code"
+                                    placeholder="Vui lòng nhập mã giảm giá" aria-label="category title" readonly />
+                            </div>
+                            <div class="col-md-4"> <button id="generate_coupon_update" type="button"
+                                    class="btn bg-label-info">Tạo mã</button></div>
+                        </div>
+
                         <div class="text-danger update-code-error"></div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label" for="update-value">Giá trị<span style="color: red"> *</span></label>
+                        <input type="hidden" class="form-control" id="update-value-hidden" />
                         <input type="text" class="form-control" id="update-value" placeholder="Vui lòng nhập giá trị"
                             aria-label="category title" required />
                         <div class="text-danger update-value-error"></div>
@@ -624,6 +798,7 @@
 
                     <div class="mb-3 ecommerce-select2-dropdown">
                         <label class="form-label" for="update-minimum_spend">Chi phí tối thiểu</label>
+                        <input type="hidden" class="form-control" id="update-minimum_spend-hidden" />
                         <input type="text" class="form-control" id="update-minimum_spend"
                             placeholder="Vui lòng nhập chi phí tôi thiểu" aria-label="category title" required />
                         <div class="text-danger update-minimum_spend-error"></div>
@@ -645,15 +820,23 @@
 
                     <div class="mb-3">
 
-                        <label for="update-end_date" class="form-label">Loại giảm giá<span style="color: red">
+                        <label for="update-type" class="form-label">Loại giảm giá<span style="color: red">
                                 *</span></label>
-                        <select name="form-select" class="form-select" id="update-type">
+                        <select name="form-select" class="selectpicker w-100" data-style="btn-default" id="update-type">
                             <option value="1" selected>Phần trăm đơn hàng(%)</option>
                             <option value="2">Giảm giá tiền</option>
                             <option value="3">Giao hàng</option>
                         </select>
+                        <div class="text-danger update-type-error"></div>
                     </div>
 
+                    <div class="mb-3 ecommerce-select2-dropdown">
+                        <label class="form-label" for="update-minimum_spend">Số lần sử dụng tối đa</label>
+                        <input type="hidden" id="update-usage_limit-hidden" />
+                        <input type="number" class="form-control" id="update-usage_limit"
+                            placeholder="Số lần sử dụng tối đã" required />
+                        <div class="text-danger" id="update-usage_limit-error"></div>
+                    </div>
 
                     <div class="mb-3">
                         <label class="form-label">Mô tả</label>

@@ -8,9 +8,19 @@ use App\Http\Requests\StoreUpdateProductSpecificaionRequest;
 use App\Models\ProductSpecification;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
-
-class ProductSpecificationController extends Controller
+use Illuminate\Routing\Controllers\Middleware;
+class ProductSpecificationController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(middleware: 'permission:thêm thông số|sửa thông số|xóa thông số', only: ['index', 'store']),
+            new Middleware(middleware: 'permission:thêm thông số', only: ['create', 'store']),
+            new Middleware(middleware: 'permission:sửa thông số', only: ['edit', 'update']),
+            new Middleware(middleware: 'permission:xóa thông số', only: ['destroy']),
+        ];
+    }
     public function index()
     {
         return view('product_specification.index');

@@ -28,12 +28,12 @@
         // Variable declaration for table
 
         var dt_invoice_table = $('.datatables-invoices'),
-            statusObj = {
-                1: { title: 'Chờ duyệt', class: 'bg-label-warning' },
-                2: { title: 'Đã duyệt', class: 'bg-label-success' },
-                3: { title: 'Đã giao', class: 'bg-label-info' },
-                4: { title: 'Hủy', class: 'bg-label-danger' }
-            },
+            // statusObj = {
+            //     1: { title: 'Chờ duyệt', class: 'bg-label-warning' },
+            //     2: { title: 'Đã duyệt', class: 'bg-label-success' },
+            //     3: { title: 'Đã giao', class: 'bg-label-info' },
+            //     4: { title: 'Hủy', class: 'bg-label-danger' }
+            // },
             formalityObj = {
                 1: { title: 'Tiền mặt', class: 'bg-label-success' },
                 2: { title: 'Chuyển khoản', class: 'bg-label-info' },
@@ -42,7 +42,7 @@
 
         if (dt_invoice_table.length) {
             var dt_invoices = dt_invoice_table.DataTable({
-                ajax: { url: "{{route('invoices.data.table')}}", method: "get", dataType: "json"},
+                ajax: { url: "{{route('invoices.data.table')}}", method: "get", dataType: "json" },
                 columns: [
                     {
                         data: 'id', render: function (data, type, full, meta) {
@@ -68,19 +68,19 @@
                             );
                         }
                     },
-                    {
-                        data: 'status', render: function (data, type, full, meta) {
-                            var $status = full['status'];
+                    // {
+                    //     data: 'status', render: function (data, type, full, meta) {
+                    //         var $status = full['status'];
 
-                            return (
-                                '<span class="badge px-2 ' +
-                                statusObj[$status].class +
-                                '" text-capitalized>' +
-                                statusObj[$status].title +
-                                '</span>'
-                            );
-                        }
-                    },
+                    //         return (
+                    //             '<span class="badge px-2 ' +
+                    //             statusObj[$status].class +
+                    //             '" text-capitalized>' +
+                    //             statusObj[$status].title +
+                    //             '</span>'
+                    //         );
+                    //     }
+                    // },
                     {
                         data: 'id', render: function (data, type, row) {
                             if (row.status === 1) {
@@ -484,7 +484,7 @@
                         <th>Nhà cung cấp</th>
                         <th>Tổng tiền</th>
                         <th>Hình thức</th>
-                        <th>Trạng thái</th>
+                        <!-- <th>Trạng thái</th> -->
                         <th>Thao tác</th>
                     </tr>
                 </thead>

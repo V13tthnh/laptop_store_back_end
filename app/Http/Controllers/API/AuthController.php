@@ -8,6 +8,7 @@ use App\Http\Requests\API\Auth\LoginRequest;
 use App\Http\Requests\API\Auth\RegisterRequest;
 use App\Http\Requests\API\Auth\ResetPasswordRequest;
 use App\Mail\ForgotPasswordMail;
+use App\Mail\RegisterMail;
 use App\Models\User;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Auth\Events\Registered;
@@ -38,7 +39,7 @@ class AuthController extends Controller
                     'message' => 'Email người dùng chưa được kích hoạt, vui lòng kiểm tra kỹ email để kích hoạt tài khoản.',
                 ], 401);
             }
-            $token = $user->createToken('token')->plainTextToken;
+            $token = $user->createToken("API TOKEN")->plainTextToken;
 
             return response()->json([
                 'status' => true,
@@ -60,17 +61,22 @@ class AuthController extends Controller
                 'full_name' => $request->full_name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'status' => 1,
+                'email_verified_at' => null,
+                'status' => 1
             ]);
-            //event(new Registered($user));
-            $user->assignRole('customer');
 
-            return response()->json([
-                'status' => true,
-                'message' => 'Đăng ký thành công',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
-            ], 200);
-        } catch (\Throwable $th) {
+            $user->assignRole('customer');
+            if ($user) {
+                Mail::to($user->email)->send(new RegisterMail($user));
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Đăng ký thành công',
+                    'token' => $user->createToken("API TOKEN")->plainTextToken
+                ], 200);
+            }
+
+        } catch (\Exception $th) {
+            $user->delete();
             return response()->json([
                 'status' => false,
                 'message' => $th->getMessage()
@@ -237,11 +243,11 @@ class AuthController extends Controller
         }
         if (!$user) {
             $user = User::query()->firstOrCreate([
-                'email' => $userInfo->getEmail() ?? '', // Kiểm tra và xử lý null ở đây
+                'email' => $userInfo->getEmail() ?? '',
             ], [
-                'name' => $userInfo->getName() ?? '', // Kiểm tra và xử lý null ở đây
+                'name' => $userInfo->getName() ?? '',
                 'email_verified_at' => now(),
-                'provider_id' => $userInfo->getId() ?? '', // Kiểm tra và xử lý null ở đây
+                'provider_id' => $userInfo->getId() ?? '',
                 'provider' => $provider,
             ]);
             Auth::login($user);

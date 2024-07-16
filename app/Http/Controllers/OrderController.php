@@ -12,6 +12,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\DataTables;
+use Illuminate\Routing\Controllers\Middleware;
 
 class OrderController extends Controller
 {
@@ -20,6 +21,13 @@ class OrderController extends Controller
     const STATUS_SHIPPING = 3;
     const STATUS_CANCELLED = 4;
     const STATUS_COMPLETED = 5;
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(middleware: 'permission:duyệt đơn', only: ['updateStatus']),
+        ];
+    }
     public function index()
     {
         $PAID = 4;

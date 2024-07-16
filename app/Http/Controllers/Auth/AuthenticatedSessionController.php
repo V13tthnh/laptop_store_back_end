@@ -26,6 +26,23 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
+        // Kiểm tra vai trò người dùng
+        if (Auth::user()->hasRole('customer')) {
+            // Logout người dùng
+            Auth::guard('web')->logout();
+
+            // Vô hiệu hóa session
+            $request->session()->invalidate();
+
+            // Tạo lại token session
+            $request->session()->regenerateToken();
+
+            // Chuyển hướng về trang đăng nhập kèm thông báo lỗi
+            return redirect('/login')->withErrors([
+                'role' => 'Bạn không có quyền truy cập vào hệ thống.',
+            ]);
+        }
+
         $request->session()->regenerate();
 
         return redirect()->intended(route('dashboard.index', absolute: false));

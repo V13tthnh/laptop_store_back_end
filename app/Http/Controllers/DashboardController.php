@@ -32,6 +32,7 @@ class DashboardController extends Controller
         $newCustomers = $this->getNewCustomerRegister();
         $newOrders = $this->getNewOrdersList();
         $totalProductInventory = $this->getTotalQuantityProduct();
+        $totalRevenue = Order::where('status', 5)->sum('total');
         return view(
             'dashboard.index',
             compact(
@@ -45,6 +46,7 @@ class DashboardController extends Controller
                 'newCustomers',
                 'newOrders',
                 'totalOrders',
+                'totalRevenue'
             )
         );
     }
@@ -155,23 +157,6 @@ class DashboardController extends Controller
 
         return response()->json($statuses);
     }
-
-    // public function getRevenueData()
-    // {
-    //     $orders = Order::where('status', 5) // Đã thanh toán
-    //         ->selectRaw('DATE(created_at) as date, SUM(total) as revenue')
-    //         ->groupBy('date')
-    //         ->orderBy('date')
-    //         ->get()
-    //         ->map(function ($order) {
-    //             return [
-    //                 'date' => Carbon::parse($order->date)->format('d-m-Y'),
-    //                 'revenue' => number_format($order->revenue, 0, ',', '.') . ' đ'
-    //             ];
-    //         });
-
-    //     return response()->json($orders);
-    // }
 
     public function getRevenueData(Request $request)
     {

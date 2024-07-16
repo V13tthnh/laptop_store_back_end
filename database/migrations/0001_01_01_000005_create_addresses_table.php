@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('ward');
             $table->string('address_detail');
             $table->unsignedBigInteger('user_id');
+           // $table->string('type');
             $table->boolean('is_default');
             $table->timestamps();
         });

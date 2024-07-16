@@ -103,7 +103,6 @@
 
                         // Attach the image ID to the file preview
                         mockFile.previewElement.setAttribute("data-id", file.id);
-
                         formData.append('images[]', file);
                     });
 

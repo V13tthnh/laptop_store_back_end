@@ -9,22 +9,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CheckCustomerRole
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user()->hasRole('customer')) {
+        $user = Auth::user();
 
-            if ($request->routeIs('login') || $request->routeIs('register')) {
-                return $next($request);
-            }
-
-            abort(403, 'Unauthorized action.');
+        if ($user && ($user->hasRole('admin') || $user->hasRole('employee'))) {
+            return $next($request);
         }
 
-        return $next($request);
+        Auth::logout();
+        return redirect()->route('login')->withErrors([
+            'role' => 'You do not have access to this area.',
+        ]);
     }
 }

@@ -10,9 +10,16 @@ use App\Models\Supplier;
 use Auth;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
-
-class InvoiceController extends Controller
+use Illuminate\Routing\Controllers\Middleware;
+class InvoiceController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(middleware: 'permission:thêm đơn nhập', only: ['create', 'store']),
+            new Middleware(middleware: 'permission:sửa đơn nhập', only: ['edit', 'update']),
+        ];
+    }
 
     public function index()
     {
@@ -60,7 +67,11 @@ class InvoiceController extends Controller
             $detail->product_id = $request->product_id[$i];
             $detail->quantity = $request->quantity[$i];
             $detail->cost_price = $request->cost_price[$i];
-            $detail->selling_price = $request->cost_price[$i] * (1 + $request->profit);
+            if (isset($request->profit)) {
+                $detail->selling_price = $request->cost_price[$i] * (1 + $request->profit);
+            } else {
+                $detail->selling_price = $request->cost_price[$i];
+            }
             $detail->save();
 
             $total += $request->total[$i];
@@ -78,7 +89,7 @@ class InvoiceController extends Controller
 
         return response()->json([
             'success' => 200,
-            'message' => "Thêm thành công"
+            'message' => "Thêm hóa đơn thành công."
         ]);
     }
 
@@ -112,6 +123,7 @@ class InvoiceController extends Controller
 
     public function update(StoreUpdateInvoiceRequest $request, string $id)
     {
+        //dd($request);
         $invoice = Invoice::findOrFail($id);
         $invoice->supplier_id = $request->supplier_id;
         $invoice->formality = $request->formality;
@@ -130,10 +142,18 @@ class InvoiceController extends Controller
             $detail->product_id = $request->product_id[$i];
             $detail->quantity = $request->quantity[$i];
             $detail->cost_price = $request->cost_price[$i];
-            $detail->selling_price = $request->cost_price[$i] * (1 + $request->profit);
+            if (isset($request->profit)) {
+                $detail->selling_price = $request->cost_price[$i] * (1 + $request->profit);
+            } else {
+                $detail->selling_price = $request->cost_price[$i];
+            }
             $detail->save();
+            if($request->total[$i] == null){
+                $total += ($request->cost_price[$i] *  $request->quantity[$i]);
+            }else{
+                $total += $request->total[$i];
+            }
 
-            $total += $request->total[$i];
 
             $updateProduct = Product::find($request->product_id[$i]);
             $updateProduct->quantity = $request->quantity[$i];

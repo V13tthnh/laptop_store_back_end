@@ -7,9 +7,19 @@ use App\Http\Requests\StoreUpdateSupplierRequest;
 use App\Models\Category;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Routing\Controllers\Middleware;
 
-class SupplierController extends Controller
+class SupplierController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(middleware: 'permission:thêm nhà cung cấp|sửa nhà cung cấp|xóa nhà cung cấp', only: ['index', 'store']),
+            new Middleware(middleware: 'permission:thêm nhà cung cấp', only: ['create', 'store']),
+            new Middleware(middleware: 'permission:sửa nhà cung cấp', only: ['edit', 'update']),
+            new Middleware(middleware: 'permission:xóa nhà cung cấp', only: ['destroy']),
+        ];
+    }
     public function index()
     {
         return view('supplier.index');

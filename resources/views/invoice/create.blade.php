@@ -236,8 +236,11 @@
                                     '<input type="checkbox" class="dt-checkboxes form-check-input invoices_p_ids" value="' + product.id + '" name="invoices_p_ids[]">',
                                     $row_output,
                                     '<input class="form-control invoices_p_quantities" min="1" type="number" value="1" name="invoices_p_quantities[]">',
+
                                     '<input class="form-control invoices_p_cost_prices" min="1" type="number" name="invoices_p_cost_prices[]">',
+
                                     '<span class="invoices_p_totals"></span>'
+
                                 ]).draw(false);
                             }
                         });
@@ -253,9 +256,10 @@
 
         $('#add-btn').click(function () {
             if (invoice_total <= 0) {
-                warningNotification("Vui lòng bấm cập nhật để lưu sản phẩm");
+                warningNotification("Vui lòng cập nhật danh sách sản phẩm nhập trước khi lưu.");
                 return;
             }
+
             let supplier_id = $('#invoices_p_supplier').val();
             let formality = $('#invoice_p_formality').val();
             let profit = parseFloat($('#invoice_p_profit').val()) / 100;
@@ -265,6 +269,10 @@
             formData.append('formality', formality);
             formData.append('profit', profit);
 
+            formData.delete('product_id[]');
+            formData.delete('quantity[]');
+            formData.delete('cost_price[]');
+            formData.delete('total[]');
             dt_invoices_p.rows().every(function () {
                 var $row = $(this.node());
                 let product_id = $row.find('.invoices_p_ids').val();
@@ -302,7 +310,6 @@
                     $('.add-invoice-' + key + '-error').text(value[4]);
                 });
             });
-
         });
 
         //select all invoice products
@@ -317,12 +324,19 @@
         //Update product was added to invoice
         $('#update-p-invoice-btn').click(function (e) {
             e.preventDefault();
+
             Swal.fire({
-                title: 'Lưu ý: Những thay đổi từ trước đó sẽ không thể cập nhật lại',
+                title: 'Những thay đổi từ trước đó sẽ không thể cập nhật lại',
                 text: 'Hãy kiểm tra cẩn thận dữ liệu 1 lần nữa trước khi lưu',
                 icon: 'warning',
+                showCancelButton: true,
                 confirmButtonText: 'Lưu thông tin',
-                cancelButtonText: 'Hủy bỏ'
+                cancelButtonText: 'Hủy',
+                customClass: {
+                    confirmButton: 'btn btn-primary me-3 waves-effect waves-light',
+                    cancelButton: 'btn btn-label-secondary waves-effect waves-light'
+                },
+                buttonsStyling: false
             }).then((result) => {
                 if (result.value) {
                     dt_invoices_p.rows().every(function () {
@@ -411,6 +425,28 @@
             tr.find('.invoices_p_totals').val(total);
         });
 
+        $('.datatables-invoice-products').on('input', '.invoices_p_quantities, .invoices_p_cost_prices', function () {
+            let inputValue = $(this).val().trim();
+
+            inputValue = inputValue.replace(/[^\d.]/g, '');
+
+            if (/^\d*\.?\d*$/.test(inputValue) && !inputValue.includes('-')) {
+                $(this).val(inputValue);
+            } else {
+                $(this).val('');
+            }
+        });
+
+        $('#invoice_p_profit').on('input', function () {
+            let inputValue = $(this).val().trim();
+
+            // Loại bỏ các ký tự không phải số
+            inputValue = inputValue.replace(/[^\d]/g, '');
+
+            // Kiểm tra và cập nhật lại giá trị vào input
+            $(this).val(inputValue);
+        });
+
         function calculateTotalSum() {
             var totalSum = 0;
             dt_invoices_p.rows().every(function () {
@@ -448,6 +484,7 @@
                 buttonsStyling: false
             });
         }
+
         setTimeout(() => {
             $('.dataTables_filter .form-control').removeClass('form-control-sm');
             $('.dataTables_length .form-select').removeClass('form-select-sm');

@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Order\StoreOrderRequest;
 use App\Mail\OrderShippedMail;
 use App\Models\Address;
+use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\UserCouponUsage;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -42,7 +45,7 @@ class OrderController extends Controller
     {
         try {
 
-            $order = Order::with(['products.firstImage', 'address'])->find($request->order_id);
+            $order = Order::with(['products.firstImage', 'address', 'user'])->find($request->order_id);
             if (!$order) {
                 return response()->json(['message' => 'Order not found'], 404);
             }
@@ -59,7 +62,9 @@ class OrderController extends Controller
     }
     public function store(StoreOrderRequest $request)
     {
+
         try {
+            $today = Carbon::today();
             $addressId = $this->getAddressId($request->user_id);
 
             if ($addressId == null) {
@@ -68,7 +73,29 @@ class OrderController extends Controller
                     'message' => "Vui lòng chọn địa chỉ mặc định, nếu bạn chưa có địa chỉ xin vui lòng chọn thêm địa chỉ."
                 ], 402);
             }
-            
+
+            if (!empty($request->coupon_code)) {
+                $coupon = Coupon::where('code', $request->coupon_code)
+                    ->where('status', 1)
+                    ->whereDate('start_date', '<=', $today)
+                    ->whereDate('end_date', '>=', $today)
+                    ->first();
+
+
+                if ($coupon) {
+                    $usageCount = UserCouponUsage::where('user_id', $request->user_id)
+                        ->where('coupon_id', $coupon->id)
+                        ->count();
+
+                    if ($usageCount < $coupon->usage_limit) {
+                        $userUsage = new UserCouponUsage;
+                        $userUsage->user_id = $request->user_id;
+                        $userUsage->coupon_id = $coupon->id;
+                        $userUsage->save();
+                    }
+                }
+            }
+
             $order = new Order();
             $order->user_id = $request->user_id;
             $order->name = $request->name;
@@ -106,7 +133,8 @@ class OrderController extends Controller
 
             return response()->json([
                 'status' => true,
-                'message' => 'Cảm ơn bạn đã mua hàng. Đơn hàng của bạn đang chờ duyệt.'
+                'message' => 'Cảm ơn bạn đã mua hàng. Đơn hàng của bạn đang chờ duyệt.',
+                'order_id' => $order->id
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -137,6 +165,10 @@ class OrderController extends Controller
 
             $order->status = 4;
             $order->save();
+
+            $orderCouponUsages = UserCouponUsage::where('user_id', $order->user_id)
+                ->where('coupon_id', '<>', null)
+                ->get();
 
             foreach ($order->orderProduct as $item) {
                 $product = Product::find($item->product_id);

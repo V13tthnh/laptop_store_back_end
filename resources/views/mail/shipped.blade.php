@@ -27,7 +27,7 @@
         <table style="width: 100%; border-collapse: collapse;">
             <thead>
                 <tr>
-                    <th style="border: 1px solid #ddd; padding: 8px;">Hình ảnh</th>
+
                     <th style="border: 1px solid #ddd; padding: 8px;">Tên</th>
                     <th style="border: 1px solid #ddd; padding: 8px;">Số lượng</th>
                     <th style="border: 1px solid #ddd; padding: 8px;">Giá bán</th>
@@ -37,11 +37,7 @@
             <tbody>
                 @foreach ($order->products as $product)
                     <tr>
-                        <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">
-                            <img src=<img
-                                src="{{asset($product->firstImage->url) ?? '<span class="avatar-initial rounded-circle bg-label-success">P</span>'}}"
-                                style="max-width: 100px;">
-                        </td>
+
                         <td style="border: 1px solid #ddd; padding: 8px;">{{ $product->name }}</td>
                         <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">
                             {{ $product->pivot->quantity }}
@@ -58,10 +54,10 @@
         </table>
 
         <!-- Thông tin tổng kết -->
-        <h3 style="color: #333;">Thông tin tổng kết</h3>
-        <p><strong>Tạm tính:</strong> {{number_format($order->subtotal, 0, ',', '.') . ' đ' }}</p>
-        <p><strong>Giảm giá:</strong> {{number_format($order->discount, 0, ',', '.') . ' đ'}}</p>
-        <p><strong>Tổng tiền thực tế:</strong> {{$order->total}} </p>
+        <h3 style="color: #333; margin-left: 600px">Thông tin tổng kết</h3>
+        <p style="margin-left: 600px"><strong>Tạm tính:</strong> {{number_format($order->subtotal, 0, ',', '.') . ' đ' }}</p>
+        <p style="margin-left: 600px"><strong>Giảm giá:</strong> {{number_format($order->discount, 0, ',', '.') . ' đ'}}</p>
+        <p style="margin-left: 600px"><strong>Tổng tiền thực tế:</strong> {{$order->total}} </p>
         <p><strong>Ghi chú:</strong> {{ $order->note }}</p>
     </div>
 </body>

@@ -91,7 +91,7 @@
                             return (
                                 '<div class="d-flex align-items-center">' +
                                 '<button class="btn btn-sm btn-icon restore-btn" value="' + data +
-                                '"><i class="ti ti-refresh ti-sm me-2"></i>Khôi phục</button>'+
+                                '"><i class="ti ti-refresh ti-sm me-2"></i>Khôi phục</button>' +
                                 '</div>' +
                                 '</div>'
                             );
@@ -126,141 +126,6 @@
                 },
                 // Buttons with Dropdown
                 buttons: [
-                    {
-                        extend: 'collection',
-                        className: 'btn btn-label-secondary ms-2 dropdown-toggle waves-effect waves-light',
-                        text: '<i class="ti ti-download me-2"></i>Xuất',
-                        buttons: [
-                            {
-                                extend: 'print',
-                                text: '<i class="ti ti-printer me-2"></i>Print',
-                                className: 'dropdown-item',
-                                exportOptions: {
-                                    columns: [2, 3, 4, 5, 6, 7],
-                                    format: {
-                                        body: function (inner, coldex, rowdex) {
-                                            if (inner.length <= 0) return inner;
-                                            var el = $.parseHTML(inner);
-                                            var result = '';
-                                            $.each(el, function (index, item) {
-                                                if (item.classList !== undefined && item.classList.contains('order-name')) {
-                                                    result = result + item.lastChild.firstChild.textContent;
-                                                } else if (item.innerText === undefined) {
-                                                    result = result + item.textContent;
-                                                } else result = result + item.innerText;
-                                            });
-                                            return result;
-                                        }
-                                    }
-                                },
-                                customize: function (win) {
-                                    // Customize print view for dark
-                                    $(win.document.body)
-                                        .css('color', headingColor)
-                                        .css('border-color', borderColor)
-                                        .css('background-color', bodyBg);
-                                    $(win.document.body)
-                                        .find('table')
-                                        .addClass('compact')
-                                        .css('color', 'inherit')
-                                        .css('border-color', 'inherit')
-                                        .css('background-color', 'inherit');
-                                }
-                            },
-                            {
-                                extend: 'csv',
-                                text: '<i class="ti ti-file me-2"></i>Csv',
-                                className: 'dropdown-item',
-                                exportOptions: {
-                                    columns: [2, 3, 4, 5, 6, 7],
-                                    format: {
-                                        body: function (inner, coldex, rowdex) {
-                                            if (inner.length <= 0) return inner;
-                                            var el = $.parseHTML(inner);
-                                            var result = '';
-                                            $.each(el, function (index, item) {
-                                                if (item.classList !== undefined && item.classList.contains('order-name')) {
-                                                    result = result + item.lastChild.firstChild.textContent;
-                                                } else if (item.innerText === undefined) {
-                                                    result = result + item.textContent;
-                                                } else result = result + item.innerText;
-                                            });
-                                            return result;
-                                        }
-                                    }
-                                }
-                            },
-                            {
-                                extend: 'excel',
-                                text: '<i class="ti ti-file-export me-2"></i>Excel',
-                                className: 'dropdown-item',
-                                exportOptions: {
-                                    columns: [2, 3, 4, 5, 6, 7],
-                                    format: {
-                                        body: function (inner, coldex, rowdex) {
-                                            if (inner.length <= 0) return inner;
-                                            var el = $.parseHTML(inner);
-                                            var result = '';
-                                            $.each(el, function (index, item) {
-                                                if (item.classList !== undefined && item.classList.contains('order-name')) {
-                                                    result = result + item.lastChild.firstChild.textContent;
-                                                } else if (item.innerText === undefined) {
-                                                    result = result + item.textContent;
-                                                } else result = result + item.innerText;
-                                            });
-                                            return result;
-                                        }
-                                    }
-                                }
-                            },
-                            {
-                                extend: 'pdf',
-                                text: '<i class="ti ti-file-text me-2"></i>Pdf',
-                                className: 'dropdown-item',
-                                exportOptions: {
-                                    columns: [2, 3, 4, 5, 6, 7],
-                                    format: {
-                                        body: function (inner, coldex, rowdex) {
-                                            if (inner.length <= 0) return inner;
-                                            var el = $.parseHTML(inner);
-                                            var result = '';
-                                            $.each(el, function (index, item) {
-                                                if (item.classList !== undefined && item.classList.contains('order-name')) {
-                                                    result = result + item.lastChild.firstChild.textContent;
-                                                } else if (item.innerText === undefined) {
-                                                    result = result + item.textContent;
-                                                } else result = result + item.innerText;
-                                            });
-                                            return result;
-                                        }
-                                    }
-                                }
-                            },
-                            {
-                                extend: 'copy',
-                                text: '<i class="ti ti-copy me-2"></i>Copy',
-                                className: 'dropdown-item',
-                                exportOptions: {
-                                    columns: [2, 3, 4, 5, 6, 7],
-                                    format: {
-                                        body: function (inner, coldex, rowdex) {
-                                            if (inner.length <= 0) return inner;
-                                            var el = $.parseHTML(inner);
-                                            var result = '';
-                                            $.each(el, function (index, item) {
-                                                if (item.classList !== undefined && item.classList.contains('order-name')) {
-                                                    result = result + item.lastChild.firstChild.textContent;
-                                                } else if (item.innerText === undefined) {
-                                                    result = result + item.textContent;
-                                                } else result = result + item.innerText;
-                                            });
-                                            return result;
-                                        }
-                                    }
-                                }
-                            }
-                        ]
-                    },
                     {
                         text: '<i class="ti ti-trash ti-xs me-0 me-sm-2"></i><span class="v-btn__content" data-no-activator="">Danh sách sản phẩm</span>',
                         className: 'add-new btn btn-primary ms-2 waves-effect waves-light product-page-btn',
@@ -373,13 +238,13 @@
             $('.dataTables_filter').addClass('ms-n3');
         }
 
-         //restore
-         $('.datatables-products').on('click', '.restore-btn', function(){
+        //restore
+        $('.datatables-products').on('click', '.restore-btn', function () {
             var id = $(this).val();
             $.ajax({
-                url: "/admin/products/restore/" +id,
+                url: "/admin/products/restore/" + id,
                 method: "get",
-            }).done(function(res){
+            }).done(function (res) {
                 if (res.success === SUCCESS) {
                     successfulNotification(res.message);
                     reloadDataTable();
@@ -387,8 +252,8 @@
             });
         });
 
-         //go to products page
-        $('.product-page-btn').click(function(e){
+        //go to products page
+        $('.product-page-btn').click(function (e) {
             e.preventDefault();
             window.location.href = '/admin/products';
 
@@ -432,14 +297,7 @@
 
     <!-- Product List Table -->
     <div class="card">
-        <div class="card-header">
-            <h5 class="card-title mb-0">Lọc theo:</h5>
-            <div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0">
-                <div class="col-md-4 product_category"></div>
-                <div class="col-md-4 product_brand"></div>
-                <div class="col-md-4 product_status"></div>
-            </div>
-        </div>
+
         <div class="card-datatable table-responsive">
             <table class="datatables-products table">
                 <thead class="border-top">
