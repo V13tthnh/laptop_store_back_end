@@ -82,6 +82,9 @@
                         data: 'birthday',
                         render: function (data, type, full, meta) {
                             var $birthday = full['birthday'];
+                            if (data === null) {
+                                return '<div class="d-flex align-items-center">trống</div>';
+                            }
                             return '<span class="fw-medium">' + $birthday + '</span>';
                         }
                     },
@@ -89,6 +92,9 @@
                         data: 'gender',
                         render: function (data, type, full, meta) {
                             var $gender = full['gender'];
+                            if (data === null) {
+                                return '<div class="d-flex align-items-center">trống</div>';
+                            }
                             return '<span class="fw-medium">' + $gender + '</span>';
                         }
                     },
@@ -109,24 +115,25 @@
                         }
                     },
                     {
-                        data: 'id', render: function (data, type, full, meta) {
+                        data: 'total_orders', render: function (data, type, full, meta) {
                             return (
                                 '<div class="d-flex align-items-center">' +
-                                '<button class="btn btn-sm btn-icon edit-btn" value="' + data +
-                                '" data-bs-toggle="offcanvas" data-bs-target="#offcanvasEditUser">' +
-                                '<i class="ti ti-edit ti-sm me-2"></i></button>' +
-                                '<button value="' + full['id'] + '" class="btn btn-sm btn-icon delete-btn"><i class="ti ti-trash ti-sm mx-2"></i></button>' +
-                                '<a href="javascript:;" class="text-body dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm mx-1"></i></a>' +
-                                '<div class="dropdown-menu dropdown-menu-end m-0">' +
-                                // '<a href="" class="dropdown-item">Xem chi tiết</a>' +
-                                '<a href="{{route('roles.index')}}" class="dropdown-item">Phân quyền</a>' +
-                                '</div>' +
+                                data +
+                                '</div>'
+                            );
+                        }
+                    },
+                    {
+                        data: 'total_order_amount', render: function (data, type, full, meta) {
+                            return (
+                                '<div class="d-flex align-items-center">' +
+                                new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data) +
                                 '</div>'
                             );
                         }
                     }
                 ],
-
+                order: [[1, 'desc']],
                 dom:
                     '<"row me-2"' +
                     '<"col-md-2"<"me-3"l>>' +
@@ -154,10 +161,6 @@
                 },
                 // Buttons with Dropdown
                 buttons: [
-                    // {
-                    //     text: '<i class="ti ti-trash ti-xs me-0 me-sm-2"></i><span class="v-btn__content" data-no-activator="">Danh sách đã xóa</span>',
-                    //     className: 'add-new btn btn-danger ms-2 waves-effect waves-light trashPage',
-                    // },
                     {
                         extend: 'collection',
                         className: 'btn btn-label-secondary dropdown-toggle mx-3 waves-effect waves-light',
@@ -298,14 +301,6 @@
                             }
                         ]
                     },
-                    // {
-                    //     text: '<i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">Thêm nhân viên</span>',
-                    //     className: 'add-new btn btn-primary waves-effect waves-light',
-                    //     attr: {
-                    //         'data-bs-toggle': 'offcanvas',
-                    //         'data-bs-target': '#offcanvasAddUser'
-                    //     }
-                    // }
                 ],
                 // For responsive popup
                 responsive: {
@@ -342,264 +337,6 @@
             });
         }
 
-        //go to trash page
-        $('.trashPage').click(function (e) {
-            e.preventDefault();
-            window.location.href = '/admin/employees/trash';
-        });
-
-        //add new user
-        $('#add-btn').click(function (e) {
-            e.preventDefault();
-
-            let full_name = $('#add-user-name').val();
-            let email = $('#add-user-email').val();
-            let phone = $('#add-user-phone').val();
-            let birthday = $('#add-user-birthday').val();
-            let gender = $('#add-user-gender option:selected').text();
-            let password = $('#add-user-password').val();
-            let role = $('#add-user-role option:selected').text();
-            let status = $('#add-user-status').val();
-
-            formDataStore.append("_token", "{{csrf_token()}}");
-            formDataStore.append("full_name", full_name);
-            formDataStore.append("phone", phone);
-            formDataStore.append("email", email);
-            formDataStore.append("password", password);
-            formDataStore.append("birthday", birthday);
-            formDataStore.append("gender", gender);
-            formDataStore.append("role", role);
-            formDataStore.append("status", status);
-
-            $.ajax({
-                url: "{{route('employees.store')}}",
-                method: "post",
-                data: formDataStore,
-                contentType: false,
-                processData: false,
-            }).done(function (res) {
-                if (res.success == SUCCESS) {
-                    successfulNotification(res.message)
-                    reloadDataTable();
-                    closeOffCanvas();
-                }
-            }).fail(function (res) {
-                var errors = res.responseJSON.errors;
-                showValidationErrors(errors, '#add-new-user-form', '.add-user-');
-            });
-        });
-
-        //show data edit user
-        $('.datatables-users').on('click', '.edit-btn', function () {
-            let id = $(this).val();
-            $.ajax({
-                url: "employees/" + id + "/edit",
-                method: "get",
-            }).done(function (res) {
-                if (res.data == null) {
-                    Swal.fire({ title: "Dữ liệu không tồn tại", icon: 'error', confirmButtonText: 'OK' });
-                    return;
-                }
-                $('#edit-user-id').val(res.data.id);
-                $('#edit-user-name').val(res.data.full_name);
-                $('#edit-user-email').val(res.data.email);
-                $('#edit-user-phone').val(res.data.phone);
-                $('#edit-user-birthday').val(res.data.birthday);
-                $('#edit-user-gender').val(res.data.gender == 'nam' || 'Nam' ? 1 : res.data.gender == 'nữ' | 'Nữ' ? 2 : 3);
-                $('#edit-user-password').val(res.data.password);
-                $('#edit-user-role').val(res.data.roles[0].id);
-                $("#edit-user-role").trigger('change');
-
-                $('#edit-user-status').val(res.data.status);
-            });
-        });
-
-        //update user
-        $('#update-btn').click(function (e) {
-            e.preventDefault();
-            let id = $('#edit-user-id').val();
-            let full_name = $('#edit-user-name').val();
-            let email = $('#edit-user-email').val();
-            let phone = $('#edit-user-phone').val();
-            let birthday = $('#edit-user-birthday').val();
-            let gender = $('#edit-user-gender option:selected').text();
-            let role = $('#edit-user-role option:selected').text();
-            let status = $('#edit-user-status').val();
-
-            formDataUpdate.append("_token", "{{csrf_token()}}");
-            formDataUpdate.append("full_name", full_name);
-            formDataUpdate.append("phone", phone);
-            formDataUpdate.append("email", email);
-            formDataUpdate.append("birthday", birthday);
-            formDataUpdate.append("gender", gender);
-            formDataUpdate.append("role", role);
-            formDataUpdate.append("status", status);
-
-            $.ajax({
-                url: 'employees/' + id + '/update',
-                method: "post",
-                data: formDataUpdate,
-                contentType: false,
-                processData: false,
-            }).done(function (res) {
-                if (res.success == SUCCESS) {
-                    successfulNotification(res.message);
-                    reloadDataTable();
-                    closeOffCanvas();
-                }
-            }).fail(function (res) {
-                var errors = res.responseJSON.errors;
-                showValidationErrors(errors, '#edit-user-form', '.edit-user-')
-            });
-        });
-
-        //delete employee
-        $('.datatables-users').on('click', '.delete-btn', function () {
-            var id = $(this).val();
-            Swal.fire({
-                title: 'Bạn muốn xóa mục này',
-                text: 'Dữ liệu bị xóa vẫn có thể khôi phục!',
-                icon: 'warning',
-                confirmButtonText: 'Đồng ý',
-                cancelButtonText: 'Hủy bỏ'
-            }).then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        url: "employees/" + id,
-                        method: "delete",
-                        data: {
-                            "_token": "{{csrf_token()}}"
-                        }
-                    }).done(function (res) {
-                        if (res.success) {
-                            successfulNotification(res.message);
-                            reloadDataTable();
-                        }
-                        if (!res.success) {
-                            Swal.fire({ title: res.message, icon: 'error', confirmButtonText: 'OK' });
-                            return;
-                        }
-                    });
-                }
-            })
-        });
-
-        //close offcanvas add-user
-        function closeOffCanvas() {
-            $('.close-offcanvas').click();
-        }
-
-        //reload dataTable user
-        function reloadDataTable() {
-            dt_user.ajax.reload();
-        }
-
-        //Notification if request successfully
-        function successfulNotification(message) {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: message,
-                showConfirmButton: false,
-                timer: 1500,
-                customClass: {
-                    confirmButton: 'btn btn-primary waves-effect waves-light'
-                },
-                buttonsStyling: false
-            });
-        }
-
-        //show errors
-        function showValidationErrors(errors, formClass, errorClass) {
-            $(formClass).addClass('was-validated');
-            $.each(errors, function (key, value) {
-                $(errorClass + key + '-error').text(value[0]);
-                $(errorClass + key + '-error').text(value[1]);
-                $(errorClass + key + '-error').text(value[2]);
-                $(errorClass + key + '-error').text(value[3]);
-                $(errorClass + key + '-error').text(value[4]);
-                $(errorClass + key + '-error').text(value[5]);
-                $(errorClass + key + '-error').text(value[6]);
-            });
-        }
-
-        //For get url add-image
-        $('#add-user-avatar').change(function (e) {
-            var input = e.target;
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    formDataStore.set("avatar", input.files[0]);
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        });
-
-        //For get url edit-image
-        $('#edit-user-avatar').change(function (e) {
-            var input = e.target;
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    formDataUpdate.set("avatar", input.files[0]);
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        });
-
-        //Clear inputFile after store or update
-        function clearInputFile(f) {
-            if (f.value) {
-                try {
-                    f.value = ''; //for IE11, latest Chrome/Firefox/Opera...
-                } catch (err) { }
-                if (f.value) { //for IE5 ~ IE10
-                    var form = document.createElement('form'),
-                        parentNode = f.parentNode, ref = f.nextSibling;
-                    form.appendChild(f);
-                    form.reset();
-                    parentNode.insertBefore(f, ref);
-                }
-            }
-        }
-
-        //Clear form create after hiden form
-        $('#offcanvasAddUser').on('hidden.bs.offcanvas', function () {
-            $('#add-user-name').val('');
-            $('#add-user-email').val('');
-            $('#add-user-password').val('');
-            $('#add-user-avatar').click(function () { clearInputFile($(this).val()); });
-            $('#add-user-phone').text('');
-            $('#add-user-birthday').val('');
-            $('#add-user-gender').val($("#add-user-gender option:first").val());
-            $("#add-user-role").val($("#add-user-role option:first").val());
-            $("#add-user-role").trigger('change');
-            $("#add-user-status").val($("#add-user-status option:first").val());
-            $("#add-user-status").trigger('change');
-            $('.add-user-name-error').text('');
-            $('.add-user-email-error').text('');
-            $('.add-user-password-error').text('');
-            $('.add-user-avatar-error').text('');
-            $('.add-user-phone-error').text('');
-            $('.add-user-birthday-error').text('');
-            $('.add-user-gender-error').text('');
-            $(".add-user-role-error").text('');
-            $(".add-user-status-error").text('');
-        });
-
-        //Clear form edit after hiden form
-        $('#offcanvasEditUser').on('hidden.bs.offcanvas', function () {
-            $('#edit-user-avatar').click(function () { clearInputFile($(this).val()); });
-            $('.edit-user-name-error').text('');
-            $('.edit-user-email-error').text('');
-            $('.edit-user-avatar-error').text('');
-            $('.edit-user-phone-error').text('');
-            $('.edit-user-birthday-error').text('');
-            $('.edit-user-gender-error').text('');
-            $(".edit-user-role-error").text('');
-            $(".edit-user-status-error").text('');
-        });
-
         // Filter form control to default size
         setTimeout(() => {
             $('.dataTables_filter .form-control').removeClass('form-control-sm');
@@ -623,11 +360,11 @@
                     <tr>
                         <th>Tên</th>
                         <th>Email</th>
-
                         <th>Ngày sinh</th>
                         <th>Giới tính</th>
                         <th>Trạng thái</th>
-                        <th>Thao tác</th>
+                        <th>Tổng hóa đơn</th>
+                        <th>Tổng tiền</th>
                     </tr>
                 </thead>
             </table>

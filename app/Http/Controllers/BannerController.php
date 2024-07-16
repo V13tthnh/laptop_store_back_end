@@ -4,11 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUpdateBannerRequest;
 use App\Models\Banner;
+use Illuminate\Routing\Controllers\Middleware;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
 
-class BannerController extends Controller
+class BannerController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(middleware: 'permission:thêm banner|sửa banner|xóa banner', only: ['index', 'store']),
+            new Middleware(middleware: 'permission:thêm banner', only: ['create', 'store']),
+            new Middleware(middleware: 'permission:sửa banner', only: ['edit', 'update']),
+            new Middleware(middleware: 'permission:xóa banner', only: ['destroy']),
+        ];
+    }
 
     public function index()
     {

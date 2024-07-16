@@ -218,15 +218,12 @@
 
         function successNotification(message) {
             Swal.fire({
-                position: 'center',
                 icon: 'success',
-                title: "Cập nhật thành công",
-                showConfirmButton: false,
-                timer: 1500,
+                title: 'Đã xóa thành công!',
+                text: 'Dữ liệu đánh giá đã được cập nhật.',
                 customClass: {
-                    confirmButton: 'btn btn-primary waves-effect waves-light'
-                },
-                buttonsStyling: false
+                    confirmButton: 'btn btn-success waves-effect waves-light'
+                }
             });
         }
 

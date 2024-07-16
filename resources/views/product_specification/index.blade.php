@@ -152,156 +152,8 @@
                     searchPlaceholder: 'Tìm kiếm'
                 },
                 // Buttons with Dropdown
-                buttons: [
-                    {
-                        extend: 'collection',
-                        className: 'btn btn-label-secondary dropdown-toggle mx-3 waves-effect waves-light',
-                        text: '<i class="ti ti-screen-share me-1 ti-xs"></i>Xuất',
-                        buttons: [
-                            {
-                                extend: 'print',
-                                text: '<i class="ti ti-printer me-2" ></i>Print',
-                                className: 'dropdown-item',
-                                exportOptions: {
-                                    columns: [1, 2, 3],
-                                    // prevent avatar to be print
-                                    format: {
-                                        body: function (inner, coldex, rowdex) {
-                                            if (inner.length <= 0) return inner;
-                                            var el = $.parseHTML(inner);
-                                            var result = '';
-                                            $.each(el, function (index, item) {
-                                                if (item.classList !== undefined && item.classList.contains('user-name')) {
-                                                    result = result + item.lastChild.firstChild.textContent;
-                                                } else if (item.innerText === undefined) {
-                                                    result = result + item.textContent;
-                                                } else result = result + item.innerText;
-                                            });
-                                            return result;
-                                        }
-                                    }
-                                },
-                                customize: function (win) {
-                                    //customize print view for dark
-                                    $(win.document.body)
-                                        .css('color', headingColor)
-                                        .css('border-color', borderColor)
-                                        .css('background-color', bodyBg);
-                                    $(win.document.body)
-                                        .find('table')
-                                        .addClass('compact')
-                                        .css('color', 'inherit')
-                                        .css('border-color', 'inherit')
-                                        .css('background-color', 'inherit');
-                                }
-                            },
-                            {
-                                extend: 'csv',
-                                text: '<i class="ti ti-file-text me-2" ></i>Csv',
-                                className: 'dropdown-item',
-                                exportOptions: {
-                                    columns: [1, 2, 3],
-                                    // prevent avatar to be display
-                                    format: {
-                                        body: function (inner, coldex, rowdex) {
-                                            if (inner.length <= 0) return inner;
-                                            var el = $.parseHTML(inner);
-                                            var result = '';
-                                            $.each(el, function (index, item) {
-                                                if (item.classList !== undefined && item.classList.contains('user-name')) {
-                                                    result = result + item.lastChild.firstChild.textContent;
-                                                } else if (item.innerText === undefined) {
-                                                    result = result + item.textContent;
-                                                } else result = result + item.innerText;
-                                            });
-                                            return result;
-                                        }
-                                    }
-                                }
-                            },
-                            {
-                                extend: 'excel',
-                                text: '<i class="ti ti-file-spreadsheet me-2"></i>Excel',
-                                className: 'dropdown-item',
-                                exportOptions: {
-                                    columns: [1, 2, 3],
-                                    // prevent avatar to be display
-                                    format: {
-                                        body: function (inner, coldex, rowdex) {
-                                            if (inner.length <= 0) return inner;
-                                            var el = $.parseHTML(inner);
-                                            var result = '';
-                                            $.each(el, function (index, item) {
-                                                if (item.classList !== undefined && item.classList.contains('user-name')) {
-                                                    result = result + item.lastChild.firstChild.textContent;
-                                                } else if (item.innerText === undefined) {
-                                                    result = result + item.textContent;
-                                                } else result = result + item.innerText;
-                                            });
-                                            return result;
-                                        }
-                                    }
-                                }
-                            },
-                            {
-                                extend: 'pdf',
-                                text: '<i class="ti ti-file-code-2 me-2"></i>Pdf',
-                                className: 'dropdown-item',
-                                exportOptions: {
-                                    columns: [1, 2, 3],
-                                    // prevent avatar to be display
-                                    format: {
-                                        body: function (inner, coldex, rowdex) {
-                                            if (inner.length <= 0) return inner;
-                                            var el = $.parseHTML(inner);
-                                            var result = '';
-                                            $.each(el, function (index, item) {
-                                                if (item.classList !== undefined && item.classList.contains('user-name')) {
-                                                    result = result + item.lastChild.firstChild.textContent;
-                                                } else if (item.innerText === undefined) {
-                                                    result = result + item.textContent;
-                                                } else result = result + item.innerText;
-                                            });
-                                            return result;
-                                        }
-                                    }
-                                }
-                            },
-                            {
-                                extend: 'copy',
-                                text: '<i class="ti ti-copy me-2" ></i>Copy',
-                                className: 'dropdown-item',
-                                exportOptions: {
-                                    columns: [1, 2, 3],
-                                    // prevent avatar to be display
-                                    format: {
-                                        body: function (inner, coldex, rowdex) {
-                                            if (inner.length <= 0) return inner;
-                                            var el = $.parseHTML(inner);
-                                            var result = '';
-                                            $.each(el, function (index, item) {
-                                                if (item.classList !== undefined && item.classList.contains('user-name')) {
-                                                    result = result + item.lastChild.firstChild.textContent;
-                                                } else if (item.innerText === undefined) {
-                                                    result = result + item.textContent;
-                                                } else result = result + item.innerText;
-                                            });
-                                            return result;
-                                        }
-                                    }
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        text: '<i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">Thêm thông số</span>',
-                        className: 'add-new btn btn-primary waves-effect waves-light',
-                        attr: {
-                            'data-bs-toggle': 'modal',
-                            'data-bs-target': '#addSpecificationModal'
-                        },
-                    }
-                ],
+                buttons: [],
+                order: [[1, 'desc']],
                 responsive: {
                     details: {
                         display: $.fn.dataTable.Responsive.display.modal({
@@ -414,11 +266,17 @@
         $('.datatables-product-sp').on('click', '.delete-btn', function () {
             var id = $(this).val();
             Swal.fire({
-                title: 'Bạn muốn xóa mục này',
-                text: 'Dữ liệu bị xóa vẫn có thể khôi phục!',
+                title: 'Bạn có chắc không?',
+                text: "Dữ liệu này không thể khôi phục!",
                 icon: 'warning',
-                confirmButtonText: 'Đồng ý',
-                cancelButtonText: 'Hủy bỏ'
+                showCancelButton: true,
+                confirmButtonText: 'Đúng, Hãy xóa nó!',
+                cancelButtonText: 'Hủy',
+                customClass: {
+                    confirmButton: 'btn btn-primary me-3 waves-effect waves-light',
+                    cancelButton: 'btn btn-label-secondary waves-effect waves-light'
+                },
+                buttonsStyling: false
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
@@ -454,15 +312,12 @@
         //Notification if request successfully
         function successfulNotification(message) {
             Swal.fire({
-                position: 'top-end',
                 icon: 'success',
-                title: message,
-                showConfirmButton: false,
-                timer: 1500,
+                title: 'Đã xóa thành công!',
+                text: 'Dữ liệu thông số đã được cập nhật.',
                 customClass: {
-                    confirmButton: 'btn btn-primary waves-effect waves-light'
-                },
-                buttonsStyling: false
+                    confirmButton: 'btn btn-success waves-effect waves-light'
+                }
             });
         }
 
@@ -531,7 +386,7 @@
                     </div>
                     <div class="col-12">
                         <div class="card mb-3">
-                        <h6 class="card-header">Giá trị thông số</h6>
+                            <h6 class="card-header">Giá trị thông số</h6>
                             <div class="card-body">
                                 <form class="form-repeater-1">
                                     <div data-repeater-list="group-a">
@@ -540,8 +395,8 @@
                                                 <div class="mb-3 col-12">
                                                     <div class="row">
                                                         <div class="col-9">
-                                                            <label class="form-label"
-                                                                for="form-repeater-1-1-1">Giá trị</label>
+                                                            <label class="form-label" for="form-repeater-1-1-1">Giá
+                                                                trị</label>
                                                             <input type="text" id="form-repeater-1-1-1"
                                                                 name="add-product-sp-detail[]"
                                                                 class="form-control add-product-sp-detail"
@@ -606,8 +461,8 @@
                                                 <div class="mb-3 col-8">
                                                     <div class="row">
                                                         <div class="col-10">
-                                                            <label class="form-label"
-                                                                for="form-repeater-2-1-1">Giá trị</label>
+                                                            <label class="form-label" for="form-repeater-2-1-1">Giá
+                                                                trị</label>
                                                             <input type="text" id="form-repeater-2-1-1"
                                                                 name="edit-product-sp-detail[]"
                                                                 class="form-control edit-product-sp-detail"

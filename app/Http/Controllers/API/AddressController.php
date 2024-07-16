@@ -19,7 +19,7 @@ class AddressController extends Controller
     public function getAllAddress($id)
     {
         try {
-            $addresses =  $addresses = Address::where('user_id', $id)->orderBy('is_default', 'desc')->get();
+            $addresses = $addresses = Address::where('user_id', $id)->orderBy('is_default', 'desc')->get();
             return response()->json([
                 'status' => true,
                 'data' => $addresses
@@ -177,7 +177,7 @@ class AddressController extends Controller
             $address->phone = $request->phone;
             $address->district = $district->name;
             $address->ward = $ward->name;
-            $address->provinces =  $province->name;
+            $address->provinces = $province->name;
             $address->address_detail = $request->address_detail;
             $address->user_id = $request->user_id;
             $address->save();
@@ -197,7 +197,7 @@ class AddressController extends Controller
     public function setDefault(Request $request, $id)
     {
         try {
-            Address::where('user_id',  $id)->update(['is_default' => 0]);
+            Address::where('user_id', $id)->update(['is_default' => 0]);
 
             $address = Address::find($request->id);
             $address->is_default = 1;
@@ -215,6 +215,32 @@ class AddressController extends Controller
         }
     }
 
+    public function getProvinceType(Request $request, $id)
+    {
+        try {
+            $address = Address::where('user_id', $id)->where('is_default', 1)->first();
+
+            if (!$address) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Địa chỉ mặc định không tồn tại.'
+                ], 404);
+            }
+
+            $provinceType = Province::where('name', $address->provinces)->pluck('type');
+
+            return response()->json([
+                'status' => true,
+                'data' => $provinceType,
+
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
     public function delete($id)
     {
         try {
@@ -231,7 +257,8 @@ class AddressController extends Controller
         }
     }
 
-    public function getDefaultAddress($id){
+    public function getDefaultAddress($id)
+    {
         try {
             $defaultAddress = Address::where('user_id', $id)->where('is_default', 1)->first();
             return response()->json([

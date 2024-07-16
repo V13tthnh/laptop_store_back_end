@@ -23,14 +23,13 @@ class CustomerController extends Controller
             $user->birthday = $request->birthday;
             $user->save();
 
-
             return response()->json([
-                'sucesss' => true,
+                'status' => true,
                 'message' => "Cập nhật thành công"
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'sucesss' => false,
+                'status' => false,
                 'message' => "Có lỗi xảy ra: " . $e
             ], 500);
         }
@@ -43,7 +42,7 @@ class CustomerController extends Controller
             $user->password = Hash::make($request->new_password);
             $user->save();
             return response()->json([
-                'sucesss' => true,
+                'success' => true,
                 'message' => "Đổi mật khẩu thành công."
             ], 200);
         } catch (\Exception $e) {

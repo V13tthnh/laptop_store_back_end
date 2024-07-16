@@ -18,7 +18,7 @@ class RegisterRequest extends FormRequest
     {
         return [
             'full_name' => ['required', 'string', 'min:8', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'email' => ['required', 'string', 'lowercase', 'email:rfc,dns', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'min:8', 'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9])/u'],
             'password_confirmation' => 'required|same:password'
         ];
@@ -35,6 +35,8 @@ class RegisterRequest extends FormRequest
             'email.required' => 'Vui lòng nhập Email',
             'email.email' => 'Email không hợp lệ',
             'email.unique' => 'Email đã tồn tại',
+            'email.rfc' => 'Email không hợp lệ',
+            'email.dns' => 'Email không hợp lệ',
 
             'password.required' => 'Vui lòng nhập mât khẩu',
             'password.string' => 'Mật khẩu phải là chuỗi ký tự',

@@ -82,6 +82,6 @@ class Order extends Model
 
     function formatCurrencyVND($number)
     {
-        return number_format($number, 0, ',', '.') . ' vnđ';
+        return number_format($number, 0, ',', '.') . ' ₫';
     }
 }

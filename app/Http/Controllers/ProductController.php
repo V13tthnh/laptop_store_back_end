@@ -13,17 +13,20 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Storage;
 use Str;
+use Illuminate\Routing\Controllers\Middleware;
 
-class ProductController extends Controller
+class ProductController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
 
-    // function __construct()
-    // {
-    //      $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index','store']]);
-    //      $this->middleware('permission:user-create', ['only' => ['create','store']]);
-    //      $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
-    //      $this->middleware('permission:user-delete', ['only' => ['destroy']]);
-    // }
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(middleware: 'permission:thêm sản phẩm|sửa sản phẩm|xóa sản phẩm', only: ['index', 'store']),
+            new Middleware(middleware: 'permission:thêm sản phẩm', only: ['create', 'store']),
+            new Middleware(middleware: 'permission:sửa sản phẩm', only: ['edit', 'update']),
+            new Middleware(middleware: 'permission:xóa sản phẩm', only: ['destroy']),
+        ];
+    }
 
     public function index()
     {
@@ -91,7 +94,8 @@ class ProductController extends Controller
 
     public function show(string $id)
     {
-        return view('product.detail');
+        $product = Product::with(['images', 'firstImage', 'category', 'brand', 'productSpecificationDetails.productSpecification'])->find($id);
+        return view('product.detail', compact('product'));
     }
 
     public function edit(string $id)
@@ -107,6 +111,7 @@ class ProductController extends Controller
 
     public function update(StoreUpdateProductRequest $request, string $id)
     {
+        dd($request);
         $product = Product::find($id);
         $product->name = $request->name;
         $product->SKU = $request->SKU;

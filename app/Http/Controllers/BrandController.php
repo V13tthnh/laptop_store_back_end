@@ -5,9 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Http\Requests\StoreUpdateBrandRequest;
 use Yajra\DataTables\DataTables;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Storage;
-class BrandController extends Controller
+class BrandController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(middleware: 'permission:thêm thương hiệu|sửa thương hiệu|xóa thương hiệu', only: ['index', 'store']),
+            new Middleware(middleware: 'permission:thêm thương hiệu', only: ['create', 'store']),
+            new Middleware(middleware: 'permission:sửa thương hiệu', only: ['edit', 'update']),
+            new Middleware(middleware: 'permission:xóa thương hiệu', only: ['destroy']),
+        ];
+    }
     public function index()
     {
         return view('brand.index');

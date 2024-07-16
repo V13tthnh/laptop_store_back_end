@@ -19,8 +19,9 @@ class StoreUpdateCouponRequest extends FormRequest
             'value' => 'required|numeric|min:0',
             'minimum_spend' => 'required|numeric',
             'start_date' => 'required',
+            'end_date' => 'required|after:start_date',
+            'usage_limit' => 'nullable|integer|min:1|max:10',
             'type' => 'required|integer|in:1,2,3',
-            'end_date' => 'required',
         ];
     }
 
@@ -39,7 +40,8 @@ class StoreUpdateCouponRequest extends FormRequest
 
             'start_date.required' => "Vui lòng nhập ngày bắt đầu!",
 
-            'end_date.required' => "Vui lòng nhập ngày bắt đầu!",
+            'end_date.required' => "Vui lòng nhập ngày kết thúc!",
+            'end_date.after' => "Ngày kết thúc phải sau ngày bắt đầu.",
 
             'type.required' => 'Vui lòng chọn loại giảm giá.',
             'type.integer' => 'Loại giảm giá phải là một số nguyên.',
@@ -47,6 +49,10 @@ class StoreUpdateCouponRequest extends FormRequest
 
             'value.min' => 'Giá trị giảm giá không được nhỏ hơn 0.',
             'value.max' => 'Giá trị giảm giá theo phần trăm không được vượt quá 100.',
+
+            'usage_limit.max' => "Số lần sử dụng tối đa là :max lần.",
+            'usage_limit.min' => "Số lần sử dụng tối đa phải ít nhất là 1 lần.",
+            'usage_limit.integer' => "Số lần sử dụng tối đa phải là số nguyên."
         ];
     }
 

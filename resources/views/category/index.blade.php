@@ -148,7 +148,7 @@
                         }
                     }
                 ],
-                //set any columns order asc/desc
+                order: [[1, 'desc']],
                 dom:
                     '<"card-header d-flex flex-wrap pb-2"' +
                     '<f>' +

@@ -10,13 +10,16 @@ use Yajra\DataTables\DataTables;
 class CustomerController extends Controller
 {
     public function index()
-    {   
+    {
         return view('customer.index');
     }
 
     public function listDataTableCustomers()
     {
-        $customers = User::role('customer')->get();
+        $customers = User::role('customer')
+            ->withCount('orders as total_orders')
+            ->withSum('orders as total_order_amount', 'total') // Giả sử `amount` là cột lưu trữ tổng số tiền của hóa đơn
+            ->get();
         return Datatables::of($customers)->make(true);
     }
 

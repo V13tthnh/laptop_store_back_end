@@ -13,6 +13,7 @@ use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\ReviewController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\ShippingController;
 use Illuminate\Support\Facades\Route;
 
 //Auth API
@@ -22,7 +23,7 @@ Route::get('auth/redirect/{provider}', [AuthController::class, 'redirect']);
 Route::get('auth/callback/{provider}', [AuthController::class, 'callback']);
 
 Route::post('register', [AuthController::class, 'register']);
-Route::get('email/verify/{id}', [MailController::class, 'verifyEmail']);
+Route::get('/email/verify/{email}', [MailController::class, 'verifyEmail']);
 Route::post('email/resend', [MailController::class, 'resend']);
 Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('reset-password', [AuthController::class, 'resetPassword']);
@@ -43,11 +44,12 @@ Route::get('/brands', [BrandController::class, 'getAllBrand']);
 Route::get('/provinces', [AddressController::class, 'getProvinces']);
 Route::get('/provinces/{provinceId}/districts', [AddressController::class, 'getDistrictsByProvinceId']);
 Route::get('/districts/{districtId}/wards', [AddressController::class, 'getWardsByDistrictsId']);
-//Coupon
-Route::get('/coupons', [CouponController::class, 'getAllCoupons']);
-Route::post('/apply-coupon', [CouponController::class, 'applyCoupon']);
+
 //Banner
 Route::get('/banners', [BannerController::class, 'banners']);
+
+Route::post('/momo/checkout', [CheckoutController::class, 'momoCheckout']);
+
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     //Quản lý thông tin người dùng
@@ -55,9 +57,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('logout', [AuthController::class, 'logout']);
     Route::post('/update-profile', [CustomerController::class, 'updateProfile']);
     Route::post('/change-password', [CustomerController::class, 'changePassword']);
-
-    //mã giảm giá
-    Route::post('/get-available-coupons', [CouponController::class, 'getAvailableCoupons']);
 
     //Quản lý địa chỉ
     Route::get('/addresses/{id}/all', [AddressController::class, 'getAllAddress']);
@@ -67,6 +66,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/addresses/{id}', [AddressController::class, 'update']);
     Route::delete('/addresses/{id}', [AddressController::class, 'delete']);
     Route::post('/address/{id}/set-default', [AddressController::class, 'setDefault']);
+    Route::post('/address/{id}/province-type', [AddressController::class, 'getProvinceType']);
+
+    //mã giảm giá
+    Route::get('/coupons', [CouponController::class, 'getAllCoupons']);
+    Route::post('/apply-coupon', [CouponController::class, 'applyCoupon']);
+    Route::post('/get-available-coupons', [CouponController::class, 'getAvailableCoupons']);
 
     //hóa đơn
     Route::post('/get-order-detail', [OrderController::class, 'getOrderDetails']);
@@ -78,8 +83,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/store-review', [ReviewController::class, 'store']);
 
     //Thanh toán
+    Route::post('/checkout-online', [CheckoutController::class, 'onlineCheckout']);
     Route::post('/checkout', [OrderController::class, 'store']);
     route::get('/vnp/callback', [CheckoutController::class, 'vnPayCallBack']);
-    Route::post('/checkout-online', [CheckoutController::class, 'onlineCheckout']);
+
+    //tính phí ship
+    Route::post('/calculate-shipping-fee', [ShippingController::class, 'calculateShippingFee']);
 });
 

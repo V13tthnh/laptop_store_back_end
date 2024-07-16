@@ -10,6 +10,7 @@ use Illuminate\Routing\Controllers\Middleware;
 
 class PermissionController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
+    
     public static function middleware(): array
     {
         return [

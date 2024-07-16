@@ -9,9 +9,20 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Hash;
+use Illuminate\Routing\Controllers\Middleware;
 
-class EmployeeController extends Controller
+class EmployeeController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware(middleware: 'permission:thêm nhân viên|sửa nhân viên|xóa nhân viên', only: ['index', 'store']),
+            new Middleware(middleware: 'permission:thêm nhân viên', only: ['create', 'store']),
+            new Middleware(middleware: 'permission:sửa nhân viên', only: ['edit', 'update']),
+            new Middleware(middleware: 'permission:xóa nhân viên', only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         $roles = Role::with('permissions')->get();

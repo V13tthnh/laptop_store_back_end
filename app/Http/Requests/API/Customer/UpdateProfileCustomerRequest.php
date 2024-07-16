@@ -20,7 +20,7 @@ class UpdateProfileCustomerRequest extends FormRequest
             //     'email',
             //     'unique:users,email,' . $this->id . ',id'
             // ],
-            'gender' => 'required',
+
             'birthday' => 'required',
             'phone' => 'required|string|max:15|regex:/^\+?[0-9]{10,15}$/',
         ];
@@ -36,8 +36,6 @@ class UpdateProfileCustomerRequest extends FormRequest
             // 'email.required' => 'Vui lòng nhập Email.',
             // 'email.email' => 'Email không hợp lệ.',
             // 'email.unique' => 'Email đã tồn tại.',
-
-            'gender.required' => 'Vui lòng chọn giới tính .',
 
             'birthday.required' => 'Vui lòng chọn Ngày sinh.',
 

@@ -430,8 +430,8 @@
                                     <i class="ti ti-currency-dollar ti-sm"></i>
                                 </div>
                                 <div class="card-info">
-                                    <h5 class="mb-0">{{number_format($totalProducts, 0, ',', '.') . 'đ'}}</h5>
-                                    <small>Tổng hóa đơn nhập</small>
+                                    <h5 class="mb-0">{{number_format($totalRevenue, 0, ',', '.') . 'đ'}}</h5>
+                                    <small>Tổng doanh thu</small>
                                 </div>
                             </div>
                         </div>

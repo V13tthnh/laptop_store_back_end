@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 Route::get('/admin/products', function () {
     if (Auth::check()) {
@@ -10,8 +11,8 @@ Route::get('/admin/products', function () {
         $role = $user->getRoleNames()->first();
         return view('product.index', compact('role'));
     }
-
 })->middleware(['auth', 'verified'])->name('products.name');
+
 
 Route::middleware('auth')->group(function () {
     Route::prefix('admin')->group(function () {
@@ -47,6 +48,7 @@ Route::middleware('auth')->group(function () {
 Route::get('mail', function () {
     return view('mail.forgot-password');
 });
+
 require __DIR__ . '/auth.php';
 
 

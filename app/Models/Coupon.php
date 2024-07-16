@@ -12,9 +12,10 @@ class Coupon extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'code',
         'start_date',
         'end_date',
+        'usage_limit'
     ];
 
     protected $hidden = [

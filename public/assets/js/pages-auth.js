@@ -37,9 +37,12 @@ document.addEventListener('DOMContentLoaded', function (e) {
               notEmpty: {
                 message: 'Vui lòng nhập email'
               },
+              emailAddress: {
+                message: 'Vui lòng nhập địa chỉ email hợp lệ'
+              },
               stringLength: {
                 min: 6,
-                message: 'Tên người dùng ít nhất 6 ký tự'
+                message: 'Email ít nhất 6 ký tự'
               }
             }
           },

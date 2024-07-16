@@ -267,8 +267,13 @@
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
                                     data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="/{{Auth::user()->avatar}}" alt
-                                            class="h-auto rounded-circle" />
+                                        @if (Auth::user()->avatar != null)
+                                            <img src="/{{ Auth::user()->avatar }}" alt="User Avatar"
+                                                class="h-auto rounded-circle" />
+                                        @else
+                                            <span class="avatar-initial rounded-circle bg-label-success">U</span>
+                                        @endif
+
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">

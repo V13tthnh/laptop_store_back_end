@@ -41,7 +41,11 @@
                         data: 'user_name', name: 'user.full_name'
                     },
                     { data: 'phone', name: 'phone' },
-                    { data: 'discount', name: 'discount' },
+                    { data: 'discount', render: function (data, type, full, meta) {
+                            var $discount = data;
+                            var $formattedDiscount = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format($discount);
+                            return '<span class="d-none">' + $formattedDiscount + '</span>' + $formattedDiscount;
+                        } },
                     {
                         data: 'total', render: function (data, type, full, meta) {
                             var $total = data;
@@ -142,6 +146,7 @@
                     }
                 ],
                 columnDefs: [],
+                order: [[1, 'desc']],
                 dom:
                     '<"row mx-1"' +
                     '<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>>' +
@@ -187,18 +192,53 @@
 
         $('.order-list-table').on('click', '.update-status', function () {
             var data = $(this).data();
-            var id = $(this).val();
-            $.ajax({
-                url: '/admin/orders/update-status',
-                method: 'post',
-                data: { '_token': "{{csrf_token()}}", id: id, status: data.status },
-                success: function (response) {
-                    if (response.status) {
-                        successNotification("Cập nhật thành công");
-                        dt_order.ajax.reload();
+            if (data.status === 3) {
+                Swal.fire({
+                    title: 'Bạn có chắc không?',
+                    text: "Dữ liệu này không thể khôi phục!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Đúng, Hãy xóa nó!',
+                    cancelButtonText: 'Hủy',
+                    customClass: {
+                        confirmButton: 'btn btn-primary me-3 waves-effect waves-light',
+                        cancelButton: 'btn btn-label-secondary waves-effect waves-light'
+                    },
+                    buttonsStyling: false
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: "brands/" + id,
+                            method: "delete",
+                            data: {
+                                "_token": "{{csrf_token()}}"
+                            }
+                        }).done(function (res) {
+                            if (res.success) {
+                                successfulNotification(res.message);
+                                reloadDataTable();
+                            }
+                            if (!res.success) {
+                                Swal.fire({ title: res.message, icon: 'error', confirmButtonText: 'OK' });
+                                return;
+                            }
+                        });
                     }
-                }
-            });
+                })
+            } else {
+                var id = $(this).val();
+                $.ajax({
+                    url: '/admin/orders/update-status',
+                    method: 'post',
+                    data: { '_token': "{{csrf_token()}}", id: id, status: data.status },
+                    success: function (response) {
+                        if (response.status) {
+                            successNotification("Cập nhật thành công");
+                            dt_order.ajax.reload();
+                        }
+                    }
+                });
+            }
         });
 
         $('.order-list-table').on('click', '.send-mail', function () {
@@ -236,15 +276,12 @@
 
         function successNotification(message) {
             Swal.fire({
-                position: 'center',
                 icon: 'success',
-                title: message,
-                showConfirmButton: false,
-                timer: 1500,
+                title: 'cập nhật thành công!',
+                text: 'Dữ liệu đơn hàng đã được cập nhật.',
                 customClass: {
-                    confirmButton: 'btn btn-primary waves-effect waves-light'
-                },
-                buttonsStyling: false
+                    confirmButton: 'btn btn-success waves-effect waves-light'
+                }
             });
         }
 

@@ -53,8 +53,8 @@
                                     {{ $detail->product->name }}
                                     </td>
                                     <td>{{ $detail->quantity }}</td>
-                                    <td>{{ $detail->cost_price }}</td>
-                                    <td>{{ $detail->cost_price * $detail->quantity}}</td>
+                                    <td>{{ number_format($detail->cost_price, 0, ',', '.')}}đ</td>
+                                    <td>{{ number_format($detail->cost_price * $detail->quantity, 0, ',', '.')}}    đ</td>
                                 </tr>
                             @endforeach
                         </tbody>
